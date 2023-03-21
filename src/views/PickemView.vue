@@ -15,7 +15,7 @@
         </div>
         <div class="card lg:col-span-2">
           <div class="card-body">
-            <div class="card-title flex justify-between">
+            <div class="card-title">
               Pick'em
               <a href="#" class="btn btn-primary btn-sm">Week 1</a>
             </div>
