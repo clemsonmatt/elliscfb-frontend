@@ -7,4 +7,5 @@ export default interface Team {
   stadium_name: String,
   primary_color: String,
   secondary_color: String,
+  school: String,
 }

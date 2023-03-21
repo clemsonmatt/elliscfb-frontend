@@ -7,7 +7,7 @@
   <BaseLayout>
     <template #header>Teams</template>
     <template #default>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <div v-for="conference in conferences">
           <ConferenceComponent :conference="conference" />
         </div>
@@ -18,7 +18,6 @@
 
 <script lang="ts">
   import type Conference from "@/types/Conference"
-  import type Team from "@/types/Team"
   import axios from 'axios'
 
   export default {
@@ -28,21 +27,16 @@
       }
     },
 
-    methods: {
-      async getData() {
-        try {
-          // get data
-          axios
-            .get('http://localhost:3000/conferences.json')
-            .then(response => (this.conferences = response.data))
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    },
-
-    created() {
-      this.getData();
+    async created() {
+      // get data
+      await axios
+        .get('http://localhost:3000/conferences.json')
+        .then(response => {
+          this.conferences = response.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 </script>

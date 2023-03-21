@@ -19,7 +19,7 @@
             <h2 class="text-2xl card-title">
               School Info
             </h2>
-            <h4 class="text-xl italic font-bold underline">{{ team.name }}</h4>
+            <h4 class="text-xl italic font-bold underline">{{ team.school }}</h4>
             <h5 class="font-bold">Location</h5>
             <h6 class="italic">{{ team.city }}, {{ team.state }}</h6>
             <h5 class="font-bold">Stadium</h5>
