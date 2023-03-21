@@ -12,7 +12,7 @@
       <h2 class="text-xl card-title">{{ props.conference.name }}</h2>
       <div class="list-group">
         <div v-for="team in props.conference.teams">
-          <router-link :to="{ name: 'cfb_team', params: { nameShort: team.nameShort.toString() } }" class="list-group=item">
+          <router-link :to="{ name: 'cfb_team', params: { slug: team.slug.toString() } }" class="list-group=item">
             {{ team.name }}
           </router-link>
         </div>

@@ -19,84 +19,12 @@
 <script lang="ts">
   import type Conference from "@/types/Conference"
   import type Team from "@/types/Team"
+  import axios from 'axios'
 
   export default {
     data() {
       return {
-        conferences: [
-          {
-            id: 1,
-            name: 'ACC',
-            teams: [
-              {
-                name: 'Clemson',
-                nameShort: 'clemson',
-              },
-              {
-                name: 'FSU',
-                nameShort: 'fsu',
-              },
-              {
-                name: 'NC State',
-                nameShort: 'nc-state',
-              }
-            ] as Team[]
-          },
-          {
-            id: 2,
-            name: 'SEC',
-            teams: [
-              {
-                name: 'Alabama',
-                nameShort: 'alabama',
-              },
-              {
-                name: 'South Carolina',
-                nameShort: 'south-carolina',
-              },
-              {
-                name: 'Georgia',
-                nameShort: 'georgia',
-              }
-            ] as Team[]
-          },
-          {
-            id: 3,
-            name: 'Big Ten',
-            teams: [
-              {
-                name: 'Oklahoma',
-                nameShort: 'oklahoma',
-              },
-              {
-                name: 'Oklahoma State',
-                nameShort: 'oklahoma-state',
-              },
-              {
-                name: 'Arkansas',
-                nameShort: 'arkansas',
-              }
-            ] as Team[]
-          },
-          {
-            id: 3,
-            name: 'PAC Ten',
-            teams: [
-              {
-                name: 'UCLA',
-                nameShort: 'ucla',
-              },
-              {
-                name: 'Oregon',
-                nameShort: 'oregon',
-              },
-              {
-                name: 'USC',
-                nameShort: 'usc',
-              }
-            ] as Team[]
-          }
-        ] as Conference[],
+        conferences: [] as Conference[]
       }
     },
 
@@ -104,9 +32,9 @@
       async getData() {
         try {
           // get data
-          // const response = await this.$http.get('url_here')
-
-          // this.conferences = response.data
+          axios
+            .get('http://localhost:3000/conferences.json')
+            .then(response => (this.conferences = response.data))
         } catch (error) {
           console.log(error);
         }

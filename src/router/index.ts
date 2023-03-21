@@ -18,7 +18,7 @@ const router = createRouter({
       component: Teams
     },
     {
-      path: '/teams/:nameShort',
+      path: '/teams/:slug',
       name: 'cfb_team',
       component: Team
     },

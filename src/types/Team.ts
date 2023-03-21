@@ -1,4 +1,5 @@
 export default interface Team {
   name: String,
-  nameShort: String,
+  name_short: String,
+  slug: String,
 }

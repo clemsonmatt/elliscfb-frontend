@@ -10,7 +10,7 @@
       {{ team.name }}
     </template>
     <template #default>
-      <TeamNavbar :name-short="team.nameShort" />
+      <TeamNavbar :slug="team.slug" />
 
       <div class="grid xl:grid-cols-3 gap-4">
         <div class="card">
@@ -42,22 +42,19 @@
   export default {
     data() {
         return {
-            team: {
-                name: "",
-                nameShort: "",
-            } as Team
+            team: {} as Team
         };
     },
     methods: {
         async getData() {
             try {
                 //TODO: get data
-                let nameShort = this.$route.params.nameShort.toString();
-                if (nameShort == undefined) {
+                let slug = this.$route.params.slug.toString();
+                if (slug == undefined) {
                     throw new Error("Could not find team");
                 }
-                this.team.name = nameShort.toUpperCase();
-                this.team.nameShort = nameShort;
+                this.team.name = slug.toUpperCase();
+                this.team.slug = slug;
             }
             catch (error) {
                 console.log(error);

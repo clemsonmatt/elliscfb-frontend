@@ -5,7 +5,7 @@
   const currentRouteName = route.name
 
   const props = defineProps<{
-    nameShort: String
+    slug: String
   }>()
 </script>
 
@@ -13,7 +13,7 @@
   <div class="navbar bg-base-200 rounded-xl mb-4">
     <ul class="menu menu-horizontal px-1">
       <li>
-        <router-link :to="{ name: 'cfb_team', params: { nameShort: team.nameShort.toString() }}" :class="{ active: currentRouteName == 'cfb_team' }">
+        <router-link :to="{ name: 'cfb_team', params: { slug: team.slug.toString() }}" :class="{ active: currentRouteName == 'cfb_team' }">
           Overview
         </router-link>
       </li>
@@ -30,20 +30,17 @@
   export default {
     data() {
       return {
-        team: {
-          name: '',
-          nameShort: '',
-        } as Team
+        team: {} as Team
       }
     },
 
     methods: {
       async getData() {
-        if (this.nameShort == undefined) {
+        if (this.slug == undefined) {
           throw new Error('Could not find team')
         }
 
-        this.team.nameShort = this.nameShort
+        this.team.slug = this.slug
       },
     },
 
