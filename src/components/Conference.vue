@@ -10,11 +10,13 @@
   <div class="card">
     <div class="card-body">
       <h2 class="text-xl card-title">{{ props.conference.name }}</h2>
-      <ul>
-        <li v-for="team in props.conference.teams">
-          {{ team.name }}
-        </li>
-      </ul>
+      <div class="list-group">
+        <div v-for="team in props.conference.teams">
+          <router-link :to="{ name: 'cfb_team', params: { nameShort: team.nameShort.toString() } }" class="list-group=item">
+            {{ team.name }}
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>

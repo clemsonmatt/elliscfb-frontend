@@ -15,12 +15,12 @@
             </label>
             <ul tabindex="0" class="menu dropdown-content mt-3 p-2 shadow-lg bg-base-200 rounded-box w-52">
               <li>
-                <router-link :to="{ name: 'pickem' }" :class="{ active: currentRouteName == 'pickem' }">
+                <router-link :to="{ name: 'cfb_pickem' }" :class="{ active: currentRouteName == 'cfb_pickem' }">
                   Pick'em
                 </router-link>
               </li>
               <li>
-                <router-link :to="{ name: 'teams' }" :class="{ active: currentRouteName == 'teams' }">
+                <router-link :to="{ name: 'cfb_teams' }" :class="{ active: currentRouteName == 'cfb_teams' }">
                   Teams
                 </router-link>
               </li>
@@ -30,12 +30,12 @@
           </div>
           <ul class="hidden lg:flex menu menu-horizontal px-1">
             <li>
-                <router-link :to="{ name: 'pickem' }" :class="{ active: currentRouteName == 'pickem' }">
+                <router-link :to="{ name: 'cfb_pickem' }" :class="{ active: currentRouteName == 'cfb_pickem' }">
                   Pick'em
                 </router-link>
               </li>
             <li>
-                <router-link :to="{ name: 'teams' }" :class="{ active: currentRouteName == 'teams' }">
+                <router-link :to="{ name: 'cfb_teams' }" :class="{ active: currentRouteName == 'cfb_teams' }">
                   Teams
                 </router-link>
               </li>

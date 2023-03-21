@@ -30,12 +30,15 @@
             teams: [
               {
                 name: 'Clemson',
+                nameShort: 'clemson',
               },
               {
                 name: 'FSU',
+                nameShort: 'fsu',
               },
               {
                 name: 'NC State',
+                nameShort: 'nc-state',
               }
             ] as Team[]
           },
@@ -45,12 +48,15 @@
             teams: [
               {
                 name: 'Alabama',
+                nameShort: 'alabama',
               },
               {
                 name: 'South Carolina',
+                nameShort: 'south-carolina',
               },
               {
                 name: 'Georgia',
+                nameShort: 'georgia',
               }
             ] as Team[]
           },
@@ -60,12 +66,15 @@
             teams: [
               {
                 name: 'Oklahoma',
+                nameShort: 'oklahoma',
               },
               {
                 name: 'Oklahoma State',
+                nameShort: 'oklahoma-state',
               },
               {
                 name: 'Arkansas',
+                nameShort: 'arkansas',
               }
             ] as Team[]
           },
@@ -75,12 +84,15 @@
             teams: [
               {
                 name: 'UCLA',
+                nameShort: 'ucla',
               },
               {
                 name: 'Oregon',
+                nameShort: 'oregon',
               },
               {
                 name: 'USC',
+                nameShort: 'usc',
               }
             ] as Team[]
           }
