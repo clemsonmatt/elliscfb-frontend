@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Pickem from '../views/PickemView.vue'
-import Teams from '../views/TeamsView.vue'
-import Team from '../views/TeamView.vue'
+import Pickem from '@/views/PickemView.vue'
+import Teams from '@/views/TeamsView.vue'
+import Team from '@/views/TeamView.vue'
+import Setting from '@/views/SettingsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/teams/:nameShort',
       name: 'cfb_team',
       component: Team
+    },
+    {
+      path: '/settings',
+      name: 'cfb_settings',
+      component: Setting
     }
   ]
 })

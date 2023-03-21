@@ -60,7 +60,11 @@
                     Profile
                   </a>
                 </li>
-                <li><a>Settings</a></li>
+                <li>
+                  <router-link :to="{ name: 'cfb_settings' }" :class="{ active: currentRouteName == 'cfb_settings' }">
+                    Settings
+                  </router-link>
+                </li>
                 <li><a>Logout</a></li>
               </ul>
             </div>
