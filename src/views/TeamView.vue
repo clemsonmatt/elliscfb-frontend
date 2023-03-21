@@ -25,7 +25,14 @@
             <h5 class="font-bold">Stadium</h5>
             <h6 class="italic">{{ team.stadium_name }}</h6>
             <h5 class="font-bold">Colors</h5>
-            <h6 class="italic">#{{ team.primary_color }} | #{{ team.secondary_color }}</h6>
+            <div class="grid grid-cols-3">
+              <div class="h-6 col-span-2 rounded-l-xl" :style="{ backgroundColor: `#${team.primary_color}` }"></div>
+              <div class="h-6 rounded-r-xl" :style="{ backgroundColor: `#${team.secondary_color}` }"></div>
+            </div>
+            <div class="grid grid-cols-3">
+              <h6 class="col-span-2 italic text-center">#{{ team.primary_color }}</h6>
+              <h6 class="italic text-center">#{{ team.secondary_color }}</h6>
+            </div>
           </div>
         </div>
         <div class="col-span-2 card">
