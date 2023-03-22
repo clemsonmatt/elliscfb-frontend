@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Pickem from '@/views/PickemView.vue'
 import Teams from '@/views/TeamsView.vue'
 import Team from '@/views/TeamView.vue'
+import TeamGames from '@/views/TeamGamesView.vue'
 import Setting from '@/views/SettingsView.vue'
 
 const router = createRouter({
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/teams/:slug',
       name: 'cfb_team',
       component: Team
+    },
+    {
+      path: '/teams/:slug/games',
+      name: 'cfb_team_games',
+      component: TeamGames
     },
     {
       path: '/settings',

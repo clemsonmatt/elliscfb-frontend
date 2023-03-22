@@ -10,14 +10,18 @@
 </script>
 
 <template>
-  <div class="navbar bg-base-200 rounded-xl mb-4">
-    <ul class="menu menu-horizontal px-1">
+  <div class="mb-4 navbar bg-base-200 rounded-xl">
+    <ul class="px-1 menu menu-horizontal">
       <li>
         <router-link :to="{ name: 'cfb_team', params: { slug: slug.toString() }}" :class="{ active: currentRouteName == 'cfb_team' }">
           Overview
         </router-link>
       </li>
-      <li><a>Schedule</a></li>
+      <li>
+        <router-link :to="{ name: 'cfb_team_games', params: { slug: slug.toString() }}" :class="{ active: currentRouteName == 'cfb_team_games' }">
+          Schedule
+        </router-link>
+      </li>
       <li><a>Rankings</a></li>
       <li><a>Statistics</a></li>
     </ul>
