@@ -30,7 +30,7 @@
     async created() {
       // get data
       await axios
-        .get('http://localhost:3000/conferences.json')
+        .get('conferences.json')
         .then(response => {
           this.conferences = response.data
         })

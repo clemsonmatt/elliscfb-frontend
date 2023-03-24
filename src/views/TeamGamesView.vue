@@ -65,7 +65,7 @@
       let slug = this.$route.params.slug.toString();
 
       await axios
-        .get(`http://localhost:3000/teams/${slug}/games.json`)
+        .get(`teams/${slug}/games.json`)
         .then(response => {
           this.team = response.data.team
           this.games = response.data.games
