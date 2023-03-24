@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 .card {
-  @apply bg-base-200 shadow-xl;
+  @apply shadow-xl bg-base-200;
 }
 .card-title {
-  @apply text-xl mb-4 uppercase border-b border-base-300 pb-4 flex justify-between;
+  @apply flex justify-between pb-4 mb-4 text-xl uppercase border-b border-base-300;
+}
+.card-compact>.card-body {
+  @apply p-1;
 }

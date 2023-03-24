@@ -14,9 +14,8 @@
     <template #default>
       <TeamNavbar :slug="team.slug" v-if="!loading" />
 
-      <div class="card">
+      <div class="card card-compact">
         <div class="card-body">
-          <div class="card-title">Games</div>
           <table class="table table-zebra" v-if="!loading">
             <thead>
               <tr>
