@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.store'
 import Login from '@/views/LoginView.vue'
 import Pickem from '@/views/PickemView.vue'
 import Setting from '@/views/SettingsView.vue'
@@ -40,6 +41,18 @@ const router = createRouter({
       component: Login
     }
   ]
+})
+
+router.beforeEach(async (to) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/login']
+  const authRequired = !publicPages.includes(to.path)
+  const auth = useAuthStore()
+
+  if (authRequired && !auth.user) {
+    // auth.returnUrl = to.fullPath || '/'
+    return '/login'
+  }
 })
 
 export default router

@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios'
+import { useAuthStore } from '@/stores/auth.store'
 
 export default {
   name: 'Signin',
@@ -64,16 +64,13 @@ export default {
   },
   methods: {
     async signin() {
-      await axios
-        .post('/login', { email: this.email, password: this.password })
-        .then((response) => {
-          localStorage.setItem('token', response.data.token)
-          console.log('logged in... should redirect')
-        })
-        .catch((error) => {
-          this.error = (error.response && error.response.data && error.response.data.error) || ''
-          console.log('signin failed...')
-        })
+      const authStore = useAuthStore()
+
+      return authStore.login(this.email, this.password).catch((error) => {
+        this.error = (error.response && error.response.data && error.response.data.error) || ''
+        console.log('signin failed...')
+        console.log(error)
+      })
     }
   }
 }
