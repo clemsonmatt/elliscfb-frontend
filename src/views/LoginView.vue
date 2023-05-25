@@ -1,8 +1,9 @@
 <template>
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-    <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-      EllisCFB
-    </a>
+    <div class="w-1/6 mb-6">
+      <img src="/logo-dark.png" class="hidden w-full dark:inline-flex" />
+      <img src="/logo-light.png" class="w-full dark:hidden" />
+    </div>
     <div class="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 bg-base-200">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <form class="space-y-4 md:space-y-6" @submit.prevent="signin">
