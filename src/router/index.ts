@@ -6,6 +6,7 @@ import Setting from '@/views/SettingsView.vue'
 import Teams from '@/views/TeamsView.vue'
 import Team from '@/views/TeamView.vue'
 import TeamGames from '@/views/TeamGamesView.vue'
+import Games from '@/views/GamesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,11 @@ const router = createRouter({
       path: '/teams/:slug/games',
       name: 'cfb_team_games',
       component: TeamGames
+    },
+    {
+      path: '/games/:week?',
+      name: 'cfb_games',
+      component: Games
     },
     {
       path: '/settings',

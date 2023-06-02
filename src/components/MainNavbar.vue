@@ -48,7 +48,14 @@ const authStore = useAuthStore()
                   Teams
                 </router-link>
               </li>
-              <li><a>Games</a></li>
+              <li>
+                <router-link
+                  :to="{ name: 'cfb_games' }"
+                  :class="{ active: currentRouteName == 'cfb_games' }"
+                >
+                  Games
+                </router-link>
+              </li>
               <li><a>Rankings</a></li>
             </ul>
           </div>
@@ -69,7 +76,14 @@ const authStore = useAuthStore()
                 Teams
               </router-link>
             </li>
-            <li><a>Games</a></li>
+            <li>
+              <router-link
+                :to="{ name: 'cfb_games' }"
+                :class="{ active: currentRouteName == 'cfb_games' }"
+              >
+                Games
+              </router-link>
+            </li>
             <li><a>Rankings</a></li>
           </ul>
         </div>

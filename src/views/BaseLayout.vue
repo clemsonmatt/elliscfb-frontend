@@ -1,12 +1,17 @@
 <script setup lang="ts">
-  import MainNavbar from '../components/MainNavbar.vue'
+import MainNavbar from '../components/MainNavbar.vue'
 </script>
 
 <template>
   <MainNavbar />
-  <div class="my-8 mx-4 2xl:container 2xl:mx-auto">
-    <h1 class="text-4xl font-bold border-b border-base-300 pb-2 mb-4">
-      <slot name="header"></slot>
+  <div class="mx-4 my-8 2xl:container 2xl:mx-auto">
+    <h1 class="pb-2 mb-4 border-b border-base-300">
+      <div class="float-right">
+        <slot name="header-action"></slot>
+      </div>
+      <div class="text-4xl font-bold">
+        <slot name="header"></slot>
+      </div>
     </h1>
     <main><slot></slot></main>
   </div>
