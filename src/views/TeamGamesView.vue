@@ -31,9 +31,15 @@ import TeamNavbar from '@/components/TeamNavbar.vue'
               <tr v-for="game in games">
                 <td>{{ game.date }}</td>
                 <td v-if="game.home_team.name_short == team.name_short">
-                  vs. {{ game.away_team.name_short }}
+                  <router-link :to="{ name: 'cfb_game', params: { id: game.id.toString() } }">
+                    vs. {{ game.away_team.name_short }}
+                  </router-link>
                 </td>
-                <td v-else>@ {{ game.home_team.name_short }}</td>
+                <td v-else>
+                  <router-link :to="{ name: 'cfb_game', params: { id: game.id.toString() } }">
+                    @ {{ game.home_team.name_short }}
+                  </router-link>
+                </td>
                 <td>{{ game.time }}</td>
                 <td>{{ game.location }}</td>
                 <td>&mdash;</td>

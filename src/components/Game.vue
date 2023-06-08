@@ -9,7 +9,7 @@ const props = defineProps<{
 <template>
   <div class="mb-6 card">
     <div class="card-body">
-      <router-link :to="{ name: 'cfb_game', params: { id: props.game.id } }">
+      <router-link :to="{ name: 'cfb_game', params: { id: props.game.id.toString() } }">
         <div class="grid grid-cols-3 gap-4">
           <div>
             <h3 class="text-2xl">{{ props.game.home_team.name }}</h3>

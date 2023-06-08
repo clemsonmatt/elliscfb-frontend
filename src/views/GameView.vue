@@ -7,8 +7,16 @@ import type Game from '@/types/Game'
   <BaseLayout>
     <template #header>
       <div class="flex justify-between" v-if="!loading">
-        <div>{{ game.home_team.name }}</div>
-        <div>{{ game.away_team.name }}</div>
+        <div>
+          <router-link :to="{ name: 'cfb_team', params: { slug: game.home_team.slug.toString() } }">
+            {{ game.home_team.name }}
+          </router-link>
+        </div>
+        <div>
+          <router-link :to="{ name: 'cfb_team', params: { slug: game.away_team.slug.toString() } }">
+            {{ game.away_team.name }}
+          </router-link>
+        </div>
       </div>
     </template>
 
