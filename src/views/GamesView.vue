@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import BaseLayout from './BaseLayout.vue'
-import GameComponent from '../components/Game.vue'
+import GameComponent from '@/components/Game.vue'
+import SpinnerComponent from '@/components/Spinner.vue'
 </script>
 
 <template>
@@ -37,6 +38,9 @@ import GameComponent from '../components/Game.vue'
               <GameComponent :game="game" :isManage="false" />
             </tbody>
           </table>
+          <div v-else>
+            <SpinnerComponent />
+          </div>
         </div>
       </div>
     </template>

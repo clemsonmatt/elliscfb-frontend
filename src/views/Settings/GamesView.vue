@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import BaseLayout from '../BaseLayout.vue'
 import SettingsNavbar from '@/components/SettingsNavbar.vue'
-import GameComponent from '../../components/Game.vue'
+import GameComponent from '@/components/Game.vue'
+import SpinnerComponent from '@/components/Spinner.vue'
 </script>
 
 <template>
@@ -29,7 +30,7 @@ import GameComponent from '../../components/Game.vue'
           </div>
         </div>
         <div class="card-body">
-          <table class="table table-compact table-zebra">
+          <table class="table table-compact table-zebra" v-if="!loading">
             <thead>
               <th>Away Team</th>
               <th>Home Team</th>
@@ -42,6 +43,9 @@ import GameComponent from '../../components/Game.vue'
               <GameComponent :game="game" :isManage="true" />
             </tbody>
           </table>
+          <div v-else>
+            <SpinnerComponent />
+          </div>
         </div>
       </div>
     </template>
@@ -56,6 +60,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      loading: true,
       games: [] as Game[],
       week: '' as String,
       weeks: [] as Week[]
@@ -98,6 +103,9 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+        })
+        .then(() => {
+          this.loading = false
         })
     },
     async setWeek(number: string) {
