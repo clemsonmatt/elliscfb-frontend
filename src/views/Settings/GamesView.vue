@@ -1,30 +1,35 @@
 <script setup lang="ts">
-import BaseLayout from './BaseLayout.vue'
-import GameComponent from '../components/Game.vue'
+import BaseLayout from '../BaseLayout.vue'
+import SettingsNavbar from '@/components/SettingsNavbar.vue'
+import GameComponent from '../../components/Game.vue'
 </script>
 
 <template>
   <BaseLayout>
-    <template #header>Games</template>
-    <template #header-action>
-      <div class="dropdown dropdown-end">
-        <label tabindex="0" class="m-1 btn btn-sm btn-primary">Week {{ week }}</label>
-        <ul
-          tabindex="0"
-          class="p-2 mt-3 shadow-lg menu dropdown-content bg-base-200 rounded-box w-52"
-          id="js-week-dropdown"
-        >
-          <li v-for="w in weeks">
-            <a v-if="w.number.toString() == week" class="bg-primary">Week {{ w.number }}</a>
-            <a v-else @click="setWeek(w.number.toString())">Week {{ w.number }}</a>
-          </li>
-        </ul>
-      </div>
-    </template>
+    <template #header>Settings</template>
+
     <template #default>
-      <div class="card card-compact">
+      <SettingsNavbar />
+
+      <div class="card card-simple">
+        <div class="card-title">
+          <div>Week 1 Games</div>
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="m-1 btn btn-sm btn-primary">Week {{ week }}</label>
+            <ul
+              tabindex="0"
+              class="p-2 mt-3 shadow-lg menu dropdown-content bg-base-200 rounded-box w-52"
+              id="js-week-dropdown"
+            >
+              <li v-for="w in weeks">
+                <a v-if="w.number.toString() == week" class="bg-primary">Week {{ w.number }}</a>
+                <a v-else @click="setWeek(w.number.toString())">Week {{ w.number }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
         <div class="card-body">
-          <table class="table" v-if="!loading">
+          <table class="table table-compact table-zebra">
             <thead>
               <th>Away Team</th>
               <th>Home Team</th>
@@ -34,7 +39,7 @@ import GameComponent from '../components/Game.vue'
               <th></th>
             </thead>
             <tbody v-for="game in games">
-              <GameComponent :game="game" :isManage="false" />
+              <GameComponent :game="game" :isManage="true" />
             </tbody>
           </table>
         </div>
@@ -51,7 +56,6 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      loading: true,
       games: [] as Game[],
       week: '' as String,
       weeks: [] as Week[]
@@ -94,9 +98,6 @@ export default {
         })
         .catch((error) => {
           console.log(error)
-        })
-        .then(() => {
-          this.loading = false
         })
     },
     async setWeek(number: string) {

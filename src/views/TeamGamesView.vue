@@ -16,7 +16,7 @@ import TeamNavbar from '@/components/TeamNavbar.vue'
 
       <div class="card card-compact">
         <div class="card-body">
-          <table class="table table-zebra" v-if="!loading">
+          <table class="table" v-if="!loading">
             <thead>
               <tr>
                 <th>Date</th>

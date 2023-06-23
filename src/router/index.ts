@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import Login from '@/views/LoginView.vue'
 import Pickem from '@/views/PickemView.vue'
-import Setting from '@/views/SettingsView.vue'
+import SettingsPickem from '@/views/Settings/PickemView.vue'
+import SettingsGames from '@/views/Settings/GamesView.vue'
 import Teams from '@/views/TeamsView.vue'
 import Team from '@/views/TeamView.vue'
 import TeamGames from '@/views/TeamGamesView.vue'
@@ -43,9 +44,19 @@ const router = createRouter({
       component: Game
     },
     {
-      path: '/settings',
-      name: 'cfb_settings',
-      component: Setting
+      path: '/settings/pickem',
+      name: 'cfb_settings_pickem',
+      component: SettingsPickem
+    },
+    {
+      path: '/settings/games',
+      name: 'cfb_settings_games',
+      component: SettingsGames
+    },
+    {
+      path: '/settings/game/:id/edit',
+      name: 'cfb_settings_game_edit',
+      component: SettingsGames
     },
     {
       path: '/login',

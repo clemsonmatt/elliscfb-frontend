@@ -105,8 +105,8 @@ const authStore = useAuthStore()
                 </li>
                 <li>
                   <router-link
-                    :to="{ name: 'cfb_settings' }"
-                    :class="{ active: currentRouteName == 'cfb_settings' }"
+                    :to="{ name: 'cfb_settings_pickem' }"
+                    :class="{ active: $route.fullPath.includes('settings') }"
                   >
                     Settings
                   </router-link>

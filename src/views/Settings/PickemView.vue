@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseLayout from './BaseLayout.vue'
+import BaseLayout from '../BaseLayout.vue'
 import SettingsNavbar from '@/components/SettingsNavbar.vue'
 </script>
 
