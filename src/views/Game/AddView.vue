@@ -14,24 +14,20 @@ import SpinnerComponent from '@/components/Spinner.vue'
         <h2 class="card-title">Details</h2>
         <div class="text-center card-body">
           <form class="space-y-4 md:space-y-6" @submit.prevent="handleSubmit" v-if="!loading">
+            <div v-for="error in errors" class="alert alert-error">{{ error }}</div>
+
             <div class="grid gap-4 lg:grid-cols-3">
               <div>
                 <label for="date">Date</label>
-                <input type="text" name="date" id="date" v-model="date" placeholder="2023-01-01" />
+                <input type="text" name="date" id="date" v-model="date" />
               </div>
               <div>
                 <label for="time">Time</label>
-                <input type="text" name="time" id="time" v-model="time" placeholder="12:00 PM" />
+                <input type="text" name="time" id="time" v-model="time" />
               </div>
               <div>
                 <label for="location">Location</label>
-                <input
-                  type="text"
-                  name="location"
-                  id="location"
-                  v-model="location"
-                  placeholder="Seneca, SC"
-                />
+                <input type="text" name="location" id="location" v-model="location" />
               </div>
             </div>
             <div class="grid gap-4 lg:grid-cols-2">
@@ -57,7 +53,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
             <div class="grid gap-4 lg:grid-cols-2">
               <div>
                 <label for="spread">Spread</label>
-                <input type="text" name="spread" id="spread" v-model="spread" placeholder="10" />
+                <input type="text" name="spread" id="spread" v-model="spread" />
               </div>
               <div>
                 <label for="predicted_winner">Predicted winner</label>
@@ -82,13 +78,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
               <div>
                 <div>
                   <label for="bowl_name">Bowl name</label>
-                  <input
-                    type="text"
-                    name="bowl_name"
-                    id="bowl_name"
-                    v-model="bowl_name"
-                    placeholder="Bowl Name"
-                  />
+                  <input type="text" name="bowl_name" id="bowl_name" v-model="bowl_name" />
                 </div>
               </div>
             </div>
@@ -120,7 +110,8 @@ export default {
       conference_championship: 'no' as String,
       bowl_name: '' as String,
       teams: [] as Team[],
-      loading: true
+      loading: true,
+      errors: [] as String[]
     }
   },
 
@@ -137,8 +128,13 @@ export default {
   },
 
   methods: {
-    async handleSubmit() {
-      // TODO: loading icon
+    async handleSubmit(e: { preventDefault: () => void }) {
+      this.errors = []
+
+      if (this.validate(e) == false) {
+        return false
+      }
+
       this.loading = true
 
       await axios
@@ -165,11 +161,50 @@ export default {
         .then(() => {
           this.loading = false
         })
+    },
+
+    validate(e: { preventDefault: () => void }) {
+      var has_predicted_winner = this.predicted_winner.length > 0
+
+      if (
+        this.date &&
+        this.home_team &&
+        this.away_team &&
+        (!has_predicted_winner ||
+          this.predicted_winner == this.home_team ||
+          this.predicted_winner == this.away_team) &&
+        (!has_predicted_winner || (has_predicted_winner && this.spread.length > 0))
+      ) {
+        return true
+      }
+
+      if (!this.date) {
+        this.errors.push('Date required')
+      }
+      if (!this.home_team) {
+        this.errors.push('Home team required')
+      }
+      if (!this.away_team) {
+        this.errors.push('Away team required')
+      }
+      if (
+        has_predicted_winner &&
+        this.predicted_winner != this.home_team &&
+        this.predicted_winner != this.away_team
+      ) {
+        this.errors.push('Predicted winner does not match home or away team')
+      }
+      if (has_predicted_winner && this.spread.length == 0) {
+        this.errors.push('Missing spread with predicted winner')
+      }
+
+      e.preventDefault()
+
+      return false
     }
   }
 }
 
 // TODO:
-// 2. validation
 // 3. alert message
 </script>
