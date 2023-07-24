@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseLayout from '@/views/BaseLayout.vue'
 import type Team from '@/types/Team'
-import type Conference from '@/types/Conference'
+import AlertComponent from '@/components/Alert.vue'
 import SpinnerComponent from '@/components/Spinner.vue'
 </script>
 
@@ -10,11 +10,17 @@ import SpinnerComponent from '@/components/Spinner.vue'
     <template #header> Add game </template>
 
     <template #default>
+      <div v-if="complete" class="mb-4">
+        <AlertComponent color="success" message="Game added" />
+      </div>
+
       <div class="card">
         <h2 class="card-title">Details</h2>
         <div class="text-center card-body">
           <form class="space-y-4 md:space-y-6" @submit.prevent="handleSubmit" v-if="!loading">
-            <div v-for="error in errors" class="alert alert-error">{{ error }}</div>
+            <div v-for="error in errors">
+              <AlertComponent color="error" :message="error" />
+            </div>
 
             <div class="grid gap-4 lg:grid-cols-3">
               <div>
@@ -111,7 +117,8 @@ export default {
       bowl_name: '' as String,
       teams: [] as Team[],
       loading: true,
-      errors: [] as String[]
+      errors: [] as String[],
+      complete: false
     }
   },
 
@@ -150,13 +157,23 @@ export default {
           bowl_name: this.bowl_name
         })
         .then((response) => {
-          // TODO: add page success message
-          console.log('success!')
-          console.log(response.data)
+          // reset form
+          this.date = ''
+          this.home_team = ''
+          this.away_team = ''
+          this.time = ''
+          this.location = ''
+          this.spread = ''
+          this.predicted_winner = ''
+          this.conference_championship = 'no'
+          this.bowl_name = ''
+
+          // show success message
+          this.complete = true
         })
         .catch((error) => {
-          // TODO: add page success message
-          console.log(error)
+          console.log(error.response.data.error)
+          this.errors.push(error.response.data.error)
         })
         .then(() => {
           this.loading = false
@@ -204,7 +221,4 @@ export default {
     }
   }
 }
-
-// TODO:
-// 3. alert message
 </script>
