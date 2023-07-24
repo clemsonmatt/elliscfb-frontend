@@ -9,7 +9,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
     <template #header>Games</template>
     <template #header-action>
       <div class="dropdown dropdown-end">
-        <label tabindex="0" class="m-1 btn btn-sm btn-primary">Week {{ week }}</label>
+        <div tabindex="0" class="m-1 btn btn-sm btn-primary">Week {{ week }}</div>
         <ul
           tabindex="0"
           class="p-2 mt-3 shadow-lg menu dropdown-content bg-base-200 rounded-box w-52"

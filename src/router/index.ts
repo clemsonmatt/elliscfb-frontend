@@ -10,6 +10,7 @@ import TeamGames from '@/views/TeamGamesView.vue'
 import Games from '@/views/Game/ListView.vue'
 import Game from '@/views/Game/DetailView.vue'
 import GameAdd from '@/views/Game/AddView.vue'
+import GameEdit from '@/views/Game/EditView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,14 +56,14 @@ const router = createRouter({
       component: SettingsPickem
     },
     {
-      path: '/settings/games',
+      path: '/settings/games/:week?',
       name: 'cfb_settings_games',
       component: SettingsGames
     },
     {
       path: '/settings/game/:id/edit',
-      name: 'cfb_settings_game_edit',
-      component: SettingsGames
+      name: 'cfb_game_edit',
+      component: GameEdit
     },
     {
       path: '/login',

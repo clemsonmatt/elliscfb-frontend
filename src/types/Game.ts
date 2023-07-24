@@ -1,6 +1,6 @@
 import type Team from './Team'
 
-export default interface Conference {
+export default interface Game {
   id: Number
   home_team: Team
   away_team: Team

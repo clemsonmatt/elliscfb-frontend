@@ -14,21 +14,25 @@ import SpinnerComponent from '@/components/Spinner.vue'
 
       <div class="card card-simple">
         <div class="card-title">
-          <div>Week 1 Games</div>
+          <div>Week {{ week }} Games</div>
           <div>
             <router-link class="btn btn-success btn-sm" :to="{ name: 'cfb_game_add' }">
               Add game
             </router-link>
             <div class="dropdown dropdown-end">
-              <label tabindex="0" class="m-1 btn btn-sm btn-primary">Week {{ week }}</label>
+              <div tabindex="0" class="m-1 btn btn-sm btn-primary">Week {{ week }}</div>
               <ul
                 tabindex="0"
                 class="p-2 mt-3 shadow-lg menu dropdown-content bg-base-200 rounded-box w-52"
                 id="js-week-dropdown"
               >
                 <li v-for="w in weeks">
-                  <a v-if="w.number.toString() == week" class="bg-primary">Week {{ w.number }}</a>
-                  <a v-else @click="setWeek(w.number.toString())">Week {{ w.number }}</a>
+                  <a v-if="w.number.toString() == week" class="text-sm bg-primary"
+                    >Week {{ w.number }}</a
+                  >
+                  <a v-else @click="setWeek(w.number.toString())" class="text-sm"
+                    >Week {{ w.number }}</a
+                  >
                 </li>
               </ul>
             </div>
@@ -120,7 +124,7 @@ export default {
 
       // update url
       this.$router.push({
-        name: 'cfb_games',
+        name: 'cfb_settings_games',
         params: {
           week: number
         }

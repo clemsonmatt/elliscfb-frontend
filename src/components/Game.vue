@@ -42,7 +42,8 @@ const props = defineProps<{
     <td v-if="props.isManage">
       <router-link
         class="btn btn-xs btn-primary"
-        :to="{ name: 'cfb_settings_game_edit', params: { id: props.game.id.toString() } }"
+        :to="{ name: 'cfb_game_edit', params: { id: props.game.id.toString() } }"
+        target="_blank"
       >
         Edit
       </router-link>

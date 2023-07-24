@@ -9,11 +9,16 @@ import SpinnerComponent from '@/components/Spinner.vue'
 
 <template>
   <BaseLayout>
-    <template #header> Add game </template>
+    <template #header> Edit game </template>
+    <template #header-action>
+      <router-link :to="{ name: 'cfb_settings_games' }" class="btn btn-sm">
+        Back to games
+      </router-link>
+    </template>
 
     <template #default>
       <div v-if="complete" class="mb-4">
-        <AlertComponent color="success" message="Game added" />
+        <AlertComponent color="success" message="Game updated" />
       </div>
 
       <div class="card">
@@ -59,11 +64,35 @@ export default {
       teams: [] as Team[],
       loading: true,
       errors: [] as String[],
-      complete: false
+      complete: false,
+      gameId: ''
     }
   },
 
   async created() {
+    // get data
+    this.gameId = this.$route.params.id.toString()
+
+    await axios
+      .get(`games/${this.gameId}.json`)
+      .then((response) => {
+        this.game = response.data
+        this.game.home_team = response.data.home_team.slug
+        this.game.away_team = response.data.away_team.slug
+        this.game.conference_championship =
+          response.data.conference_championship == true ? 'yes' : 'no'
+
+        if (response.data.predicted_winning_team) {
+          this.game.predicted_winning_team = response.data.predicted_winning_team.slug
+        }
+
+        this.loading = false
+      })
+      .catch((error) => {
+        console.log(error)
+        this.errors.push('Error loading game details')
+      })
+
     await axios
       .get('teams.json')
       .then((response) => {
@@ -72,6 +101,7 @@ export default {
       })
       .catch((error) => {
         console.log(error)
+        this.errors.push('Error loading teams')
       })
   },
 
@@ -86,7 +116,7 @@ export default {
       this.loading = true
 
       await axios
-        .post(`games.json`, {
+        .patch(`games/${this.gameId}.json`, {
           date: this.game.date,
           home_team: this.game.home_team,
           away_team: this.game.away_team,
@@ -98,17 +128,6 @@ export default {
           bowl_name: this.game.bowl_name
         })
         .then((response) => {
-          // reset form
-          this.game.date = ''
-          this.game.home_team = ''
-          this.game.away_team = ''
-          this.game.time = ''
-          this.game.location = ''
-          this.game.spread = ''
-          this.game.predicted_winning_team = ''
-          this.game.conference_championship = 'no'
-          this.game.bowl_name = ''
-
           // show success message
           this.complete = true
         })
