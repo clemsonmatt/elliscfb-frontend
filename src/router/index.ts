@@ -7,8 +7,9 @@ import SettingsGames from '@/views/Settings/GamesView.vue'
 import Teams from '@/views/TeamsView.vue'
 import Team from '@/views/TeamView.vue'
 import TeamGames from '@/views/TeamGamesView.vue'
-import Games from '@/views/GamesView.vue'
-import Game from '@/views/GameView.vue'
+import Games from '@/views/Game/ListView.vue'
+import Game from '@/views/Game/DetailView.vue'
+import GameAdd from '@/views/Game/AddView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,11 @@ const router = createRouter({
       path: '/games/:week?',
       name: 'cfb_games',
       component: Games
+    },
+    {
+      path: '/game/add',
+      name: 'cfb_game_add',
+      component: GameAdd
     },
     {
       path: '/game/:id',

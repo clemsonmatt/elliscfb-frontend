@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseLayout from './BaseLayout.vue'
+import BaseLayout from '@/views/BaseLayout.vue'
 import GameComponent from '@/components/Game.vue'
 import SpinnerComponent from '@/components/Spinner.vue'
 </script>

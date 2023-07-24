@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseLayout from './BaseLayout.vue'
+import BaseLayout from '@/views/BaseLayout.vue'
 import type Game from '@/types/Game'
 </script>
 
