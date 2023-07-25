@@ -51,7 +51,8 @@ export default {
       spread: '',
       predicted_winning_team: '',
       conference_championship: 'no',
-      bowl_name: ''
+      bowl_name: '',
+      canceled: ''
     }
 
     return {

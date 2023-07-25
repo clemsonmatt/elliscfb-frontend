@@ -56,7 +56,8 @@ export default {
       spread: '',
       predicted_winning_team: '',
       conference_championship: 'no',
-      bowl_name: ''
+      bowl_name: '',
+      canceled: ''
     }
 
     return {
@@ -81,6 +82,7 @@ export default {
         this.game.away_team = response.data.away_team.slug
         this.game.conference_championship =
           response.data.conference_championship == true ? 'yes' : 'no'
+        this.game.canceled = response.data.canceled == true ? 'yes' : 'no'
 
         if (response.data.predicted_winning_team) {
           this.game.predicted_winning_team = response.data.predicted_winning_team.slug
@@ -125,7 +127,8 @@ export default {
           spread: this.game.spread,
           predicted_winning_team: this.game.predicted_winning_team,
           conference_championship: this.game.conference_championship,
-          bowl_name: this.game.bowl_name
+          bowl_name: this.game.bowl_name,
+          canceled: this.game.canceled
         })
         .then((response) => {
           // show success message

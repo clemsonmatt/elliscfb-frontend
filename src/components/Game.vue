@@ -43,7 +43,6 @@ const props = defineProps<{
       <router-link
         class="btn btn-xs btn-primary"
         :to="{ name: 'cfb_game_edit', params: { id: props.game.id.toString() } }"
-        target="_blank"
       >
         Edit
       </router-link>

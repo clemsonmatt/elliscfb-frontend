@@ -32,8 +32,6 @@ const props = defineProps<{
           {{ team.name }}
         </option>
       </select>
-    </div>
-    <div>
       <label for="away_team">Away team</label>
       <select v-model="game.away_team">
         <option value="">-- Away team --</option>
@@ -42,23 +40,24 @@ const props = defineProps<{
         </option>
       </select>
     </div>
-  </div>
-  <div class="grid gap-4 lg:grid-cols-2">
     <div>
-      <label for="spread">Spread</label>
-      <input type="text" name="spread" id="spread" v-model="game.spread" />
-    </div>
-    <div>
-      <label for="predicted_winning_team">Predicted winner</label>
-      <select v-model="game.predicted_winning_team">
-        <option value="">-- Predicted winner --</option>
-        <option v-for="team in teams" :value="team.slug">
-          {{ team.name }}
-        </option>
-      </select>
+      <div>
+        <label for="spread">Spread</label>
+        <input type="text" name="spread" id="spread" v-model="game.spread" />
+      </div>
+      <div>
+        <label for="predicted_winning_team">Predicted winner</label>
+        <select v-model="game.predicted_winning_team">
+          <option value="">-- Predicted winner --</option>
+          <option v-for="team in teams" :value="team.slug">
+            {{ team.name }}
+          </option>
+        </select>
+      </div>
     </div>
   </div>
-  <div class="grid gap-4 lg:grid-cols-2">
+  <div class="divider"></div>
+  <div class="grid gap-4 lg:grid-cols-3">
     <div>
       <div>
         <label for="conference_championship">Conference championship</label>
@@ -73,6 +72,13 @@ const props = defineProps<{
         <label for="bowl_name">Bowl name</label>
         <input type="text" name="bowl_name" id="bowl_name" v-model="game.bowl_name" />
       </div>
+    </div>
+    <div>
+      <label for="canceled">Canceled</label>
+      <select id="canceled" v-model="game.canceled">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
     </div>
   </div>
   <div class="divider"></div>

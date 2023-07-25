@@ -8,4 +8,5 @@ export default interface GameForm {
   predicted_winning_team: String
   conference_championship: String
   bowl_name: String
+  canceled: String
 }
