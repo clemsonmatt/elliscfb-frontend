@@ -1,3 +1,4 @@
+import type GameStat from './GameStatForm'
 import type Team from './Team'
 
 export default interface Game {
@@ -17,4 +18,6 @@ export default interface Game {
   network: String
   home_team_score: Number
   away_team_score: Number
+  home_team_stats: GameStat
+  away_team_stats: GameStat
 }

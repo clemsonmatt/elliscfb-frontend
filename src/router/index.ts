@@ -4,6 +4,8 @@ import Login from '@/views/LoginView.vue'
 import Pickem from '@/views/PickemView.vue'
 import SettingsPickem from '@/views/Settings/PickemView.vue'
 import SettingsGames from '@/views/Settings/GamesView.vue'
+import SettingsStats from '@/views/Settings/GameStatsView.vue'
+import SettingsStatsAdd from '@/views/Settings/GameStatsAddView.vue'
 import Teams from '@/views/TeamsView.vue'
 import Team from '@/views/TeamView.vue'
 import TeamGames from '@/views/TeamGamesView.vue'
@@ -64,6 +66,16 @@ const router = createRouter({
       path: '/settings/game/:id/edit',
       name: 'cfb_game_edit',
       component: GameEdit
+    },
+    {
+      path: '/settings/stats/:week?',
+      name: 'cfb_settings_stats',
+      component: SettingsStats
+    },
+    {
+      path: '/settings/stats/:id/add',
+      name: 'cfb_settings_game_stat',
+      component: SettingsStatsAdd
     },
     {
       path: '/login',
