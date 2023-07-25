@@ -10,4 +10,12 @@ export default interface GameStat {
   q2: Number
   q3: Number
   q4: Number
+  ot: Number
+  rushing_yards: Number
+  rushing_attempts: Number
+  passing_yards: Number
+  passing_attempts: Number
+  passing_completions: Number
+  turnovers: Number
+  penalty_yards: Number
 }

@@ -44,7 +44,15 @@ import type Game from '@/types/Game'
         </div>
         <div class="col-span-2 row-span-2">
           <div class="mb-6 card card-compact" v-if="game.winning_team">
-            <h2 class="card-title">Game Statistics</h2>
+            <h2 class="card-title">
+              Game Statistics
+              <router-link
+                :to="{ name: 'cfb_settings_game_stat', params: { id: game.id.toString() } }"
+                class="btn btn-sm"
+              >
+                Edit Stats
+              </router-link>
+            </h2>
             <div class="card-body">
               <table class="table table-compact">
                 <thead>
@@ -60,28 +68,79 @@ import type Game from '@/types/Game'
                   </tr>
                   <tr>
                     <th>Final</th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
+                    <td class="text-center">{{ game.home_team_stats.final }}</td>
+                    <td class="text-center">{{ game.away_team_stats.final }}</td>
                   </tr>
                   <tr>
                     <th>1st Quarter</th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
+                    <td class="text-center">{{ game.home_team_stats.q1 }}</td>
+                    <td class="text-center">{{ game.away_team_stats.q1 }}</td>
                   </tr>
                   <tr>
                     <th>2nd Quarter</th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
+                    <td class="text-center">{{ game.home_team_stats.q2 }}</td>
+                    <td class="text-center">{{ game.away_team_stats.q2 }}</td>
                   </tr>
                   <tr>
                     <th>3rd Quarter</th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
+                    <td class="text-center">{{ game.home_team_stats.q3 }}</td>
+                    <td class="text-center">{{ game.away_team_stats.q3 }}</td>
                   </tr>
                   <tr>
                     <th>4th Quarter</th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
+                    <td class="text-center">{{ game.home_team_stats.penalty_yards }}</td>
+                    <td class="text-center">{{ game.away_team_stats.q4 }}</td>
+                  </tr>
+                  <tr>
+                    <th>Overtime</th>
+                    <td class="text-center">{{ game.home_team_stats.ot || '-' }}</td>
+                    <td class="text-center">{{ game.away_team_stats.ot || '-' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table mt-6 table-compact">
+                <thead>
+                  <tr>
+                    <th>Stat</th>
+                    <th class="text-center">{{ game.home_team.name_short }}</th>
+                    <th class="text-center">{{ game.away_team.name_short }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Rushing Yards</th>
+                    <th class="text-center">{{ game.home_team_stats.rushing_yards }}</th>
+                    <th class="text-center">{{ game.away_team_stats.rushing_yards }}</th>
+                  </tr>
+                  <tr>
+                    <th class="pl-6">Rushing Attempts</th>
+                    <td class="text-center">{{ game.home_team_stats.rushing_attempts }}</td>
+                    <td class="text-center">{{ game.away_team_stats.rushing_attempts }}</td>
+                  </tr>
+                  <tr>
+                    <th>Passing Yards</th>
+                    <th class="text-center">{{ game.home_team_stats.passing_yards }}</th>
+                    <th class="text-center">{{ game.away_team_stats.passing_yards }}</th>
+                  </tr>
+                  <tr>
+                    <th class="pl-6">Passing Attempts</th>
+                    <td class="text-center">{{ game.home_team_stats.passing_attempts }}</td>
+                    <td class="text-center">{{ game.away_team_stats.passing_attempts }}</td>
+                  </tr>
+                  <tr>
+                    <th class="pl-6">Passing Completions</th>
+                    <td class="text-center">{{ game.home_team_stats.passing_completions }}</td>
+                    <td class="text-center">{{ game.away_team_stats.passing_completions }}</td>
+                  </tr>
+                  <tr>
+                    <th>Turnovers</th>
+                    <td class="text-center">{{ game.home_team_stats.turnovers }}</td>
+                    <td class="text-center">{{ game.away_team_stats.turnovers }}</td>
+                  </tr>
+                  <tr>
+                    <th>Penalty Yards</th>
+                    <td class="text-center">{{ game.home_team_stats.penalty_yards }}</td>
+                    <td class="text-center">{{ game.away_team_stats.penalty_yards }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -140,7 +199,7 @@ export default {
   },
   async created() {
     // get data
-    let gameId = this.$route.params.id.toString()
+    var gameId = this.$route.params.id.toString()
 
     await axios
       .get(`games/${gameId}.json`)

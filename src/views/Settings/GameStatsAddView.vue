@@ -63,6 +63,76 @@ import SpinnerComponent from '@/components/Spinner.vue'
                   <label for="q4">4th Quarter</label>
                   <input type="number" name="q4" id="q4" v-model="home_stat.q4" />
                 </div>
+                <div>
+                  <label for="ot">Overtime</label>
+                  <input type="number" name="ot" id="ot" v-model="home_stat.ot" />
+                </div>
+                <div class="divider"></div>
+                <div>
+                  <label for="rushing_yards">Rushing Yards</label>
+                  <input
+                    type="number"
+                    name="rushing_yards"
+                    id="rushing_yards"
+                    v-model="home_stat.rushing_yards"
+                  />
+                </div>
+                <div>
+                  <label for="rushing_attempts">Rushing Attempts</label>
+                  <input
+                    type="number"
+                    name="rushing_attempts"
+                    id="rushing_attempts"
+                    v-model="home_stat.rushing_attempts"
+                  />
+                </div>
+                <div class="divider"></div>
+                <div>
+                  <label for="passing_yards">Passing Yards</label>
+                  <input
+                    type="number"
+                    name="passing_yards"
+                    id="passing_yards"
+                    v-model="home_stat.passing_yards"
+                  />
+                </div>
+                <div>
+                  <label for="passing_attempts">Passsing Attempts</label>
+                  <input
+                    type="number"
+                    name="passing_attempts"
+                    id="passing_attempts"
+                    v-model="home_stat.passing_attempts"
+                  />
+                </div>
+                <div>
+                  <label for="passing_completions">Passing Completions</label>
+                  <input
+                    type="number"
+                    name="passing_completions"
+                    id="passing_completions"
+                    v-model="home_stat.passing_completions"
+                  />
+                </div>
+                <div class="divider"></div>
+                <div>
+                  <label for="turnovers">Turnovers</label>
+                  <input
+                    type="number"
+                    name="turnovers"
+                    id="turnovers"
+                    v-model="home_stat.turnovers"
+                  />
+                </div>
+                <div>
+                  <label for="penalty_yards">Penalty Yards</label>
+                  <input
+                    type="number"
+                    name="penalty_yards"
+                    id="penalty_yards"
+                    v-model="home_stat.penalty_yards"
+                  />
+                </div>
               </div>
 
               <div>
@@ -86,6 +156,76 @@ import SpinnerComponent from '@/components/Spinner.vue'
                 <div>
                   <label for="q4">4th Quarter</label>
                   <input type="number" name="q4" id="q4" v-model="away_stat.q4" />
+                </div>
+                <div>
+                  <label for="ot">Overtime</label>
+                  <input type="number" name="ot" id="ot" v-model="away_stat.ot" />
+                </div>
+                <div class="divider"></div>
+                <div>
+                  <label for="rushing_yards">Rushing Yards</label>
+                  <input
+                    type="number"
+                    name="rushing_yards"
+                    id="rushing_yards"
+                    v-model="away_stat.rushing_yards"
+                  />
+                </div>
+                <div>
+                  <label for="rushing_attempts">Rushing Attempts</label>
+                  <input
+                    type="number"
+                    name="rushing_attempts"
+                    id="rushing_attempts"
+                    v-model="away_stat.rushing_attempts"
+                  />
+                </div>
+                <div class="divider"></div>
+                <div>
+                  <label for="passing_yards">Passing Yards</label>
+                  <input
+                    type="number"
+                    name="passing_yards"
+                    id="passing_yards"
+                    v-model="away_stat.passing_yards"
+                  />
+                </div>
+                <div>
+                  <label for="passing_attempts">Passsing Attempts</label>
+                  <input
+                    type="number"
+                    name="passing_attempts"
+                    id="passing_attempts"
+                    v-model="away_stat.passing_attempts"
+                  />
+                </div>
+                <div>
+                  <label for="passing_completions">Passing Completions</label>
+                  <input
+                    type="number"
+                    name="passing_completions"
+                    id="passing_completions"
+                    v-model="away_stat.passing_completions"
+                  />
+                </div>
+                <div class="divider"></div>
+                <div>
+                  <label for="turnovers">Turnovers</label>
+                  <input
+                    type="number"
+                    name="turnovers"
+                    id="turnovers"
+                    v-model="away_stat.turnovers"
+                  />
+                </div>
+                <div>
+                  <label for="penalty_yards">Penalty Yards</label>
+                  <input
+                    type="number"
+                    name="penalty_yards"
+                    id="penalty_yards"
+                    v-model="away_stat.penalty_yards"
+                  />
                 </div>
               </div>
             </div>
@@ -112,14 +252,30 @@ export default {
       q1: '',
       q2: '',
       q3: '',
-      q4: ''
+      q4: '',
+      ot: '',
+      rushing_yards: '',
+      rushing_attempts: '',
+      passing_yards: '',
+      passing_attempts: '',
+      passing_completions: '',
+      turnovers: '',
+      penalty_yards: ''
     }
     var away_stat = {
       final: '',
       q1: '',
       q2: '',
       q3: '',
-      q4: ''
+      q4: '',
+      ot: '',
+      rushing_yards: '',
+      rushing_attempts: '',
+      passing_yards: '',
+      passing_attempts: '',
+      passing_completions: '',
+      turnovers: '',
+      penalty_yards: ''
     }
 
     return {
@@ -175,11 +331,27 @@ export default {
           home_q2: this.home_stat.q2,
           home_q3: this.home_stat.q3,
           home_q4: this.home_stat.q4,
+          home_ot: this.home_stat.ot,
+          home_rushing_yards: this.home_stat.rushing_yards,
+          home_rushing_attempts: this.home_stat.rushing_attempts,
+          home_passing_yards: this.home_stat.passing_yards,
+          home_passing_attempts: this.home_stat.passing_attempts,
+          home_passing_completions: this.home_stat.passing_completions,
+          home_turnovers: this.home_stat.turnovers,
+          home_penalty_yards: this.home_stat.penalty_yards,
           away_final: this.away_stat.final,
           away_q1: this.away_stat.q1,
           away_q2: this.away_stat.q2,
           away_q3: this.away_stat.q3,
-          away_q4: this.away_stat.q4
+          away_q4: this.away_stat.q4,
+          away_ot: this.away_stat.ot,
+          away_rushing_yards: this.away_stat.rushing_yards,
+          away_rushing_attempts: this.away_stat.rushing_attempts,
+          away_passing_yards: this.away_stat.passing_yards,
+          away_passing_attempts: this.away_stat.passing_attempts,
+          away_passing_completions: this.away_stat.passing_completions,
+          away_turnovers: this.away_stat.turnovers,
+          away_penalty_yards: this.away_stat.penalty_yards
         })
         .then((response) => {
           // show success message
