@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import BaseLayout from './BaseLayout.vue'
-import GameComponent from '../components/Game.vue'
+import BaseLayout from '@/views/BaseLayout.vue'
+import GameComponent from '@/components/Game.vue'
+import SpinnerComponent from '@/components/Spinner.vue'
 </script>
 
 <template>
@@ -8,7 +9,7 @@ import GameComponent from '../components/Game.vue'
     <template #header>Games</template>
     <template #header-action>
       <div class="dropdown dropdown-end">
-        <label tabindex="0" class="m-1 btn btn-sm btn-primary">Week {{ week }}</label>
+        <div tabindex="0" class="m-1 btn btn-sm btn-primary">Week {{ week }}</div>
         <ul
           tabindex="0"
           class="p-2 mt-3 shadow-lg menu dropdown-content bg-base-200 rounded-box w-52"
@@ -22,8 +23,25 @@ import GameComponent from '../components/Game.vue'
       </div>
     </template>
     <template #default>
-      <div v-for="game in games">
-        <GameComponent :game="game" />
+      <div class="card card-compact">
+        <div class="card-body">
+          <table class="table" v-if="!loading">
+            <thead>
+              <th>Away Team</th>
+              <th>Home Team</th>
+              <th>Result</th>
+              <th>Time</th>
+              <th>Location</th>
+              <th></th>
+            </thead>
+            <tbody v-for="game in games">
+              <GameComponent :game="game" :isManage="false" />
+            </tbody>
+          </table>
+          <div v-else>
+            <SpinnerComponent />
+          </div>
+        </div>
       </div>
     </template>
   </BaseLayout>
@@ -37,6 +55,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      loading: true,
       games: [] as Game[],
       week: '' as String,
       weeks: [] as Week[]
@@ -79,6 +98,9 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+        })
+        .then(() => {
+          this.loading = false
         })
     },
     async setWeek(number: string) {

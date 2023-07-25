@@ -3,36 +3,52 @@ import type Game from '@/types/Game'
 
 const props = defineProps<{
   game: Game
+  isManage: Boolean
 }>()
 </script>
 
 <template>
-  <div class="mb-6 card">
-    <div class="card-body">
-      <router-link :to="{ name: 'cfb_game', params: { id: props.game.id.toString() } }">
-        <div class="grid grid-cols-3 gap-4">
-          <div>
-            <h3 class="text-2xl">{{ props.game.home_team.name }}</h3>
-          </div>
-          <div class="text-center">
-            <div v-if="props.game.winning_team">
-              Final
-              <br />
-              {{ props.game.home_team_score || '?' }}
-              &mdash;
-              {{ props.game.away_team_score || '?' }}
-            </div>
-            <div v-else>
-              {{ props.game.time }}
-              <br />
-              {{ props.game.location }}
-            </div>
-          </div>
-          <div>
-            <h3 class="text-2xl text-right">{{ props.game.away_team.name }}</h3>
-          </div>
-        </div>
+  <tr>
+    <td>
+      <router-link
+        v-bind:to="{ name: 'cfb_team', params: { slug: props.game.away_team.slug.toString() } }"
+      >
+        {{ props.game.away_team.name }}
       </router-link>
-    </div>
-  </div>
+    </td>
+    <td>
+      @
+      <router-link
+        v-bind:to="{ name: 'cfb_team', params: { slug: props.game.home_team.slug.toString() } }"
+      >
+        {{ props.game.home_team.name }}
+      </router-link>
+    </td>
+    <td>
+      <span v-if="props.game.canceled" class="badge badge-xs badge-warning"> Canceled </span>
+      <span v-else>
+        {{ props.game.away_team.name_abbr }} {{ props.game.away_team_score || '?' }}
+        ,
+        {{ props.game.home_team.name_abbr }} {{ props.game.home_team_score || '?' }}
+      </span>
+    </td>
+    <td>{{ props.game.time }}</td>
+    <td>{{ props.game.location }}</td>
+    <td>
+      <router-link
+        class="btn btn-xs"
+        :to="{ name: 'cfb_game', params: { id: props.game.id.toString() } }"
+      >
+        Details
+      </router-link>
+    </td>
+    <td v-if="props.isManage">
+      <router-link
+        class="btn btn-xs btn-primary"
+        :to="{ name: 'cfb_game_edit', params: { id: props.game.id.toString() } }"
+      >
+        Edit
+      </router-link>
+    </td>
+  </tr>
 </template>
