@@ -18,13 +18,18 @@ import SpinnerComponent from '@/components/Spinner.vue'
       <div class="card">
         <h2 class="card-title">
           Game Stats
-          <router-link
-            :to="{ name: 'cfb_game', params: { id: game.id.toString() } }"
-            class="btn btn-sm btn-primary"
-            v-if="!loading"
-          >
-            Game details
-          </router-link>
+          <div>
+            <router-link :to="{ name: 'cfb_settings_stats' }" class="mr-4 btn btn-sm">
+              Game stats
+            </router-link>
+            <router-link
+              :to="{ name: 'cfb_game', params: { id: game.id.toString() } }"
+              class="btn btn-sm btn-primary"
+              v-if="!loading"
+            >
+              Game details
+            </router-link>
+          </div>
         </h2>
         <div class="card-body">
           <form class="space-y-4 md:space-y-6" @submit.prevent="handleSubmit" v-if="!loading">
@@ -181,6 +186,9 @@ export default {
         })
         .then(() => {
           this.loading = false
+
+          // redirect back to the stats page
+          this.$router.push({ name: 'cfb_settings_stats' })
         })
     },
 
