@@ -133,6 +133,12 @@ export default {
       .get(`games/${this.gameId}.json`)
       .then((response) => {
         this.game = response.data
+
+        if (response.data.home_team_stats) {
+          this.home_stat = response.data.home_team_stats
+          this.away_stat = response.data.away_team_stats
+        }
+
         this.loading = false
       })
       .catch((error) => {
@@ -179,14 +185,14 @@ export default {
     },
 
     validate(e: { preventDefault: () => void }) {
-      if (this.home_stat.final && this.away_stat.final) {
+      if (this.home_stat.final !== '' && this.away_stat.final !== '') {
         return true
       }
 
-      if (!this.home_stat.final) {
+      if (this.home_stat.final === '') {
         this.errors.push('Home final score required')
       }
-      if (!this.away_stat.final) {
+      if (this.away_stat.final === '') {
         this.errors.push('Away final score required')
       }
 

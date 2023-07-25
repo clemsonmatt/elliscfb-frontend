@@ -149,7 +149,7 @@ export default {
     async getGames(week: string) {
       // get game data
       await axios
-        .get(`/games/${week}/week.json`)
+        .get(`/game-stats/${week}/week.json`)
         .then((response) => {
           this.games = response.data
         })
