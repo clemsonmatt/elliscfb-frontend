@@ -19,7 +19,10 @@ import SpinnerComponent from '@/components/Spinner.vue'
         <h2 class="card-title">
           Game Stats
           <div>
-            <router-link :to="{ name: 'cfb_settings_stats' }" class="mr-4 btn btn-sm">
+            <router-link
+              :to="{ name: 'cfb_settings_stats', params: { week: week } }"
+              class="mr-4 btn btn-sm"
+            >
               Game stats
             </router-link>
             <router-link
@@ -126,7 +129,8 @@ export default {
       loading: true,
       errors: [] as String[],
       complete: false,
-      gameId: ''
+      gameId: '',
+      week: null
     }
   },
 
@@ -138,6 +142,7 @@ export default {
       .get(`games/${this.gameId}.json`)
       .then((response) => {
         this.game = response.data
+        this.week = response.data.week.number
 
         if (response.data.home_team_stats) {
           this.home_stat = response.data.home_team_stats
@@ -188,7 +193,7 @@ export default {
           this.loading = false
 
           // redirect back to the stats page
-          this.$router.push({ name: 'cfb_settings_stats' })
+          this.$router.push({ name: 'cfb_settings_stats', params: { week: this.week } })
         })
     },
 
