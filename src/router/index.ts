@@ -55,27 +55,32 @@ const router = createRouter({
     {
       path: '/settings/pickem',
       name: 'cfb_settings_pickem',
-      component: SettingsPickem
+      component: SettingsPickem,
+      meta: { manageRole: true }
     },
     {
       path: '/settings/games/:week?',
       name: 'cfb_settings_games',
-      component: SettingsGames
+      component: SettingsGames,
+      meta: { manageRole: true }
     },
     {
       path: '/settings/game/:id/edit',
       name: 'cfb_game_edit',
-      component: GameEdit
+      component: GameEdit,
+      meta: { manageRole: true }
     },
     {
       path: '/settings/stats/:week?',
       name: 'cfb_settings_stats',
-      component: SettingsStats
+      component: SettingsStats,
+      meta: { manageRole: true }
     },
     {
       path: '/settings/stats/:id/add',
       name: 'cfb_settings_game_stat',
-      component: SettingsStatsAdd
+      component: SettingsStatsAdd,
+      meta: { manageRole: true }
     },
     {
       path: '/login',
@@ -89,11 +94,20 @@ router.beforeEach(async (to) => {
   // redirect to login page if not logged in and trying to access a restricted page
   const publicPages = ['/login']
   const authRequired = !publicPages.includes(to.path)
+  const requiresManageRole = to.meta.manageRole
   const auth = useAuthStore()
+
+  // make sure the user and roles are up-to-date
+  auth.updateUser()
 
   if (authRequired && !auth.user) {
     // auth.returnUrl = to.fullPath || '/'
     return '/login'
+  }
+
+  // redirect back if user doesn't have manage role
+  if (requiresManageRole && !auth.canManage) {
+    return '/'
   }
 })
 

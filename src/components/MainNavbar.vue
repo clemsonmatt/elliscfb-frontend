@@ -94,7 +94,7 @@ const authStore = useAuthStore()
             </div>
             <div class="dropdown dropdown-end">
               <label tabindex="0" class="btn btn-circle">
-                <div class="w-10 rounded-full">ME</div>
+                <div class="w-10 rounded-full">{{ authStore.user.initials }}</div>
               </label>
               <ul
                 tabindex="0"
@@ -107,6 +107,7 @@ const authStore = useAuthStore()
                   <router-link
                     :to="{ name: 'cfb_settings_pickem' }"
                     :class="{ active: $route.fullPath.includes('settings') }"
+                    v-if="authStore.canManage"
                   >
                     Settings
                   </router-link>
