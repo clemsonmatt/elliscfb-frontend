@@ -37,6 +37,11 @@ import SpinnerComponent from '@/components/Spinner.vue'
             <tbody v-for="game in games">
               <GameComponent :game="game" :isManage="false" />
             </tbody>
+            <tbody v-if="games.length == 0">
+              <tr>
+                <td colspan="6">None</td>
+              </tr>
+            </tbody>
           </table>
           <div v-else>
             <SpinnerComponent />
