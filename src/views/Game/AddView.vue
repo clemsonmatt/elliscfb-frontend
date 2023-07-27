@@ -52,7 +52,7 @@ export default {
       predicted_winning_team: '',
       conference_championship: 'no',
       bowl_name: '',
-      canceled: ''
+      canceled: 'no'
     }
 
     return {

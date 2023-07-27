@@ -30,12 +30,18 @@ import SpinnerComponent from '@/components/Spinner.vue'
               <th>Away Team</th>
               <th>Home Team</th>
               <th>Result</th>
+              <th>Date</th>
               <th>Time</th>
               <th>Location</th>
               <th></th>
             </thead>
             <tbody v-for="game in games">
               <GameComponent :game="game" :isManage="false" />
+            </tbody>
+            <tbody v-if="games.length == 0">
+              <tr>
+                <td colspan="6">None</td>
+              </tr>
             </tbody>
           </table>
           <div v-else>

@@ -45,7 +45,8 @@ const router = createRouter({
     {
       path: '/game/add',
       name: 'cfb_game_add',
-      component: GameAdd
+      component: GameAdd,
+      meta: { manageRole: true }
     },
     {
       path: '/game/:id',

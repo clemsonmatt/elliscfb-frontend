@@ -94,6 +94,11 @@ import SpinnerComponent from '@/components/Spinner.vue'
                 </td>
               </tr>
             </tbody>
+            <tbody v-if="games.length == 0">
+              <tr>
+                <td colspan="6">None</td>
+              </tr>
+            </tbody>
           </table>
           <div v-else>
             <SpinnerComponent />
