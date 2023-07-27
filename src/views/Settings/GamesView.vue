@@ -14,7 +14,12 @@ import SpinnerComponent from '@/components/Spinner.vue'
 
       <div class="card card-simple">
         <div class="card-title">
-          <div>Week {{ week }} Games</div>
+          <div>Week {{ week }} Games ({{ games.length }})</div>
+          <button @click="importGames()" class="btn btn-sm">
+            <span v-if="games.length == 0">Import</span>
+            <span v-else>Update</span>
+            &nbsp;week {{ week }} games
+          </button>
           <div>
             <router-link class="btn btn-success btn-sm" :to="{ name: 'cfb_game_add' }">
               Add game
@@ -44,6 +49,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
               <th>Away Team</th>
               <th>Home Team</th>
               <th>Result</th>
+              <th>Date</th>
               <th>Time</th>
               <th>Location</th>
               <th></th>
@@ -134,6 +140,21 @@ export default {
           week: number
         }
       })
+    },
+    async importGames() {
+      this.loading = true
+
+      await axios
+        .get(`/games/${this.week}/import.json`)
+        .then((response) => {
+          this.games = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+        .then(() => {
+          this.loading = false
+        })
     }
   }
 }

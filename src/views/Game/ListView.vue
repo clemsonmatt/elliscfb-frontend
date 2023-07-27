@@ -30,6 +30,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
               <th>Away Team</th>
               <th>Home Team</th>
               <th>Result</th>
+              <th>Date</th>
               <th>Time</th>
               <th>Location</th>
               <th></th>
