@@ -7,7 +7,10 @@ import TeamNavbar from '@/components/TeamNavbar.vue'
 <template>
   <BaseLayout>
     <template #header>
-      {{ team.name }}
+      <div class="flex items-center space-x-4">
+        <img :src="`../teamLogos/${team.logo}`" class="w-16" />
+        <span>{{ team.name }}</span>
+      </div>
     </template>
 
     <template #default>
