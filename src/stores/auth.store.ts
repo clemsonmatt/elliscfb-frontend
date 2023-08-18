@@ -32,8 +32,12 @@ export const useAuthStore = defineStore({
 
     async updateUser() {
       await axios.get('/users/details').then((response) => {
-        localStorage.setItem('user', JSON.stringify(response.data.user))
-        localStorage.setItem('roles', JSON.stringify(response.data.roles))
+        if (response.data.user == null) {
+          this.logout()
+        } else {
+          localStorage.setItem('user', JSON.stringify(response.data.user))
+          localStorage.setItem('roles', JSON.stringify(response.data.roles))
+        }
       })
     },
 

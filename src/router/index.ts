@@ -98,12 +98,14 @@ router.beforeEach(async (to) => {
   const requiresManageRole = to.meta.manageRole
   const auth = useAuthStore()
 
-  // make sure the user and roles are up-to-date
-  auth.updateUser()
+  if (authRequired) {
+    // make sure the user and roles are up-to-date
+    auth.updateUser()
 
-  if (authRequired && !auth.user) {
-    // auth.returnUrl = to.fullPath || '/'
-    return '/login'
+    if (!auth.user) {
+      // auth.returnUrl = to.fullPath || '/'
+      return '/login'
+    }
   }
 
   // redirect back if user doesn't have manage role
