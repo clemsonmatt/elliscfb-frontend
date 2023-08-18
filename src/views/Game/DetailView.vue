@@ -8,14 +8,24 @@ import type Game from '@/types/Game'
     <template #header>
       <div class="flex justify-between" v-if="!loading">
         <div>
-          <router-link :to="{ name: 'cfb_team', params: { slug: game.home_team.slug.toString() } }">
-            {{ game.home_team.name }}
-          </router-link>
+          <div class="flex items-center space-x-4">
+            <img :src="`../teamLogos/${game.home_team.logo}`" class="w-16" />
+            <router-link
+              :to="{ name: 'cfb_team', params: { slug: game.home_team.slug.toString() } }"
+            >
+              {{ game.home_team.name }}
+            </router-link>
+          </div>
         </div>
         <div>
-          <router-link :to="{ name: 'cfb_team', params: { slug: game.away_team.slug.toString() } }">
-            {{ game.away_team.name }}
-          </router-link>
+          <div class="flex items-center space-x-4">
+            <router-link
+              :to="{ name: 'cfb_team', params: { slug: game.away_team.slug.toString() } }"
+            >
+              {{ game.away_team.name }}
+            </router-link>
+            <img :src="`../teamLogos/${game.away_team.logo}`" class="w-16" />
+          </div>
         </div>
       </div>
     </template>

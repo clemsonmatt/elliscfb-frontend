@@ -9,4 +9,5 @@ export default interface Team {
   primary_color: String
   secondary_color: String
   school: String
+  logo: String
 }
