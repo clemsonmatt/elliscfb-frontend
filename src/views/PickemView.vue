@@ -7,28 +7,29 @@ import SpinnerComponent from '@/components/Spinner.vue'
 <template>
   <BaseLayout>
     <template #header>Pickem</template>
+    <template #header-action>
+      <a href="#" class="btn btn-primary btn-sm">Week 1</a>
+    </template>
     <template #default>
       <div class="grid gap-4 lg:grid-cols-3" v-if="!loading">
         <div>
           <div class="card">
             <div class="card-title">Stats</div>
             <div class="card-body">
-              <div>content here</div>
+              <div>Coming soon...</div>
             </div>
           </div>
           <div class="mt-6 card">
             <div class="card-title">Leaderboard</div>
             <div class="card-body">
-              <div>content here</div>
+              <div>Coming soon...</div>
             </div>
           </div>
         </div>
         <div class="row-span-2 lg:col-span-2">
-          <div class="card">
-            <div class="card-title">
-              Pick'em
-              <a href="#" class="btn btn-primary btn-sm">Week 1</a>
-            </div>
+          <div class="grid grid-cols-2 justify-items-stretch tabs tabs-boxed">
+            <a class="tab tab-lg tab-active">My Picks</a>
+            <a class="tab tab-lg">All Picks</a>
           </div>
           <div v-for="game in games">
             <div class="mt-6 card">
@@ -41,12 +42,26 @@ import SpinnerComponent from '@/components/Spinner.vue'
                     }"
                   >
                     <div class="card-link">
-                      <div class="my-4 text-center card-body">
-                        <img :src="`../teamLogos/${game.away_team.logo}`" class="w-24 mx-auto" />
+                      <div class="items-center text-center card-body">
+                        <img :src="`../teamLogos/${game.away_team.logo}`" class="w-24" />
                         <span v-if="game.away_team.slug == game.predicted_winning_team.slug">
                           {{ game.away_team.name_short }} (-{{ game.spread }})
                         </span>
                         <span v-else>{{ game.away_team.name_short }}</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-10 h-10 mt-2 rounded-full text-base-100 bg-base-300"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
                       </div>
                     </div>
                   </router-link>
@@ -85,12 +100,26 @@ import SpinnerComponent from '@/components/Spinner.vue'
                     }"
                   >
                     <div class="card-link">
-                      <div class="my-4 text-center card-body">
-                        <img :src="`../teamLogos/${game.home_team.logo}`" class="w-24 mx-auto" />
+                      <div class="items-center text-center card-body">
+                        <img :src="`../teamLogos/${game.home_team.logo}`" class="w-24" />
                         <span v-if="game.home_team.slug == game.predicted_winning_team.slug">
                           {{ game.home_team.name_short }} (-{{ game.spread }})
                         </span>
                         <span v-else>{{ game.home_team.name_short }}</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-10 h-10 mt-2 text-white rounded-full bg-primary"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
                       </div>
                     </div>
                   </router-link>
