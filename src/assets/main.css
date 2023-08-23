@@ -5,6 +5,9 @@
 .card {
   @apply p-0 shadow-xl bg-base-200;
 }
+.card-link {
+  @apply p-0 border-4 shadow-xl rounded-xl bg-base-100 border-base-100 hover:border-primary hover:cursor-pointer;
+}
 .card-body {
   @apply p-4;
 }
