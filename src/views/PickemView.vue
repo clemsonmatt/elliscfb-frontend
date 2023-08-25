@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BaseLayout from '@/views/BaseLayout.vue'
-import GameComponent from '@/components/Game.vue'
+import AlertComponent from '@/components/Alert.vue'
 import SpinnerComponent from '@/components/Spinner.vue'
 </script>
 
@@ -31,40 +31,40 @@ import SpinnerComponent from '@/components/Spinner.vue'
             <a class="tab tab-lg tab-active">My Picks</a>
             <a class="tab tab-lg">All Picks</a>
           </div>
+          <div v-if="error != ''" class="mb-4">
+            <AlertComponent color="error" :message="`${error}`" />
+          </div>
           <div v-for="game in games">
             <div class="mt-6 card">
               <div class="card-body">
                 <div class="grid items-center grid-cols-3 gap-4 justify-items-stretch">
-                  <router-link
-                    v-bind:to="{
-                      name: 'cfb_team',
-                      params: { slug: game.away_team.slug.toString() }
-                    }"
-                  >
-                    <div class="card-link">
-                      <div class="items-center text-center card-body">
-                        <img :src="`../teamLogos/${game.away_team.logo}`" class="w-24" />
-                        <span v-if="game.away_team.slug == game.predicted_winning_team.slug">
-                          {{ game.away_team.name_short }} (-{{ game.spread }})
-                        </span>
-                        <span v-else>{{ game.away_team.name_short }}</span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="w-10 h-10 mt-2 rounded-full text-base-100 bg-base-300"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                      </div>
+                  <div class="card-link" @click="pickWinner(game, game.away_team)">
+                    <div class="items-center text-center card-body">
+                      <img :src="`../teamLogos/${game.away_team.logo}`" class="w-24" />
+                      <span v-if="game.away_team.slug == game.predicted_winning_team.slug">
+                        {{ game.away_team.name_short }} (-{{ game.spread }})
+                      </span>
+                      <span v-else>{{ game.away_team.name_short }}</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-10 h-10 mt-2 rounded-full"
+                        :class="{
+                          'text-white bg-primary': picks.includes(game.away_team.slug),
+                          ' text-base-100 bg-base-300': !picks.includes(game.away_team.slug)
+                        }"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
                     </div>
-                  </router-link>
+                  </div>
                   <div class="text-center">
                     <div class="mb-8">
                       {{ game.location }}
@@ -93,36 +93,33 @@ import SpinnerComponent from '@/components/Spinner.vue'
                       {{ game.network }}
                     </div>
                   </div>
-                  <router-link
-                    v-bind:to="{
-                      name: 'cfb_team',
-                      params: { slug: game.home_team.slug.toString() }
-                    }"
-                  >
-                    <div class="card-link">
-                      <div class="items-center text-center card-body">
-                        <img :src="`../teamLogos/${game.home_team.logo}`" class="w-24" />
-                        <span v-if="game.home_team.slug == game.predicted_winning_team.slug">
-                          {{ game.home_team.name_short }} (-{{ game.spread }})
-                        </span>
-                        <span v-else>{{ game.home_team.name_short }}</span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="w-10 h-10 mt-2 text-white rounded-full bg-primary"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                      </div>
+                  <div class="card-link" @click="pickWinner(game, game.home_team)">
+                    <div class="items-center text-center card-body">
+                      <img :src="`../teamLogos/${game.home_team.logo}`" class="w-24" />
+                      <span v-if="game.home_team.slug == game.predicted_winning_team.slug">
+                        {{ game.home_team.name_short }} (-{{ game.spread }})
+                      </span>
+                      <span v-else>{{ game.home_team.name_short }}</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-10 h-10 mt-2 rounded-full"
+                        :class="{
+                          'text-white bg-primary': picks.includes(game.home_team.slug),
+                          ' text-base-100 bg-base-300': !picks.includes(game.home_team.slug)
+                        }"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
                     </div>
-                  </router-link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,6 +135,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
 
 <script lang="ts">
 import type Game from '@/types/Game'
+import type Team from '@/types/Team'
 import type Week from '@/types/Week'
 import axios from 'axios'
 
@@ -147,7 +145,9 @@ export default {
       loading: true,
       games: [] as Game[],
       week: '' as String,
-      weeks: [] as Week[]
+      weeks: [] as Week[],
+      picks: [] as String[],
+      error: '' as String
     }
   },
   async created() {
@@ -173,23 +173,37 @@ export default {
           }
 
           this.getGames(week)
+          this.getPicks(week)
         })
         .catch((error) => {
           console.log(error)
+          this.error = 'Could not retrieve week data'
         })
     },
     async getGames(week: string) {
       // get game data
       await axios
-        .get(`/games/${week}/week-pickem.json`)
+        .get(`/pickem/${week}/week-games.json`)
         .then((response) => {
           this.games = response.data
         })
         .catch((error) => {
           console.log(error)
+          this.error = 'Could not retrieve the games for week'
         })
-        .then(() => {
+    },
+    async getPicks(week: string) {
+      this.loading = true
+
+      await axios
+        .get(`/pickem/${week}/week-picks.json`)
+        .then((response) => {
+          this.picks = response.data.picks
           this.loading = false
+        })
+        .catch((error) => {
+          console.log(error)
+          this.error = 'Could not retrieve your picks for this week'
         })
     },
     async setWeek(number: string) {
@@ -204,6 +218,21 @@ export default {
           week: number
         }
       })
+    },
+    async pickWinner(game: Game, team: Team) {
+      await axios
+        .post(`/pickem/game-winner`, {
+          week: this.week,
+          game: game.id,
+          team: team.id
+        })
+        .then((response) => {
+          this.picks = response.data.picks
+        })
+        .catch((error) => {
+          console.log(error.response.data.error)
+          this.error = error.response.data.error
+        })
     }
   }
 }
