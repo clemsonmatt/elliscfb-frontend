@@ -20,19 +20,19 @@ axios.interceptors.request.use(
 )
 
 // redirect to login page if needed
-axios.interceptors.response.use(undefined, function (error) {
-  const authStore = useAuthStore()
+// axios.interceptors.response.use(undefined, function (error) {
+//   const authStore = useAuthStore()
 
-  if (error) {
-    const originalRequest = error.config
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true
-      // store.dispatch('LogOut')
-      authStore.logout()
-      return router.push({ name: 'cfb_login' })
-    }
-  }
-})
+//   if (error) {
+//     const originalRequest = error.config
+//     if (error.response.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true
+//       // store.dispatch('LogOut')
+//       authStore.logout()
+//       return router.push({ name: 'cfb_login' })
+//     }
+//   }
+// })
 
 import App from './App.vue'
 import router from './router'
