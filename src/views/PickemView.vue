@@ -2,6 +2,8 @@
 import BaseLayout from '@/views/BaseLayout.vue'
 import AlertComponent from '@/components/Alert.vue'
 import SpinnerComponent from '@/components/Spinner.vue'
+import PickemComponent from '@/components/Pickem.vue'
+import PickemLockedComponent from '@/components/PickemLocked.vue'
 </script>
 
 <template>
@@ -35,94 +37,22 @@ import SpinnerComponent from '@/components/Spinner.vue'
             <AlertComponent color="error" :message="`${error}`" />
           </div>
           <div v-for="game in games">
-            <div class="mt-6 card">
-              <div class="card-body">
-                <div class="grid items-center grid-cols-3 gap-4 justify-items-stretch">
-                  <div class="card-link" @click="pickWinner(game, game.away_team)">
-                    <div class="items-center text-center card-body">
-                      <img :src="`../teamLogos/${game.away_team.logo}`" class="w-24" />
-                      <span v-if="game.away_team.slug == game.predicted_winning_team.slug">
-                        {{ game.away_team.name_short }} (-{{ game.spread }})
-                      </span>
-                      <span v-else>{{ game.away_team.name_short }}</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-10 h-10 mt-2 rounded-full"
-                        :class="{
-                          'text-white bg-primary': picks.includes(game.away_team.slug),
-                          ' text-base-100 bg-base-300': !picks.includes(game.away_team.slug)
-                        }"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <div class="text-center">
-                    <div class="mb-8">
-                      {{ game.location }}
-                      <br />
-                      {{ game.home_team.city }}, {{ game.home_team.state }}
-                    </div>
-                    <div class="divider">
-                      <router-link
-                        v-bind:to="{ name: 'cfb_game', params: { id: game.id.toString() } }"
-                        class="mt-2 btn btn-sm btn-primary"
-                      >
-                        Game details
-                      </router-link>
-                    </div>
-                    <br />
-                    {{
-                      new Date(game.date).toLocaleDateString('en-us', {
-                        month: 'short',
-                        day: '2-digit',
-                        weekday: 'long'
-                      })
-                    }}
-                    <br />
-                    {{ game.time }}
-                    <div class="ml-2 badge badge-default badge-outline" v-if="game.network">
-                      {{ game.network }}
-                    </div>
-                  </div>
-                  <div class="card-link" @click="pickWinner(game, game.home_team)">
-                    <div class="items-center text-center card-body">
-                      <img :src="`../teamLogos/${game.home_team.logo}`" class="w-24" />
-                      <span v-if="game.home_team.slug == game.predicted_winning_team.slug">
-                        {{ game.home_team.name_short }} (-{{ game.spread }})
-                      </span>
-                      <span v-else>{{ game.home_team.name_short }}</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-10 h-10 mt-2 rounded-full"
-                        :class="{
-                          'text-white bg-primary': picks.includes(game.home_team.slug),
-                          ' text-base-100 bg-base-300': !picks.includes(game.home_team.slug)
-                        }"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PickemComponent
+              :game="game"
+              :away-team-picked="picks.includes(game.away_team.slug)"
+              :home-team-picked="picks.includes(game.home_team.slug)"
+              @home-team-picked="pickWinner(game, game.home_team)"
+              @away-team-picked="pickWinner(game, game.away_team)"
+              v-if="canPick(game)"
+            />
+            <PickemLockedComponent
+              :game="game"
+              :away-team-picked="picks.includes(game.away_team.slug)"
+              :home-team-picked="picks.includes(game.home_team.slug)"
+              @home-team-picked="pickWinner(game, game.home_team)"
+              @away-team-picked="pickWinner(game, game.away_team)"
+              v-if="!canPick(game) && game.winning_team == null"
+            />
           </div>
         </div>
       </div>
@@ -147,7 +77,8 @@ export default {
       week: '' as String,
       weeks: [] as Week[],
       picks: [] as String[],
-      error: '' as String
+      error: '' as String,
+      now: new Date()
     }
   },
   async created() {
@@ -228,11 +159,20 @@ export default {
         })
         .then((response) => {
           this.picks = response.data.picks
+          this.error = ''
         })
         .catch((error) => {
           console.log(error.response.data.error)
           this.error = error.response.data.error
         })
+    },
+    canPick(game: Game): boolean {
+      var gameTime = new Date(game.datetime).toLocaleString('en-us', {
+        timeZone: 'America/New_York'
+      })
+      var currentTime = this.now.toLocaleString('en-us', { timeZone: 'America/New_York' })
+
+      return gameTime > currentTime
     }
   }
 }
