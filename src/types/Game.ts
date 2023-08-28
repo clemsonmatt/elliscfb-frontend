@@ -8,6 +8,7 @@ export default interface Game {
   winning_team: Team
   date: Date
   time: String
+  datetime: Date
   location: String
   spread: Number
   predicted_winning_team: Team

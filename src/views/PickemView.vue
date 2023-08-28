@@ -66,31 +66,64 @@ import SpinnerComponent from '@/components/Spinner.vue'
                     </div>
                   </div>
                   <div class="text-center">
-                    <div class="mb-8">
+                    <div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-10 h-10 mx-auto mb-4 text-primary"
+                        v-if="!canPick(game)"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-10 h-10 mx-auto mb-4 text-primary"
+                        v-if="canPick(game)"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
                       {{ game.location }}
                       <br />
                       {{ game.home_team.city }}, {{ game.home_team.state }}
                     </div>
-                    <div class="divider">
-                      <router-link
-                        v-bind:to="{ name: 'cfb_game', params: { id: game.id.toString() } }"
-                        class="mt-2 btn btn-sm btn-primary"
-                      >
-                        Game details
-                      </router-link>
+                    <div class="w-full my-5">
+                      <div class="divider">
+                        <router-link
+                          v-bind:to="{ name: 'cfb_game', params: { id: game.id.toString() } }"
+                          class="btn btn-sm btn-primary"
+                        >
+                          Game details
+                        </router-link>
+                      </div>
                     </div>
-                    <br />
-                    {{
-                      new Date(game.date).toLocaleDateString('en-us', {
-                        month: 'short',
-                        day: '2-digit',
-                        weekday: 'long'
-                      })
-                    }}
-                    <br />
-                    {{ game.time }}
-                    <div class="ml-2 badge badge-default badge-outline" v-if="game.network">
-                      {{ game.network }}
+                    <div>
+                      {{
+                        new Date(game.datetime).toLocaleDateString('en-us', {
+                          month: 'short',
+                          day: '2-digit',
+                          weekday: 'long'
+                        })
+                      }}
+                      <br />
+                      {{ game.time }}
+                      <div class="ml-2 badge badge-default badge-outline" v-if="game.network">
+                        {{ game.network }}
+                      </div>
                     </div>
                   </div>
                   <div class="card-link" @click="pickWinner(game, game.home_team)">
@@ -147,7 +180,8 @@ export default {
       week: '' as String,
       weeks: [] as Week[],
       picks: [] as String[],
-      error: '' as String
+      error: '' as String,
+      now: new Date()
     }
   },
   async created() {
@@ -228,11 +262,20 @@ export default {
         })
         .then((response) => {
           this.picks = response.data.picks
+          this.error = ''
         })
         .catch((error) => {
           console.log(error.response.data.error)
           this.error = error.response.data.error
         })
+    },
+    canPick(game: Game): boolean {
+      var gameTime = new Date(game.datetime).toLocaleString('en-us', {
+        timeZone: 'America/New_York'
+      })
+      var currentTime = this.now.toLocaleString('en-us', { timeZone: 'America/New_York' })
+
+      return gameTime > currentTime
     }
   }
 }
