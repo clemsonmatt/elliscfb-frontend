@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import Login from '@/views/LoginView.vue'
 import CreateAccount from '@/views/CreateAccountView.vue'
-import Pickem from '@/views/PickemView.vue'
+import Pickem from '@/views/Pickem/PicksView.vue'
+import PickemAllPicks from '@/views/Pickem/AllPicksView.vue'
 import SettingsPickem from '@/views/Settings/PickemView.vue'
 import SettingsGames from '@/views/Settings/GamesView.vue'
 import SettingsStats from '@/views/Settings/GameStatsView.vue'
@@ -22,6 +23,11 @@ const router = createRouter({
       path: '/:week?',
       name: 'cfb_pickem',
       component: Pickem
+    },
+    {
+      path: '/:week/all-picks',
+      name: 'cfb_pickem_all_picks',
+      component: PickemAllPicks
     },
     {
       path: '/teams',

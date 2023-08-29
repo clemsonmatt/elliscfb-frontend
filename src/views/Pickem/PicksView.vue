@@ -1,66 +1,42 @@
 <script setup lang="ts">
-import BaseLayout from '@/views/BaseLayout.vue'
 import AlertComponent from '@/components/Alert.vue'
-import SpinnerComponent from '@/components/Spinner.vue'
+import PickemLayout from './Layout.vue'
 import PickemComponent from '@/components/Pickem.vue'
 import PickemLockedComponent from '@/components/PickemLocked.vue'
+import SpinnerComponent from '@/components/Spinner.vue'
 </script>
 
 <template>
-  <BaseLayout>
-    <template #header>Pickem</template>
-    <template #header-action>
-      <a href="#" class="btn btn-primary btn-sm">Week 1</a>
-    </template>
-    <template #default>
-      <div class="grid gap-4 lg:grid-cols-3" v-if="!loading">
-        <div>
-          <div class="card">
-            <div class="card-title">Stats</div>
-            <div class="card-body">
-              <div>Coming soon...</div>
-            </div>
-          </div>
-          <div class="mt-6 card">
-            <div class="card-title">Leaderboard</div>
-            <div class="card-body">
-              <div>Coming soon...</div>
-            </div>
-          </div>
+  <PickemLayout>
+    <template #pickem-content>
+      <div v-if="!loading">
+        <div v-if="error != ''" class="mb-4">
+          <AlertComponent color="error" :message="`${error}`" />
         </div>
-        <div class="row-span-2 lg:col-span-2">
-          <div class="grid grid-cols-2 justify-items-stretch tabs tabs-boxed">
-            <a class="tab tab-lg tab-active">My Picks</a>
-            <a class="tab tab-lg">All Picks</a>
-          </div>
-          <div v-if="error != ''" class="mb-4">
-            <AlertComponent color="error" :message="`${error}`" />
-          </div>
-          <div v-for="game in games">
-            <PickemComponent
-              :game="game"
-              :away-team-picked="picks.includes(game.away_team.slug)"
-              :home-team-picked="picks.includes(game.home_team.slug)"
-              @home-team-picked="pickWinner(game, game.home_team)"
-              @away-team-picked="pickWinner(game, game.away_team)"
-              v-if="canPick(game)"
-            />
-            <PickemLockedComponent
-              :game="game"
-              :away-team-picked="picks.includes(game.away_team.slug)"
-              :home-team-picked="picks.includes(game.home_team.slug)"
-              @home-team-picked="pickWinner(game, game.home_team)"
-              @away-team-picked="pickWinner(game, game.away_team)"
-              v-if="!canPick(game) && game.winning_team == null"
-            />
-          </div>
+        <div v-for="game in games">
+          <PickemComponent
+            :game="game"
+            :away-team-picked="picks.includes(game.away_team.slug)"
+            :home-team-picked="picks.includes(game.home_team.slug)"
+            @home-team-picked="pickWinner(game, game.home_team)"
+            @away-team-picked="pickWinner(game, game.away_team)"
+            v-if="canPick(game)"
+          />
+          <PickemLockedComponent
+            :game="game"
+            :away-team-picked="picks.includes(game.away_team.slug)"
+            :home-team-picked="picks.includes(game.home_team.slug)"
+            @home-team-picked="pickWinner(game, game.home_team)"
+            @away-team-picked="pickWinner(game, game.away_team)"
+            v-if="!canPick(game) && game.winning_team == null"
+          />
         </div>
       </div>
       <div v-else>
         <SpinnerComponent />
       </div>
     </template>
-  </BaseLayout>
+  </PickemLayout>
 </template>
 
 <script lang="ts">
