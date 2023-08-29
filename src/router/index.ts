@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import Login from '@/views/LoginView.vue'
+import CreateAccount from '@/views/CreateAccountView.vue'
 import Pickem from '@/views/PickemView.vue'
 import SettingsPickem from '@/views/Settings/PickemView.vue'
 import SettingsGames from '@/views/Settings/GamesView.vue'
@@ -84,16 +85,21 @@ const router = createRouter({
       meta: { manageRole: true }
     },
     {
-      path: '/login',
+      path: '/login/:created?',
       name: 'cfb_login',
       component: Login
+    },
+    {
+      path: '/create-account',
+      name: 'cfb_create_account',
+      component: CreateAccount
     }
   ]
 })
 
 router.beforeEach(async (to) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/login']
+  const publicPages = ['/login', '/login/created', '/create-account']
   const authRequired = !publicPages.includes(to.path)
   const requiresManageRole = to.meta.manageRole
   const auth = useAuthStore()
