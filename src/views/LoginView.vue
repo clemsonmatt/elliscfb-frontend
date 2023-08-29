@@ -1,8 +1,15 @@
+<script setup lang="ts">
+import AlertComponent from '@/components/Alert.vue'
+</script>
+
 <template>
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
     <div class="w-1/6 mb-6">
       <img src="/logo-dark.png" class="hidden w-full dark:inline-flex" />
       <img src="/logo-light.png" class="w-full dark:hidden" />
+    </div>
+    <div v-if="created" class="mb-4">
+      <AlertComponent color="success" message="Account created! Login to proceed." />
     </div>
     <div class="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 bg-base-200">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -60,10 +67,14 @@ export default {
   name: 'Signin',
   data() {
     return {
-      email: '',
-      password: '',
-      error: ''
+      email: '' as String,
+      password: '' as String,
+      error: '' as String,
+      created: false as Boolean
     }
+  },
+  async created() {
+    this.created = this.$route.params.created ? true : false
   },
   methods: {
     async signin() {

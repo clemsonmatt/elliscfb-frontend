@@ -143,7 +143,10 @@ export default {
 
           // redirect to login page
           this.$router.push({
-            name: 'cfb_login'
+            name: 'cfb_login',
+            params: {
+              created: 'created'
+            }
           })
         })
         .catch((error) => {

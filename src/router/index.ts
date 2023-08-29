@@ -85,7 +85,7 @@ const router = createRouter({
       meta: { manageRole: true }
     },
     {
-      path: '/login',
+      path: '/login/:created?',
       name: 'cfb_login',
       component: Login
     },
@@ -99,7 +99,7 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/login', '/create-account']
+  const publicPages = ['/login', '/login/created', '/create-account']
   const authRequired = !publicPages.includes(to.path)
   const requiresManageRole = to.meta.manageRole
   const auth = useAuthStore()
