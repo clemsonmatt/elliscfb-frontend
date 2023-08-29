@@ -150,10 +150,13 @@ export default {
           })
         })
         .catch((error) => {
+          console.log(error)
           console.log(error.response.data.errors)
-          error.response.data.errors.forEach((err: string) => {
-            this.errors.push(err)
-          })
+          if (error.response.data.errors != undefined) {
+            error.response.data.errors.forEach((err: string) => {
+              this.errors.push(err)
+            })
+          }
         })
         .then(() => {
           this.loading = false
