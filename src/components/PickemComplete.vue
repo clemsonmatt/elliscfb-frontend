@@ -23,20 +23,11 @@ const props = defineProps<{
             }}
           </div>
           <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-10 h-10 mx-auto text-primary"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-              />
-            </svg>
+            <h3 class="text-2xl text-primary">
+              {{ props.game.home_team_stats.final }}
+              &mdash;
+              {{ props.game.away_team_stats.final }}
+            </h3>
           </div>
           <div>
             {{ props.game.time }}
@@ -63,11 +54,38 @@ const props = defineProps<{
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-10 h-10 mt-2 rounded-full"
-              :class="{
-                'text-white bg-primary': props.homeTeamPicked,
-                'text-base-100 bg-base-300': !props.homeTeamPicked
-              }"
+              class="w-10 h-10 mt-2 text-white rounded-full bg-error"
+              v-if="!props.awayTeamPicked && props.game.winning_team.id == props.game.away_team.id"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10 mt-2 text-white rounded-full bg-success"
+              v-if="props.homeTeamPicked && props.game.winning_team.id == props.game.home_team.id"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10 mt-2 rounded-full text-base-100 bg-base-300"
+              v-if="!props.homeTeamPicked"
             >
               <path
                 stroke-linecap="round"
@@ -79,20 +97,11 @@ const props = defineProps<{
         </div>
         <div class="hidden text-center md:block">
           <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-10 h-10 mx-auto mb-4 text-primary"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-              />
-            </svg>
+            <h3 class="mb-4 text-2xl text-primary">
+              {{ props.game.home_team_stats.final }}
+              &mdash;
+              {{ props.game.away_team_stats.final }}
+            </h3>
             {{ props.game.location }}
             <br />
             {{ props.game.home_team.city }}, {{ props.game.home_team.state }}
@@ -140,11 +149,38 @@ const props = defineProps<{
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-10 h-10 mt-2 rounded-full"
-              :class="{
-                'text-white bg-primary': props.awayTeamPicked,
-                ' text-base-100 bg-base-300': !props.awayTeamPicked
-              }"
+              class="w-10 h-10 mt-2 text-white rounded-full bg-error"
+              v-if="!props.homeTeamPicked && props.game.winning_team.id == props.game.home_team.id"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10 mt-2 text-white rounded-full bg-success"
+              v-if="props.awayTeamPicked && props.game.winning_team.id == props.game.away_team.id"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10 mt-2 rounded-full text-base-100 bg-base-300"
+              v-if="!props.awayTeamPicked"
             >
               <path
                 stroke-linecap="round"

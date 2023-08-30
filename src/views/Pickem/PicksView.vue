@@ -3,6 +3,7 @@ import AlertComponent from '@/components/Alert.vue'
 import PickemLayout from './Layout.vue'
 import PickemComponent from '@/components/Pickem.vue'
 import PickemLockedComponent from '@/components/PickemLocked.vue'
+import PickemCompleteComponent from '@/components/PickemComplete.vue'
 import SpinnerComponent from '@/components/Spinner.vue'
 </script>
 
@@ -29,9 +30,13 @@ import SpinnerComponent from '@/components/Spinner.vue'
             :game="game"
             :away-team-picked="picks.includes(game.away_team.slug)"
             :home-team-picked="picks.includes(game.home_team.slug)"
-            @home-team-picked="pickWinner(game, game.home_team)"
-            @away-team-picked="pickWinner(game, game.away_team)"
             v-if="!canPick(game) && game.winning_team == null"
+          />
+          <PickemCompleteComponent
+            :game="game"
+            :away-team-picked="picks.includes(game.away_team.slug)"
+            :home-team-picked="picks.includes(game.home_team.slug)"
+            v-if="!canPick(game) && game.winning_team != null"
           />
         </div>
         <div v-if="games.length == 0">
@@ -103,6 +108,7 @@ export default {
         .get(`/pickem/${week}/week-games.json`)
         .then((response) => {
           this.games = response.data
+          console.log(this.games)
         })
         .catch((error) => {
           console.log(error)
