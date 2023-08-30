@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import Login from '@/views/LoginView.vue'
 import CreateAccount from '@/views/CreateAccountView.vue'
+import Profile from '@/views/ProfileView.vue'
 import Pickem from '@/views/Pickem/PicksView.vue'
 import PickemAllPicks from '@/views/Pickem/AllPicksView.vue'
 import SettingsPickem from '@/views/Settings/PickemView.vue'
@@ -99,6 +100,11 @@ const router = createRouter({
       path: '/create-account',
       name: 'cfb_create_account',
       component: CreateAccount
+    },
+    {
+      path: '/profile',
+      name: 'cfb_profile',
+      component: Profile
     }
   ]
 })

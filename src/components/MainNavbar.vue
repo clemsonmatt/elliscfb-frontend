@@ -101,7 +101,9 @@ const authStore = useAuthStore()
                 class="p-2 mt-3 shadow-lg menu dropdown-content bg-base-200 rounded-box w-52"
               >
                 <li>
-                  <a class="justify-between"> Profile </a>
+                  <router-link :to="{ name: 'cfb_profile' }" class="justify-between">
+                    Profile
+                  </router-link>
                 </li>
                 <li>
                   <router-link
