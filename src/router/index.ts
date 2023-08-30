@@ -12,6 +12,7 @@ import SettingsStatsAdd from '@/views/Settings/GameStatsAddView.vue'
 import Teams from '@/views/TeamsView.vue'
 import Team from '@/views/TeamView.vue'
 import TeamGames from '@/views/TeamGamesView.vue'
+import TeamRankings from '@/views/Team/RankingsView.vue'
 import Games from '@/views/Game/ListView.vue'
 import Game from '@/views/Game/DetailView.vue'
 import GameAdd from '@/views/Game/AddView.vue'
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/teams/:slug/games',
       name: 'cfb_team_games',
       component: TeamGames
+    },
+    {
+      path: '/teams/:slug/rankings',
+      name: 'cfb_team_rankings',
+      component: TeamRankings
     },
     {
       path: '/games/:week?',
