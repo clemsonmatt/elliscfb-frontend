@@ -189,7 +189,7 @@ import type Game from '@/types/Game'
           </div>
           <div class="card">
             <div class="card-body">
-              <h2 class="text-xl uppercase">Team Comparison</h2>
+              <h2 class="text-xl font-semibold uppercase">Team Comparison</h2>
             </div>
           </div>
           <div class="grid gap-4 mt-3 md:grid-cols-3">

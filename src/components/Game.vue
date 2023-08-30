@@ -35,7 +35,7 @@ const props = defineProps<{
             :to="{ name: 'cfb_team', params: { slug: props.game.home_team.slug.toString() } }"
           >
             <div class="items-center text-center card-body">
-              <img :src="`../teamLogos/${game.home_team.logo}`" class="w-24" />
+              <img :src="`../../teamLogos/${game.home_team.logo}`" class="w-24" />
               <span>{{ game.home_team.name }}</span>
             </div>
           </router-link>
@@ -79,7 +79,7 @@ const props = defineProps<{
             }"
           >
             <div class="items-center text-center card-body">
-              <img :src="`../teamLogos/${game.away_team.logo}`" class="w-24" />
+              <img :src="`../../teamLogos/${game.away_team.logo}`" class="w-24" />
               {{ game.away_team.name }}
             </div>
           </router-link>

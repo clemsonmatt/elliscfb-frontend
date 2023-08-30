@@ -11,7 +11,7 @@ import SettingsStats from '@/views/Settings/GameStatsView.vue'
 import SettingsStatsAdd from '@/views/Settings/GameStatsAddView.vue'
 import Teams from '@/views/TeamsView.vue'
 import Team from '@/views/TeamView.vue'
-import TeamGames from '@/views/TeamGamesView.vue'
+import TeamSchedule from '@/views/Team/ScheduleView.vue'
 import TeamRankings from '@/views/Team/RankingsView.vue'
 import TeamStatistics from '@/views/Team/StatisticsView.vue'
 import Games from '@/views/Game/ListView.vue'
@@ -46,7 +46,7 @@ const router = createRouter({
     {
       path: '/teams/:slug/games',
       name: 'cfb_team_games',
-      component: TeamGames
+      component: TeamSchedule
     },
     {
       path: '/teams/:slug/rankings',
