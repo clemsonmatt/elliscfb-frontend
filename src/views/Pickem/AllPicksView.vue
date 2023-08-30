@@ -20,7 +20,15 @@ import SpinnerComponent from '@/components/Spinner.vue'
           <div class="divider"></div>
           <h4 class="text-2xl text-center md:text-left">{{ user_pick.username }}</h4>
           <div class="grid grid-cols-5 gap-1 mb-6 md:grid-cols-10 justify-items-stretch">
-            <div class="my-1 card" v-for="game in games">
+            <div
+              class="my-1 card"
+              :class="{
+                'card-success':
+                  game.winning_team && user_pick.picks.includes(game.winning_team.slug),
+                'card-error': game.winning_team && !user_pick.picks.includes(game.winning_team.slug)
+              }"
+              v-for="game in games"
+            >
               <div class="card-body">
                 <img
                   :src="`../teamLogos/${game.away_team.logo}`"
