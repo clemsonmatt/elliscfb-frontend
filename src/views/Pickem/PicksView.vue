@@ -31,6 +31,11 @@ import SpinnerComponent from '@/components/Spinner.vue'
             v-if="!canPick(game) && game.winning_team == null"
           />
         </div>
+        <div v-if="games.length == 0">
+          <div class="mt-6 card">
+            <div class="card-body">Pick'em not yet available for week {{ week }}</div>
+          </div>
+        </div>
       </div>
       <div v-else>
         <SpinnerComponent />
