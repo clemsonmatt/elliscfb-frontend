@@ -29,14 +29,15 @@ const props = defineProps<{
           </div>
         </div>
       </div>
-      <div class="grid items-center grid-cols-2 gap-4 sm:grid-cols-3 justify-items-stretch">
+      <div class="grid items-center grid-cols-2 gap-4 sm:grid-cols-3">
         <div>
           <router-link
             :to="{ name: 'cfb_team', params: { slug: props.game.home_team.slug.toString() } }"
           >
-            <div class="items-center text-center card-body">
-              <img :src="`../../teamLogos/${game.home_team.logo}`" class="w-24" />
-              <span>{{ game.home_team.name }}</span>
+            <div class="items-center text-center card-body bg-base-100 sm:bg-base-200 rounded-xl">
+              <img :src="`../../teamLogos/${game.home_team.logo}`" class="w-16 sm:w-24" />
+              <span class="hidden sm:block">{{ game.home_team.name }}</span>
+              <span class="block sm:hidden">{{ game.home_team.name_short }}</span>
             </div>
           </router-link>
         </div>
@@ -78,9 +79,10 @@ const props = defineProps<{
               params: { slug: props.game.away_team.slug.toString() }
             }"
           >
-            <div class="items-center text-center card-body">
-              <img :src="`../../teamLogos/${game.away_team.logo}`" class="w-24" />
-              {{ game.away_team.name }}
+            <div class="items-center text-center card-body bg-base-100 sm:bg-base-200 rounded-xl">
+              <img :src="`../../teamLogos/${game.away_team.logo}`" class="w-16 sm:w-24" />
+              <span class="hidden sm:block">{{ game.away_team.name }}</span>
+              <span class="block sm:hidden">{{ game.away_team.name_short }}</span>
             </div>
           </router-link>
         </div>
