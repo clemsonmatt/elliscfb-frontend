@@ -56,7 +56,14 @@ const authStore = useAuthStore()
                   Games
                 </router-link>
               </li>
-              <li><a>Rankings</a></li>
+              <li>
+                <router-link
+                  :to="{ name: 'cfb_rankings' }"
+                  :class="{ active: currentRouteName == 'cfb_rankings' }"
+                >
+                  Rankings
+                </router-link>
+              </li>
             </ul>
           </div>
           <ul class="hidden px-1 lg:flex menu menu-horizontal">
@@ -84,12 +91,19 @@ const authStore = useAuthStore()
                 Games
               </router-link>
             </li>
-            <li><a>Rankings</a></li>
+            <li>
+              <router-link
+                :to="{ name: 'cfb_rankings' }"
+                :class="{ active: currentRouteName == 'cfb_rankings' }"
+              >
+                Rankings
+              </router-link>
+            </li>
           </ul>
         </div>
         <div class="navbar-end">
           <div class="flex gap-2">
-            <div class="form-control">
+            <div class="form-control" v-if="false">
               <input type="text" placeholder="Search teams..." class="input input-bordered" />
             </div>
             <div class="dropdown dropdown-end">
@@ -101,7 +115,9 @@ const authStore = useAuthStore()
                 class="p-2 mt-3 shadow-lg menu dropdown-content bg-base-200 rounded-box w-52"
               >
                 <li>
-                  <a class="justify-between"> Profile </a>
+                  <router-link :to="{ name: 'cfb_profile' }" class="justify-between">
+                    Profile
+                  </router-link>
                 </li>
                 <li>
                   <router-link

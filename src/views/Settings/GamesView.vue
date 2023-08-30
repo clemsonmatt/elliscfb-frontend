@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseLayout from '../BaseLayout.vue'
 import SettingsNavbar from '@/components/SettingsNavbar.vue'
-import GameComponent from '@/components/Game.vue'
+import GameComponent from '@/components/SettingsGame.vue'
 import SpinnerComponent from '@/components/Spinner.vue'
 </script>
 

@@ -2,13 +2,14 @@
 import BaseLayout from './BaseLayout.vue'
 import type Team from '@/types/Team'
 import type Game from '@/types/Game'
+import TeamHeaderComponent from '@/components/TeamHeader.vue'
 import TeamNavbar from '@/components/TeamNavbar.vue'
 </script>
 
 <template>
   <BaseLayout>
     <template #header>
-      {{ team.name }}
+      <TeamHeaderComponent :team="team" />
     </template>
 
     <template #default>

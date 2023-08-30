@@ -13,6 +13,9 @@ import SpinnerComponent from '@/components/Spinner.vue'
         <div v-if="error != ''" class="mb-4">
           <AlertComponent color="error" :message="`${error}`" />
         </div>
+        <h3 class="mt-4 text-3xl text-center" v-if="show_time">
+          {{ new Date(now).toLocaleString() }}
+        </h3>
         <div v-for="game in games">
           <PickemComponent
             :game="game"
@@ -30,6 +33,11 @@ import SpinnerComponent from '@/components/Spinner.vue'
             @away-team-picked="pickWinner(game, game.away_team)"
             v-if="!canPick(game) && game.winning_team == null"
           />
+        </div>
+        <div v-if="games.length == 0">
+          <div class="mt-6 card">
+            <div class="card-body">Pick'em not yet available for week {{ week }}</div>
+          </div>
         </div>
       </div>
       <div v-else>
@@ -54,6 +62,7 @@ export default {
       weeks: [] as Week[],
       picks: [] as String[],
       error: '' as String,
+      show_time: false as Boolean,
       now: new Date()
     }
   },
@@ -65,6 +74,7 @@ export default {
     }
 
     this.getWeeks(week)
+    this.showTime()
   },
   methods: {
     async getWeeks(week: string) {
@@ -136,6 +146,19 @@ export default {
         .then((response) => {
           this.picks = response.data.picks
           this.error = ''
+        })
+        .catch((error) => {
+          console.log(error.response.data.error)
+          this.error = error.response.data.error
+        })
+    },
+    async showTime() {
+      await axios
+        .get('/pickem/show-time')
+        .then((response) => {
+          this.show_time = response.data
+          console.log('show time')
+          console.log(this.show_time)
         })
         .catch((error) => {
           console.log(error.response.data.error)

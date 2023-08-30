@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import Login from '@/views/LoginView.vue'
 import CreateAccount from '@/views/CreateAccountView.vue'
+import Profile from '@/views/ProfileView.vue'
 import Pickem from '@/views/Pickem/PicksView.vue'
 import PickemAllPicks from '@/views/Pickem/AllPicksView.vue'
 import SettingsPickem from '@/views/Settings/PickemView.vue'
@@ -11,10 +12,13 @@ import SettingsStatsAdd from '@/views/Settings/GameStatsAddView.vue'
 import Teams from '@/views/TeamsView.vue'
 import Team from '@/views/TeamView.vue'
 import TeamGames from '@/views/TeamGamesView.vue'
+import TeamRankings from '@/views/Team/RankingsView.vue'
+import TeamStatistics from '@/views/Team/StatisticsView.vue'
 import Games from '@/views/Game/ListView.vue'
 import Game from '@/views/Game/DetailView.vue'
 import GameAdd from '@/views/Game/AddView.vue'
 import GameEdit from '@/views/Game/EditView.vue'
+import Rankings from '@/views/RankingsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +49,16 @@ const router = createRouter({
       component: TeamGames
     },
     {
+      path: '/teams/:slug/rankings',
+      name: 'cfb_team_rankings',
+      component: TeamRankings
+    },
+    {
+      path: '/teams/:slug/statistics',
+      name: 'cfb_team_statistics',
+      component: TeamStatistics
+    },
+    {
       path: '/games/:week?',
       name: 'cfb_games',
       component: Games
@@ -59,6 +73,11 @@ const router = createRouter({
       path: '/game/:id',
       name: 'cfb_game',
       component: Game
+    },
+    {
+      path: '/rankings',
+      name: 'cfb_rankings',
+      component: Rankings
     },
     {
       path: '/settings/pickem',
@@ -99,6 +118,11 @@ const router = createRouter({
       path: '/create-account',
       name: 'cfb_create_account',
       component: CreateAccount
+    },
+    {
+      path: '/profile',
+      name: 'cfb_profile',
+      component: Profile
     }
   ]
 })

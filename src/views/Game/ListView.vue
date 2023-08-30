@@ -23,31 +23,18 @@ import SpinnerComponent from '@/components/Spinner.vue'
       </div>
     </template>
     <template #default>
-      <div class="card card-compact">
-        <div class="card-body">
-          <table class="table" v-if="!loading">
-            <thead>
-              <th>Away Team</th>
-              <th>Home Team</th>
-              <th>Result</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Location</th>
-              <th></th>
-            </thead>
-            <tbody v-for="game in games">
-              <GameComponent :game="game" :isManage="false" />
-            </tbody>
-            <tbody v-if="games.length == 0">
-              <tr>
-                <td colspan="6">None</td>
-              </tr>
-            </tbody>
-          </table>
-          <div v-else>
-            <SpinnerComponent />
+      <div v-if="!loading">
+        <div v-for="game in games">
+          <GameComponent :game="game" />
+        </div>
+        <div v-if="games.length == 0">
+          <div class="card">
+            <div class="card-body">No games for week {{ week }}</div>
           </div>
         </div>
+      </div>
+      <div v-else>
+        <SpinnerComponent />
       </div>
     </template>
   </BaseLayout>
