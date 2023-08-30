@@ -14,11 +14,11 @@ const props = defineProps<{
       <div class="grid items-center grid-cols-3 gap-4 justify-items-stretch">
         <div>
           <div class="items-center text-center card-body">
-            <img :src="`../teamLogos/${game.away_team.logo}`" class="w-24" />
-            <span v-if="game.away_team.slug == game.predicted_winning_team.slug">
-              {{ game.away_team.name_short }} (-{{ game.spread }})
+            <img :src="`../teamLogos/${game.home_team.logo}`" class="w-24" />
+            <span v-if="game.home_team.slug == game.predicted_winning_team.slug">
+              {{ game.home_team.name_short }} (-{{ game.spread }})
             </span>
-            <span v-else>{{ game.away_team.name_short }}</span>
+            <span v-else>{{ game.home_team.name_short }}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -27,8 +27,8 @@ const props = defineProps<{
               stroke="currentColor"
               class="w-10 h-10 mt-2 rounded-full"
               :class="{
-                'text-white bg-primary': awayTeamPicked,
-                ' text-base-100 bg-base-300': !awayTeamPicked
+                'text-white bg-primary': homeTeamPicked,
+                ' text-base-100 bg-base-300': !homeTeamPicked
               }"
             >
               <path
@@ -86,11 +86,11 @@ const props = defineProps<{
         </div>
         <div>
           <div class="items-center text-center card-body">
-            <img :src="`../teamLogos/${game.home_team.logo}`" class="w-24" />
-            <span v-if="game.home_team.slug == game.predicted_winning_team.slug">
-              {{ game.home_team.name_short }} (-{{ game.spread }})
+            <img :src="`../teamLogos/${game.away_team.logo}`" class="w-24" />
+            <span v-if="game.away_team.slug == game.predicted_winning_team.slug">
+              {{ game.away_team.name_short }} (-{{ game.spread }})
             </span>
-            <span v-else>{{ game.home_team.name_short }}</span>
+            <span v-else>{{ game.away_team.name_short }}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -99,8 +99,8 @@ const props = defineProps<{
               stroke="currentColor"
               class="w-10 h-10 mt-2 rounded-full"
               :class="{
-                'text-white bg-primary': homeTeamPicked,
-                ' text-base-100 bg-base-300': !homeTeamPicked
+                'text-white bg-primary': awayTeamPicked,
+                ' text-base-100 bg-base-300': !awayTeamPicked
               }"
             >
               <path

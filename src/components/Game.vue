@@ -3,59 +3,94 @@ import type Game from '@/types/Game'
 
 const props = defineProps<{
   game: Game
-  isManage: Boolean
 }>()
 </script>
 
 <template>
-  <tr>
-    <td>
-      <div class="flex items-center space-x-3">
-        <img :src="`../teamLogos/${props.game.away_team.logo}`" class="w-10" />
-        <router-link
-          v-bind:to="{ name: 'cfb_team', params: { slug: props.game.away_team.slug.toString() } }"
-        >
-          {{ props.game.away_team.name }}
-        </router-link>
+  <div class="mt-6 card">
+    <div class="card-body">
+      <div class="block text-xl text-center sm:hidden">
+        <div class="flex w-full">
+          <div class="grid flex-grow place-items-end">
+            {{
+              new Date(game.datetime).toLocaleDateString('en-us', {
+                month: 'short',
+                day: '2-digit',
+                weekday: 'long'
+              })
+            }}
+          </div>
+          <div class="divider divider-horizontal"></div>
+          <div class="grid flex-grow place-items-start">
+            {{ game.time }}
+            <div class="ml-2 badge badge-default badge-outline" v-if="game.network">
+              {{ game.network }}
+            </div>
+          </div>
+        </div>
       </div>
-    </td>
-    <td>
-      <div class="flex items-center space-x-3">
-        <img :src="`../teamLogos/${props.game.home_team.logo}`" class="w-10" />
-        <router-link
-          v-bind:to="{ name: 'cfb_team', params: { slug: props.game.home_team.slug.toString() } }"
-        >
-          {{ props.game.home_team.name }}
-        </router-link>
+      <div class="grid items-center grid-cols-2 gap-4 sm:grid-cols-3 justify-items-stretch">
+        <div>
+          <router-link
+            :to="{ name: 'cfb_team', params: { slug: props.game.home_team.slug.toString() } }"
+          >
+            <div class="items-center text-center card-body">
+              <img :src="`../teamLogos/${game.home_team.logo}`" class="w-24" />
+              <span>{{ game.home_team.name }}</span>
+            </div>
+          </router-link>
+        </div>
+        <div class="hidden text-center sm:block">
+          <div>
+            {{ game.location }}
+            <br />
+            {{ game.home_team.city }}, {{ game.home_team.state }}
+          </div>
+          <div class="w-full my-5">
+            <div class="divider">
+              <router-link
+                v-bind:to="{ name: 'cfb_game', params: { id: game.id.toString() } }"
+                class="btn btn-sm btn-primary"
+              >
+                Game details
+              </router-link>
+            </div>
+          </div>
+          <div>
+            {{
+              new Date(game.datetime).toLocaleDateString('en-us', {
+                month: 'short',
+                day: '2-digit',
+                weekday: 'long'
+              })
+            }}
+            <br />
+            {{ game.time }}
+            <div class="ml-2 badge badge-default badge-outline" v-if="game.network">
+              {{ game.network }}
+            </div>
+          </div>
+        </div>
+        <div>
+          <router-link
+            v-bind:to="{
+              name: 'cfb_team',
+              params: { slug: props.game.away_team.slug.toString() }
+            }"
+          >
+            <div class="items-center text-center card-body">
+              <img :src="`../teamLogos/${game.away_team.logo}`" class="w-24" />
+              {{ game.away_team.name }}
+            </div>
+          </router-link>
+        </div>
       </div>
-    </td>
-    <td>
-      <span v-if="props.game.canceled" class="badge badge-xs badge-warning"> Canceled </span>
-      <span v-else-if="!props.game.winning_team">&mdash;</span>
-      <span v-else>
-        {{ props.game.away_team.name_abbr }} {{ props.game.away_team_score || '?' }}
-        ,
-        {{ props.game.home_team.name_abbr }} {{ props.game.home_team_score || '?' }}
-      </span>
-    </td>
-    <td>{{ props.game.date }}</td>
-    <td>{{ props.game.time }}</td>
-    <td>{{ props.game.location }}</td>
-    <td>
       <router-link
-        class="btn btn-xs"
-        :to="{ name: 'cfb_game', params: { id: props.game.id.toString() } }"
+        v-bind:to="{ name: 'cfb_game', params: { id: game.id.toString() } }"
+        class="inline-flex btn btn-sm btn-primary sm:hidden"
       >
-        Details
+        Game details
       </router-link>
-    </td>
-    <td v-if="props.isManage">
-      <router-link
-        class="btn btn-xs btn-primary"
-        :to="{ name: 'cfb_game_edit', params: { id: props.game.id.toString() } }"
-      >
-        Edit
-      </router-link>
-    </td>
-  </tr>
+    </div>
+  </div>
 </template>
