@@ -15,7 +15,7 @@ const props = defineProps<{
         <div class="grid items-center grid-cols-3">
           <div>
             {{
-              new Date(game.datetime).toLocaleDateString('en-us', {
+              new Date(props.game.datetime).toLocaleDateString('en-us', {
                 month: 'short',
                 day: '2-digit',
                 weekday: 'short'
@@ -39,7 +39,7 @@ const props = defineProps<{
             </svg>
           </div>
           <div>
-            {{ game.time }}
+            {{ props.game.time }}
           </div>
         </div>
         <div class="divider"></div>
