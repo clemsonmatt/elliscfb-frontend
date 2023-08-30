@@ -9,6 +9,7 @@ const props = defineProps<{
 <template>
   <div class="flex items-center space-x-4">
     <img :src="`../../teamLogos/${props.team.logo}`" class="w-16" />
-    <span>{{ props.team.name }}</span>
+    <span class="hidden sm:block">{{ props.team.name }}</span>
+    <span class="block sm:hidden">{{ props.team.name_short }}</span>
   </div>
 </template>

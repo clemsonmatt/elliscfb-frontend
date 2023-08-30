@@ -157,8 +157,6 @@ export default {
         .get('/pickem/show-time')
         .then((response) => {
           this.show_time = response.data
-          console.log('show time')
-          console.log(this.show_time)
         })
         .catch((error) => {
           console.log(error.response.data.error)

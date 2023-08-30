@@ -7,7 +7,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
   <PickemLayout>
     <template #pickem-content>
       <div v-if="!gamesLoading">
-        <div class="grid grid-cols-10 gap-1 my-6 justify-items-stretch">
+        <div class="grid hidden grid-cols-10 gap-1 my-6 md:inline-flex justify-items-stretch">
           <div class="card" v-for="game in games">
             <div class="card-body">
               <img :src="`../teamLogos/${game.away_team.logo}`" class="w-full" />
@@ -18,9 +18,9 @@ import SpinnerComponent from '@/components/Spinner.vue'
         </div>
         <div v-for="user_pick in user_picks" v-if="!picksLoading">
           <div class="divider"></div>
-          <h4 class="text-xl">{{ user_pick.username }}</h4>
-          <div class="grid grid-cols-10 gap-1 mb-6 justify-items-stretch">
-            <div class="card" v-for="game in games">
+          <h4 class="text-2xl text-center md:text-left">{{ user_pick.username }}</h4>
+          <div class="grid grid-cols-5 gap-1 mb-6 md:grid-cols-10 justify-items-stretch">
+            <div class="my-1 card" v-for="game in games">
               <div class="card-body">
                 <img
                   :src="`../teamLogos/${game.away_team.logo}`"
