@@ -23,6 +23,9 @@
 .card-error {
   @apply border-2 border-error;
 }
+.card-primary {
+  @apply border-2 border-primary;
+}
 
 .table>tbody>tr {
   @apply border-b border-base-200;
