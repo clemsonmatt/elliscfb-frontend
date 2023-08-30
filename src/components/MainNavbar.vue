@@ -56,7 +56,14 @@ const authStore = useAuthStore()
                   Games
                 </router-link>
               </li>
-              <li><a>Rankings</a></li>
+              <li>
+                <router-link
+                  :to="{ name: 'cfb_rankings' }"
+                  :class="{ active: currentRouteName == 'cfb_rankings' }"
+                >
+                  Rankings
+                </router-link>
+              </li>
             </ul>
           </div>
           <ul class="hidden px-1 lg:flex menu menu-horizontal">
@@ -84,7 +91,14 @@ const authStore = useAuthStore()
                 Games
               </router-link>
             </li>
-            <li><a>Rankings</a></li>
+            <li>
+              <router-link
+                :to="{ name: 'cfb_rankings' }"
+                :class="{ active: currentRouteName == 'cfb_rankings' }"
+              >
+                Rankings
+              </router-link>
+            </li>
           </ul>
         </div>
         <div class="navbar-end">

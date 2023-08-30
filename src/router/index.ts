@@ -18,6 +18,7 @@ import Games from '@/views/Game/ListView.vue'
 import Game from '@/views/Game/DetailView.vue'
 import GameAdd from '@/views/Game/AddView.vue'
 import GameEdit from '@/views/Game/EditView.vue'
+import Rankings from '@/views/RankingsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -72,6 +73,11 @@ const router = createRouter({
       path: '/game/:id',
       name: 'cfb_game',
       component: Game
+    },
+    {
+      path: '/rankings',
+      name: 'cfb_rankings',
+      component: Rankings
     },
     {
       path: '/settings/pickem',
