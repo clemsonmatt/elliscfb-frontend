@@ -4,9 +4,12 @@ import AlertComponent from '@/components/Alert.vue'
 
 <template>
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-    <div class="w-1/6 mb-6">
+    <div class="w-1/3 mb-6 sm:w-1/6">
       <img src="/logo-dark.png" class="hidden w-full dark:inline-flex" />
       <img src="/logo-light.png" class="w-full dark:hidden" />
+    </div>
+    <div class="mb-6" v-if="error">
+      <AlertComponent color="error" :message="error" />
     </div>
     <div v-if="created" class="mb-4">
       <AlertComponent color="success" message="Account created! Login to proceed." />
@@ -50,7 +53,7 @@ import AlertComponent from '@/components/Alert.vue'
                 Create account
               </router-link>
             </div>
-            <div>
+            <div v-if="false">
               <a href="#" class="font-bold no-underline link">Forgot password</a>
             </div>
           </div>
@@ -64,13 +67,13 @@ import AlertComponent from '@/components/Alert.vue'
 import { useAuthStore } from '@/stores/auth.store'
 
 export default {
-  name: 'Signin',
   data() {
     return {
       email: '' as String,
       password: '' as String,
       error: '' as String,
-      created: false as Boolean
+      created: false as Boolean,
+      loading: false
     }
   },
   async created() {
@@ -81,9 +84,7 @@ export default {
       const authStore = useAuthStore()
 
       return authStore.login(this.email, this.password).catch((error) => {
-        this.error = (error.response && error.response.data && error.response.data.error) || ''
-        console.log('signin failed...')
-        console.log(error)
+        this.error = error.response.data.error
       })
     }
   }

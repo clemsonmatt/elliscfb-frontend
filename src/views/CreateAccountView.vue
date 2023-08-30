@@ -5,7 +5,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
 
 <template>
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-    <div class="w-1/6 mb-6">
+    <div class="w-1/3 mb-6 sm:w-1/6">
       <img src="/logo-dark.png" class="hidden w-full dark:inline-flex" />
       <img src="/logo-light.png" class="w-full dark:hidden" />
     </div>
