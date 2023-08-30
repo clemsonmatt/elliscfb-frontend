@@ -36,7 +36,14 @@ const props = defineProps<{
           Rankings
         </router-link>
       </li>
-      <li><a>Statistics</a></li>
+      <li>
+        <router-link
+          :to="{ name: 'cfb_team_statistics', params: { slug: slug.toString() } }"
+          :class="{ active: currentRouteName == 'cfb_team_statistics' }"
+        >
+          Statistics
+        </router-link>
+      </li>
     </ul>
   </div>
 </template>
