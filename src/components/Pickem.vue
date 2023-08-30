@@ -11,19 +11,57 @@ const props = defineProps<{
 <template>
   <div class="mt-6 card">
     <div class="card-body">
-      <div class="grid items-center grid-cols-3 gap-4 justify-items-stretch">
+      <div class="block text-xl text-center sm:hidden">
+        <div class="grid items-center grid-cols-3">
+          <div>
+            {{
+              new Date(game.datetime).toLocaleDateString('en-us', {
+                month: 'short',
+                day: '2-digit',
+                weekday: 'short'
+              })
+            }}
+          </div>
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10 mx-auto text-primary"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+              />
+            </svg>
+          </div>
+          <div>
+            {{ game.time }}
+          </div>
+        </div>
+        <div class="divider"></div>
+      </div>
+      <div class="grid items-center grid-cols-2 gap-4 md:grid-cols-3 justify-items-stretch">
         <div class="card-link" @click="$emit('home-team-picked')">
           <div class="items-center text-center card-body">
-            <img :src="`../teamLogos/${game.home_team.logo}`" class="w-24" />
-            <span
-              v-if="
-                game.predicted_winning_team &&
-                game.home_team.slug == game.predicted_winning_team.slug
-              "
-            >
-              {{ game.home_team.name_short }} (-{{ game.spread }})
-            </span>
-            <span v-else>{{ game.home_team.name_short }}</span>
+            <img :src="`../teamLogos/${props.game.home_team.logo}`" class="w-24" />
+            <div class="hidden md:block">
+              <span
+                v-if="
+                  props.game.predicted_winning_team &&
+                  props.game.home_team.slug == props.game.predicted_winning_team.slug
+                "
+              >
+                {{ props.game.home_team.name_short }} (-{{ props.game.spread }})
+              </span>
+              <span v-else>{{ props.game.home_team.name_short }}</span>
+            </div>
+            <div class="block md:hidden">
+              {{ props.game.home_team.name_abbr }}
+            </div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -32,8 +70,8 @@ const props = defineProps<{
               stroke="currentColor"
               class="w-10 h-10 mt-2 rounded-full"
               :class="{
-                'text-white bg-primary': homeTeamPicked,
-                ' text-base-100 bg-base-300': !homeTeamPicked
+                'text-white bg-primary': props.homeTeamPicked,
+                ' text-base-100 bg-base-300': !props.homeTeamPicked
               }"
             >
               <path
@@ -44,7 +82,7 @@ const props = defineProps<{
             </svg>
           </div>
         </div>
-        <div class="text-center">
+        <div class="hidden text-center md:block">
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -60,14 +98,14 @@ const props = defineProps<{
                 d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
               />
             </svg>
-            {{ game.location }}
+            {{ props.game.location }}
             <br />
-            {{ game.home_team.city }}, {{ game.home_team.state }}
+            {{ props.game.home_team.city }}, {{ props.game.home_team.state }}
           </div>
           <div class="w-full my-5">
             <div class="divider">
               <router-link
-                v-bind:to="{ name: 'cfb_game', params: { id: game.id.toString() } }"
+                v-bind:to="{ name: 'cfb_game', params: { id: props.game.id.toString() } }"
                 class="btn btn-sm btn-primary"
               >
                 Game details
@@ -76,31 +114,36 @@ const props = defineProps<{
           </div>
           <div>
             {{
-              new Date(game.datetime).toLocaleDateString('en-us', {
+              new Date(props.game.datetime).toLocaleDateString('en-us', {
                 month: 'short',
                 day: '2-digit',
                 weekday: 'long'
               })
             }}
             <br />
-            {{ game.time }}
-            <div class="ml-2 badge badge-default badge-outline" v-if="game.network">
-              {{ game.network }}
+            {{ props.game.time }}
+            <div class="ml-2 badge badge-default badge-outline" v-if="props.game.network">
+              {{ props.game.network }}
             </div>
           </div>
         </div>
         <div class="card-link" @click="$emit('away-team-picked')">
           <div class="items-center text-center card-body">
-            <img :src="`../teamLogos/${game.away_team.logo}`" class="w-24" />
-            <span
-              v-if="
-                game.predicted_winning_team &&
-                game.away_team.slug == game.predicted_winning_team.slug
-              "
-            >
-              {{ game.away_team.name_short }} (-{{ game.spread }})
-            </span>
-            <span v-else>{{ game.away_team.name_short }}</span>
+            <img :src="`../teamLogos/${props.game.away_team.logo}`" class="w-24" />
+            <div class="hidden md:block">
+              <span
+                v-if="
+                  props.game.predicted_winning_team &&
+                  props.game.away_team.slug == props.game.predicted_winning_team.slug
+                "
+              >
+                {{ props.game.away_team.name_short }} (-{{ props.game.spread }})
+              </span>
+              <span v-else>{{ props.game.away_team.name_short }}</span>
+            </div>
+            <div class="block md:hidden">
+              {{ props.game.away_team.name_abbr }}
+            </div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -109,8 +152,8 @@ const props = defineProps<{
               stroke="currentColor"
               class="w-10 h-10 mt-2 rounded-full"
               :class="{
-                'text-white bg-primary': awayTeamPicked,
-                ' text-base-100 bg-base-300': !awayTeamPicked
+                'text-white bg-primary': props.awayTeamPicked,
+                ' text-base-100 bg-base-300': !props.awayTeamPicked
               }"
             >
               <path
@@ -121,6 +164,18 @@ const props = defineProps<{
             </svg>
           </div>
         </div>
+      </div>
+      <div class="block mx-auto text-center md:hidden">
+        <div v-if="props.game.predicted_winning_team">
+          {{ props.game.predicted_winning_team.name_abbr }}
+          (-{{ props.game.spread }})
+        </div>
+        <router-link
+          v-bind:to="{ name: 'cfb_game', params: { id: props.game.id.toString() } }"
+          class="mt-2 btn btn-sm btn-primary"
+        >
+          Game details
+        </router-link>
       </div>
     </div>
   </div>
