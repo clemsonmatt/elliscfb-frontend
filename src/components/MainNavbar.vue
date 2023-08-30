@@ -89,7 +89,7 @@ const authStore = useAuthStore()
         </div>
         <div class="navbar-end">
           <div class="flex gap-2">
-            <div class="form-control">
+            <div class="form-control" v-if="false">
               <input type="text" placeholder="Search teams..." class="input input-bordered" />
             </div>
             <div class="dropdown dropdown-end">
