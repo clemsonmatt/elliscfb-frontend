@@ -33,9 +33,9 @@ const props = defineProps<{
       <span v-if="props.game.canceled" class="badge badge-xs badge-warning"> Canceled </span>
       <span v-else-if="!props.game.winning_team">&mdash;</span>
       <span v-else>
-        {{ props.game.away_team.name_abbr }} {{ props.game.away_team_score || '?' }}
+        {{ props.game.away_team.name_abbr }} {{ props.game.away_team_stats.final }}
         ,
-        {{ props.game.home_team.name_abbr }} {{ props.game.home_team_score || '?' }}
+        {{ props.game.home_team.name_abbr }} {{ props.game.home_team_stats.final }}
       </span>
     </td>
     <td>{{ props.game.date }}</td>
