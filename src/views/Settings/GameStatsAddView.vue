@@ -42,101 +42,10 @@ import SpinnerComponent from '@/components/Spinner.vue'
 
             <div class="grid gap-4 lg:grid-cols-2">
               <div>
-                <h3 class="text-2xl">{{ game.home_team.name }}</h3>
-                <div>
-                  <label for="final">Final</label>
-                  <input type="number" name="final" id="final" v-model="home_stat.final" />
+                <div class="flex items-center space-x-3">
+                  <img :src="`../../../teamLogos/${game.away_team.logo}`" class="w-10" />
+                  <h3 class="text-2xl">{{ game.away_team.name }}</h3>
                 </div>
-                <div>
-                  <label for="q1">1st Quarter</label>
-                  <input type="number" name="q1" id="q1" v-model="home_stat.q1" />
-                </div>
-                <div>
-                  <label for="q2">2nd Quarter</label>
-                  <input type="number" name="q2" id="q2" v-model="home_stat.q2" />
-                </div>
-                <div>
-                  <label for="q3">3rd Quarter</label>
-                  <input type="number" name="q3" id="q3" v-model="home_stat.q3" />
-                </div>
-                <div>
-                  <label for="q4">4th Quarter</label>
-                  <input type="number" name="q4" id="q4" v-model="home_stat.q4" />
-                </div>
-                <div>
-                  <label for="ot">Overtime</label>
-                  <input type="number" name="ot" id="ot" v-model="home_stat.ot" />
-                </div>
-                <div class="divider"></div>
-                <div>
-                  <label for="rushing_yards">Rushing Yards</label>
-                  <input
-                    type="number"
-                    name="rushing_yards"
-                    id="rushing_yards"
-                    v-model="home_stat.rushing_yards"
-                  />
-                </div>
-                <div>
-                  <label for="rushing_attempts">Rushing Attempts</label>
-                  <input
-                    type="number"
-                    name="rushing_attempts"
-                    id="rushing_attempts"
-                    v-model="home_stat.rushing_attempts"
-                  />
-                </div>
-                <div class="divider"></div>
-                <div>
-                  <label for="passing_yards">Passing Yards</label>
-                  <input
-                    type="number"
-                    name="passing_yards"
-                    id="passing_yards"
-                    v-model="home_stat.passing_yards"
-                  />
-                </div>
-                <div>
-                  <label for="passing_attempts">Passsing Attempts</label>
-                  <input
-                    type="number"
-                    name="passing_attempts"
-                    id="passing_attempts"
-                    v-model="home_stat.passing_attempts"
-                  />
-                </div>
-                <div>
-                  <label for="passing_completions">Passing Completions</label>
-                  <input
-                    type="number"
-                    name="passing_completions"
-                    id="passing_completions"
-                    v-model="home_stat.passing_completions"
-                  />
-                </div>
-                <div class="divider"></div>
-                <div>
-                  <label for="turnovers">Turnovers</label>
-                  <input
-                    type="number"
-                    name="turnovers"
-                    id="turnovers"
-                    v-model="home_stat.turnovers"
-                  />
-                </div>
-                <div>
-                  <label for="penalty_yards">Penalty Yards</label>
-                  <input
-                    type="number"
-                    name="penalty_yards"
-                    id="penalty_yards"
-                    v-model="home_stat.penalty_yards"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <h3 class="text-2xl">{{ game.away_team.name }}</h3>
                 <div>
                   <label for="final">Final</label>
                   <input type="number" name="final" id="final" v-model="away_stat.final" />
@@ -225,6 +134,103 @@ import SpinnerComponent from '@/components/Spinner.vue'
                     name="penalty_yards"
                     id="penalty_yards"
                     v-model="away_stat.penalty_yards"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center space-x-3">
+                  <img :src="`../../../teamLogos/${game.home_team.logo}`" class="w-10" />
+                  <h3 class="text-2xl">{{ game.home_team.name }}</h3>
+                </div>
+                <div>
+                  <label for="final">Final</label>
+                  <input type="number" name="final" id="final" v-model="home_stat.final" />
+                </div>
+                <div>
+                  <label for="q1">1st Quarter</label>
+                  <input type="number" name="q1" id="q1" v-model="home_stat.q1" />
+                </div>
+                <div>
+                  <label for="q2">2nd Quarter</label>
+                  <input type="number" name="q2" id="q2" v-model="home_stat.q2" />
+                </div>
+                <div>
+                  <label for="q3">3rd Quarter</label>
+                  <input type="number" name="q3" id="q3" v-model="home_stat.q3" />
+                </div>
+                <div>
+                  <label for="q4">4th Quarter</label>
+                  <input type="number" name="q4" id="q4" v-model="home_stat.q4" />
+                </div>
+                <div>
+                  <label for="ot">Overtime</label>
+                  <input type="number" name="ot" id="ot" v-model="home_stat.ot" />
+                </div>
+                <div class="divider"></div>
+                <div>
+                  <label for="rushing_yards">Rushing Yards</label>
+                  <input
+                    type="number"
+                    name="rushing_yards"
+                    id="rushing_yards"
+                    v-model="home_stat.rushing_yards"
+                  />
+                </div>
+                <div>
+                  <label for="rushing_attempts">Rushing Attempts</label>
+                  <input
+                    type="number"
+                    name="rushing_attempts"
+                    id="rushing_attempts"
+                    v-model="home_stat.rushing_attempts"
+                  />
+                </div>
+                <div class="divider"></div>
+                <div>
+                  <label for="passing_yards">Passing Yards</label>
+                  <input
+                    type="number"
+                    name="passing_yards"
+                    id="passing_yards"
+                    v-model="home_stat.passing_yards"
+                  />
+                </div>
+                <div>
+                  <label for="passing_attempts">Passsing Attempts</label>
+                  <input
+                    type="number"
+                    name="passing_attempts"
+                    id="passing_attempts"
+                    v-model="home_stat.passing_attempts"
+                  />
+                </div>
+                <div>
+                  <label for="passing_completions">Passing Completions</label>
+                  <input
+                    type="number"
+                    name="passing_completions"
+                    id="passing_completions"
+                    v-model="home_stat.passing_completions"
+                  />
+                </div>
+                <div class="divider"></div>
+                <div>
+                  <label for="turnovers">Turnovers</label>
+                  <input
+                    type="number"
+                    name="turnovers"
+                    id="turnovers"
+                    v-model="home_stat.turnovers"
+                  />
+                </div>
+                <div>
+                  <label for="penalty_yards">Penalty Yards</label>
+                  <input
+                    type="number"
+                    name="penalty_yards"
+                    id="penalty_yards"
+                    v-model="home_stat.penalty_yards"
                   />
                 </div>
               </div>
