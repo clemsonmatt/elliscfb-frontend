@@ -175,7 +175,7 @@ export default {
       })
       var currentTime = this.now.toLocaleString('en-us', { timeZone: 'America/New_York' })
 
-      return gameTime > currentTime
+      return new Date(gameTime) > new Date(currentTime)
     }
   }
 }
