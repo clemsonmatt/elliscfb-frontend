@@ -11,7 +11,7 @@ const props = defineProps<{
   <tr>
     <td>
       <div class="flex items-center space-x-3">
-        <img :src="`../teamLogos/${props.game.away_team.logo}`" class="w-10" />
+        <img :src="`../../teamLogos/${props.game.away_team.logo}`" class="w-10" />
         <router-link
           v-bind:to="{ name: 'cfb_team', params: { slug: props.game.away_team.slug.toString() } }"
         >
@@ -21,7 +21,7 @@ const props = defineProps<{
     </td>
     <td>
       <div class="flex items-center space-x-3">
-        <img :src="`../teamLogos/${props.game.home_team.logo}`" class="w-10" />
+        <img :src="`../../teamLogos/${props.game.home_team.logo}`" class="w-10" />
         <router-link
           v-bind:to="{ name: 'cfb_team', params: { slug: props.game.home_team.slug.toString() } }"
         >

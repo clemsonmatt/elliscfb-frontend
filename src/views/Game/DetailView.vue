@@ -66,7 +66,11 @@ import type Game from '@/types/Game'
         <div class="card">
           <h2 class="card-title">Details</h2>
           <div class="text-center card-body">
-            <h4 class="pb-2 text-lg italic border-b border-base-100">{{ game.location }}</h4>
+            <div class="text-lg">
+              <span class="italic">{{ game.location }}</span>
+              <br />
+              {{ game.home_team.city }}, {{ game.home_team.state }}
+            </div>
             <h4 class="text-lg">
               {{
                 new Date(game.date).toLocaleDateString('en-us', {
@@ -79,21 +83,15 @@ import type Game from '@/types/Game'
             </h4>
             <h4 class="pb-2 text-lg">
               {{ game.time }}
-              <div class="ml-2 badge badge-primary">{{ game.network ?? 'TBD' }}</div>
+              <div class="ml-2 badge badge-default badge-outline" v-if="game.network">
+                {{ game.network }}
+              </div>
             </h4>
           </div>
         </div>
         <div class="md:col-span-2 md:row-span-2">
-          <div class="mb-6 card card-compact" v-if="game.winning_team">
-            <h2 class="card-title">
-              Game Statistics
-              <router-link
-                :to="{ name: 'cfb_settings_game_stat', params: { id: game.id.toString() } }"
-                class="btn btn-sm"
-              >
-                Edit Stats
-              </router-link>
-            </h2>
+          <div class="mb-6 card card-compact">
+            <h2 class="card-title">Game Statistics</h2>
             <div class="card-body">
               <table class="table table-compact">
                 <thead>
@@ -103,7 +101,7 @@ import type Game from '@/types/Game'
                     <th class="text-center">{{ game.away_team.name_short }}</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody v-if="game.winning_team">
                   <tr>
                     <th colspan="3" class="bg-base-300">Points</th>
                   </tr>
@@ -129,7 +127,7 @@ import type Game from '@/types/Game'
                   </tr>
                   <tr>
                     <th>4th Quarter</th>
-                    <td class="text-center">{{ game.home_team_stats.penalty_yards }}</td>
+                    <td class="text-center">{{ game.home_team_stats.q4 }}</td>
                     <td class="text-center">{{ game.away_team_stats.q4 }}</td>
                   </tr>
                   <tr>
@@ -138,8 +136,13 @@ import type Game from '@/types/Game'
                     <td class="text-center">{{ game.away_team_stats.ot || '-' }}</td>
                   </tr>
                 </tbody>
+                <tbody v-else>
+                  <tr>
+                    <td colspan="3">None</td>
+                  </tr>
+                </tbody>
               </table>
-              <table class="table mt-6 table-compact">
+              <table class="table mt-6 table-compact" v-if="false">
                 <thead>
                   <tr>
                     <th>Stat</th>
@@ -187,12 +190,12 @@ import type Game from '@/types/Game'
               </table>
             </div>
           </div>
-          <div class="card">
+          <div class="card" v-if="false">
             <div class="card-body">
               <h2 class="text-xl font-semibold uppercase">Team Comparison</h2>
             </div>
           </div>
-          <div class="grid gap-4 mt-3 md:grid-cols-3">
+          <div class="grid gap-4 mt-3 md:grid-cols-3" v-if="false">
             <div class="card">
               <div class="card-body" v-if="!loading">
                 <h5 class="font-bold">Scoring Margin</h5>
