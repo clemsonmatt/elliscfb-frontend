@@ -18,7 +18,31 @@ const currentRouteName = route.name
           <div class="card">
             <div class="card-title">Stats</div>
             <div class="card-body">
-              <div>Coming soon...</div>
+              <div class="text-center">
+                <h6 class="text-sm uppercase">Win Percentage</h6>
+                <h1 class="text-6xl">{{ stats.percentage }}%</h1>
+                <div class="divider"></div>
+                <div class="grid grid-cols-3 gap-4">
+                  <div>
+                    <h6 class="uppercase">Wins</h6>
+                    <div class="badge badge-lg badge-default badge-outline">
+                      {{ stats.wins }}
+                    </div>
+                  </div>
+                  <div>
+                    <h6 class="uppercase">Losses</h6>
+                    <div class="badge badge-lg badge-default badge-outline">
+                      {{ stats.losses }}
+                    </div>
+                  </div>
+                  <div>
+                    <h6 class="uppercase">Misses</h6>
+                    <div class="badge badge-lg badge-default badge-outline">
+                      {{ stats.misses }}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="mt-6 card">
@@ -61,11 +85,19 @@ import axios from 'axios'
 
 export default {
   data() {
+    let stats = {
+      percentage: 0.0 as Number,
+      wins: 0 as Number,
+      losses: 0 as Number,
+      misses: 0 as Number
+    }
+
     return {
       loading: true,
       week: '' as String,
       weeks: [] as Week[],
-      error: '' as String
+      error: '' as String,
+      stats: stats
     }
   },
   async created() {
@@ -76,6 +108,7 @@ export default {
     }
 
     this.getWeeks(week)
+    this.getStats()
   },
   methods: {
     async getWeeks(week: string) {
@@ -109,6 +142,17 @@ export default {
           week: number
         }
       })
+    },
+    async getStats() {
+      await axios
+        .get('/pickem/stats')
+        .then((response) => {
+          this.stats = response.data
+        })
+        .catch((error) => {
+          console.log(error.response.data.error)
+          this.error = error.response.data.error
+        })
     }
   }
 }
