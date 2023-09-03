@@ -49,7 +49,12 @@ const props = defineProps<{
           <div class="items-center text-center card-body">
             <img :src="`../teamLogos/${props.game.home_team.logo}`" class="w-24" />
             <div class="hidden md:block">
-              <span v-if="props.game.home_team.slug == props.game.predicted_winning_team.slug">
+              <span
+                v-if="
+                  props.game.predicted_winning_team &&
+                  props.game.home_team.slug == props.game.predicted_winning_team.slug
+                "
+              >
                 {{ props.game.home_team.name_short }} (-{{ props.game.spread }})
               </span>
               <span v-else>{{ props.game.home_team.name_short }}</span>
@@ -126,7 +131,12 @@ const props = defineProps<{
           <div class="items-center text-center card-body">
             <img :src="`../teamLogos/${props.game.away_team.logo}`" class="w-24" />
             <div class="hidden md:block">
-              <span v-if="props.game.away_team.slug == props.game.predicted_winning_team.slug">
+              <span
+                v-if="
+                  props.game.predicted_winning_team &&
+                  props.game.away_team.slug == props.game.predicted_winning_team.slug
+                "
+              >
                 {{ props.game.away_team.name_short }} (-{{ props.game.spread }})
               </span>
               <span v-else>{{ props.game.away_team.name_short }}</span>
