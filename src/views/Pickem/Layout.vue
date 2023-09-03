@@ -18,13 +18,66 @@ const currentRouteName = route.name
           <div class="card">
             <div class="card-title">Stats</div>
             <div class="card-body">
-              <div>Coming soon...</div>
+              <div class="text-center">
+                <h6 class="text-sm uppercase">Win Percentage</h6>
+                <h1 class="text-6xl">{{ stats.percentage }}%</h1>
+                <div class="divider"></div>
+                <div class="grid grid-cols-3 gap-4">
+                  <div>
+                    <h6 class="uppercase">Wins</h6>
+                    <div class="badge badge-lg badge-default badge-outline">
+                      {{ stats.wins }}
+                    </div>
+                  </div>
+                  <div>
+                    <h6 class="uppercase">Losses</h6>
+                    <div class="badge badge-lg badge-default badge-outline">
+                      {{ stats.losses }}
+                    </div>
+                  </div>
+                  <div>
+                    <h6 class="uppercase">Missed</h6>
+                    <div class="badge badge-lg badge-default badge-outline">
+                      {{ stats.misses }}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="mt-6 card">
             <div class="card-title">Leaderboard</div>
             <div class="card-body">
-              <div>Coming soon...</div>
+              <div>
+                <div class="overflow-x-auto">
+                  <table class="table w-full table-zebra">
+                    <thead>
+                      <tr>
+                        <th>Rank</th>
+                        <th>User</th>
+                        <th>
+                          <div class="tooltip tooltip-bottom" data-tip="Wins / Losses / Missed">
+                            W / L / M
+                          </div>
+                        </th>
+                        <th>Win%</th>
+                        <th>Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="user_stat in leaderboard">
+                        <th>{{ user_stat.rank }}</th>
+                        <td>{{ user_stat.username }}</td>
+                        <td>
+                          {{ user_stat.wins }} / {{ user_stat.losses }} / {{ user_stat.misses }}
+                        </td>
+                        <td>{{ user_stat.percentage }}%</td>
+                        <td>{{ user_stat.score }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -56,7 +109,8 @@ const currentRouteName = route.name
 </template>
 
 <script lang="ts">
-import type Week from '../../types/Week'
+import type UserStat from '@/types/UserStat'
+import type Week from '@/types/Week'
 import axios from 'axios'
 
 export default {
@@ -65,7 +119,9 @@ export default {
       loading: true,
       week: '' as String,
       weeks: [] as Week[],
-      error: '' as String
+      error: '' as String,
+      stats: {} as UserStat,
+      leaderboard: [] as UserStat[]
     }
   },
   async created() {
@@ -76,6 +132,8 @@ export default {
     }
 
     this.getWeeks(week)
+    this.getStats()
+    this.getLeaderboard()
   },
   methods: {
     async getWeeks(week: string) {
@@ -109,6 +167,28 @@ export default {
           week: number
         }
       })
+    },
+    async getStats() {
+      await axios
+        .get('/pickem/stats')
+        .then((response) => {
+          this.stats = response.data
+        })
+        .catch((error) => {
+          console.log(error.response.data.error)
+          this.error = error.response.data.error
+        })
+    },
+    async getLeaderboard() {
+      await axios
+        .get('/pickem/leaderboard')
+        .then((response) => {
+          this.leaderboard = response.data
+        })
+        .catch((error) => {
+          console.log(error.response.data.error)
+          this.error = error.response.data.error
+        })
     }
   }
 }
