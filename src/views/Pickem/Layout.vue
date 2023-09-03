@@ -49,34 +49,31 @@ const currentRouteName = route.name
             <div class="card-title">Leaderboard</div>
             <div class="card-body">
               <div>
-                <div class="overflow-x-auto">
-                  <table class="table w-full table-zebra">
-                    <thead>
-                      <tr>
-                        <th>Rank</th>
-                        <th>User</th>
-                        <th>
-                          <div class="tooltip tooltip-bottom" data-tip="Wins / Losses / Missed">
-                            W / L / M
-                          </div>
-                        </th>
-                        <th>Win%</th>
-                        <th>Score</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="user_stat in leaderboard">
-                        <th>{{ user_stat.rank }}</th>
-                        <td>{{ user_stat.username }}</td>
-                        <td>
-                          {{ user_stat.wins }} / {{ user_stat.losses }} / {{ user_stat.misses }}
-                        </td>
-                        <td>{{ user_stat.percentage }}%</td>
-                        <td>{{ user_stat.score }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <table class="table w-full table-compact table-zebra">
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>User</th>
+                      <th class="text-center">Win%</th>
+                      <th class="text-center">Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="user_stat in leaderboard">
+                      <th>{{ user_stat.rank }}</th>
+                      <td>{{ user_stat.username }}</td>
+                      <td class="text-center">{{ user_stat.percentage }}%</td>
+                      <td class="text-center">
+                        <div
+                          class="tooltip tooltip-left"
+                          :data-tip="`Win: ${user_stat.wins}, Loss: ${user_stat.losses}, Miss: ${user_stat.misses}`"
+                        >
+                          {{ user_stat.score }}
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -170,7 +167,7 @@ export default {
     },
     async getStats() {
       await axios
-        .get('/pickem/stats')
+        .get('/pickem/stats.json')
         .then((response) => {
           this.stats = response.data
         })
@@ -181,7 +178,7 @@ export default {
     },
     async getLeaderboard() {
       await axios
-        .get('/pickem/leaderboard')
+        .get('/pickem/leaderboard.json')
         .then((response) => {
           this.leaderboard = response.data
         })
