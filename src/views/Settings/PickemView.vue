@@ -15,12 +15,12 @@ import WeekDropdown from '@/components/WeekDropdown.vue'
 
       <div class="card card-simple">
         <div class="card-title">
-          <div>Week 1 Games</div>
+          <div>Week {{ week }} Games ({{ games.length }})</div>
           <button class="btn btn-sm">Send reminder email</button>
           <WeekDropdown :week="week" :weeks="weeks" />
         </div>
         <div class="card-body">
-          <SettingsGame :games="games" type="pickem" :loading="loading" />
+          <SettingsGame :games="games" type="pickem" :loading="loading" @game-picked="gamePicked" />
         </div>
       </div>
     </template>
@@ -98,6 +98,23 @@ export default {
           week: number
         }
       })
+    },
+    async gamePicked(game: Game) {
+      this.loading = true
+
+      await axios
+        .post(`/games/${game.id}/toggle-pickem.json`, {
+          pickem: !game.pickem
+        })
+        .then((response) => {
+          this.getGames(this.week.toString())
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+        .then(() => {
+          this.loading = false
+        })
     }
   }
 }

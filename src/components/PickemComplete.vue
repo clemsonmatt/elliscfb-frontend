@@ -46,7 +46,8 @@ const props = defineProps<{
                   props.game.home_team.slug == props.game.predicted_winning_team.slug
                 "
               >
-                {{ props.game.home_team.name_short }} (-{{ props.game.spread }})
+                {{ props.game.home_team.name_short }}
+                <span class="mx-1 badge badge-accent badge-outline">-{{ props.game.spread }}</span>
               </span>
               <span v-else>{{ props.game.home_team.name_short }}</span>
             </div>
@@ -146,7 +147,8 @@ const props = defineProps<{
                   props.game.away_team.slug == props.game.predicted_winning_team.slug
                 "
               >
-                {{ props.game.away_team.name_short }} (-{{ props.game.spread }})
+                {{ props.game.away_team.name_short }}
+                <span class="mx-1 badge badge-accent badge-outline">-{{ props.game.spread }}</span>
               </span>
               <span v-else>{{ props.game.away_team.name_short }}</span>
             </div>

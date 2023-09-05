@@ -15,7 +15,7 @@ import Spinner from '@/components/Spinner.vue'
 
         <div class="card card-simple">
           <div class="card-title">
-            <div>Week {{ week }} Stats</div>
+            <div>Week {{ week }} Stats ({{ games.length }})</div>
             <button @click="updateGameStats()" class="btn btn-sm">Import game stats</button>
             <div>
               <div class="dropdown dropdown-end">

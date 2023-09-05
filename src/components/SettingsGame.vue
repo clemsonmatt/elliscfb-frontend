@@ -12,6 +12,7 @@ const props = defineProps<{
 <template>
   <table class="table table-compact table-zebra" v-if="!loading">
     <thead>
+      <th>Pick'em</th>
       <th>Away Team</th>
       <th>Home Team</th>
       <th>Result</th>
@@ -23,6 +24,38 @@ const props = defineProps<{
     <tbody v-for="game in props.games">
       <tr>
         <td>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 mx-auto text-white rounded-full bg-primary"
+            v-if="game.pickem"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 mx-auto rounded-full text-base-100 bg-base-300"
+            v-else
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </td>
+        <td>
           <div class="flex items-center space-x-3">
             <img :src="`../../teamLogos/${game.away_team.logo}`" class="w-10" />
             <router-link
@@ -31,7 +64,16 @@ const props = defineProps<{
                 params: { slug: game.away_team.slug.toString() }
               }"
             >
-              {{ game.away_team.name }}
+              <span
+                v-if="
+                  game.predicted_winning_team &&
+                  game.away_team.slug == game.predicted_winning_team.slug
+                "
+              >
+                {{ game.away_team.name_short }}
+                <span class="badge badge-accent badge-outline">-{{ game.spread }}</span>
+              </span>
+              <span v-else>{{ game.away_team.name_short }}</span>
             </router-link>
           </div>
         </td>
@@ -44,7 +86,16 @@ const props = defineProps<{
                 params: { slug: game.home_team.slug.toString() }
               }"
             >
-              {{ game.home_team.name }}
+              <span
+                v-if="
+                  game.predicted_winning_team &&
+                  game.home_team.slug == game.predicted_winning_team.slug
+                "
+              >
+                {{ game.home_team.name_short }}
+                <span class="badge badge-accent badge-outline">-{{ game.spread }}</span>
+              </span>
+              <span v-else>{{ game.home_team.name_short }}</span>
             </router-link>
           </div>
         </td>
@@ -93,7 +144,7 @@ const props = defineProps<{
     </tbody>
     <tbody v-if="games.length == 0">
       <tr>
-        <td colspan="7">None</td>
+        <td colspan="8">None</td>
       </tr>
     </tbody>
   </table>
