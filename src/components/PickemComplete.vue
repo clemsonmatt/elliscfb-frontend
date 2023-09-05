@@ -90,7 +90,7 @@ const props = defineProps<{
               stroke-width="1.5"
               stroke="currentColor"
               class="w-10 h-10 mt-2 rounded-full text-base-100 bg-base-300"
-              v-if="!props.homeTeamPicked"
+              v-if="!props.homeTeamPicked && props.awayTeamPicked"
             >
               <path
                 stroke-linecap="round"
@@ -190,7 +190,7 @@ const props = defineProps<{
               stroke-width="1.5"
               stroke="currentColor"
               class="w-10 h-10 mt-2 rounded-full text-base-100 bg-base-300"
-              v-if="!props.awayTeamPicked"
+              v-if="!props.awayTeamPicked && props.homeTeamPicked"
             >
               <path
                 stroke-linecap="round"
