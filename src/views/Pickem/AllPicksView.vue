@@ -142,6 +142,8 @@ export default {
         })
     },
     async setWeek(number: string) {
+      this.gamesLoading = true
+
       // update data
       this.week = number
       this.getWeeks(number)
