@@ -79,22 +79,6 @@ const currentRouteName = route.name
           </div>
         </div>
         <div class="row-span-2 lg:col-span-2">
-          <div class="grid grid-cols-2 justify-items-stretch tabs tabs-boxed">
-            <router-link
-              :to="{ name: 'cfb_pickem', params: { week: week.toString() } }"
-              :class="{ 'tab-active': currentRouteName == 'cfb_pickem' }"
-              class="tab tab-lg"
-            >
-              My Picks
-            </router-link>
-            <router-link
-              :to="{ name: 'cfb_pickem_all_picks', params: { week: week.toString() } }"
-              :class="{ 'tab-active': currentRouteName == 'cfb_pickem_all_picks' }"
-              class="tab tab-lg"
-            >
-              All Picks
-            </router-link>
-          </div>
           <slot name="pickem-content"></slot>
         </div>
       </div>

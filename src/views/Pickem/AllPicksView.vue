@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import PickemLayout from './Layout.vue'
+import PickemNavbar from '@/components/PickemNavbar.vue'
 import SpinnerComponent from '@/components/Spinner.vue'
 import WeekDropdownComponent from '@/components/WeekDropdown.vue'
 </script>
@@ -11,6 +12,8 @@ import WeekDropdownComponent from '@/components/WeekDropdown.vue'
     </template>
     <template #pickem-content>
       <div v-if="!gamesLoading">
+        <PickemNavbar :week="week" />
+
         <div class="hidden grid-cols-10 gap-1 my-6 md:grid justify-items-stretch">
           <div class="card" v-for="game in games">
             <div class="card-body">

@@ -4,6 +4,7 @@ import PickemLayout from './Layout.vue'
 import PickemComponent from '@/components/Pickem.vue'
 import PickemLockedComponent from '@/components/PickemLocked.vue'
 import PickemCompleteComponent from '@/components/PickemComplete.vue'
+import PickemNavbar from '@/components/PickemNavbar.vue'
 import SpinnerComponent from '@/components/Spinner.vue'
 import WeekDropdownComponent from '@/components/WeekDropdown.vue'
 </script>
@@ -15,9 +16,12 @@ import WeekDropdownComponent from '@/components/WeekDropdown.vue'
     </template>
     <template #pickem-content>
       <div v-if="!loading">
+        <PickemNavbar :week="week" />
+
         <div v-if="error != ''" class="mb-4">
           <AlertComponent color="error" :message="`${error}`" />
         </div>
+
         <h3 class="mt-4 text-3xl text-center" v-if="show_time">
           {{ new Date(now).toLocaleString() }}
         </h3>
