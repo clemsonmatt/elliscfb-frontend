@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import BaseLayout from '../BaseLayout.vue'
+import SettingsGame from '@/components/SettingsGame.vue'
 import SettingsNavbar from '@/components/SettingsNavbar.vue'
-import SpinnerComponent from '@/components/Spinner.vue'
+import Spinner from '@/components/Spinner.vue'
 </script>
 
 <template>
@@ -14,7 +15,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
 
         <div class="card card-simple">
           <div class="card-title">
-            <div>Week {{ week }} Stats</div>
+            <div>Week {{ week }} Stats ({{ games.length }})</div>
             <button @click="updateGameStats()" class="btn btn-sm">Import game stats</button>
             <div>
               <div class="dropdown dropdown-end">
@@ -37,73 +38,12 @@ import SpinnerComponent from '@/components/Spinner.vue'
             </div>
           </div>
           <div class="card-body">
-            <table class="table table-compact table-zebra">
-              <thead>
-                <th>Away Team</th>
-                <th>Home Team</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th></th>
-              </thead>
-              <tbody v-for="game in games">
-                <tr>
-                  <td>
-                    <div class="flex items-center space-x-3">
-                      <img :src="`../../teamLogos/${game.away_team.logo}`" class="w-10" />
-                      <router-link
-                        v-bind:to="{
-                          name: 'cfb_team',
-                          params: { slug: game.away_team.slug.toString() }
-                        }"
-                      >
-                        {{ game.away_team.name_short }}
-                      </router-link>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="flex items-center space-x-3">
-                      <img :src="`../../teamLogos/${game.home_team.logo}`" class="w-10" />
-                      <router-link
-                        v-bind:to="{
-                          name: 'cfb_team',
-                          params: { slug: game.home_team.slug.toString() }
-                        }"
-                      >
-                        {{ game.home_team.name_short }}
-                      </router-link>
-                    </div>
-                  </td>
-                  <td>{{ game.date }}</td>
-                  <td>{{ game.time }}</td>
-                  <td>
-                    <router-link
-                      class="btn btn-xs"
-                      :to="{ name: 'cfb_game', params: { id: game.id.toString() } }"
-                    >
-                      Details
-                    </router-link>
-                  </td>
-                  <td>
-                    <router-link
-                      class="btn btn-xs btn-primary"
-                      :to="{ name: 'cfb_settings_game_stat', params: { id: game.id.toString() } }"
-                    >
-                      Add Stats
-                    </router-link>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody v-if="games.length == 0">
-                <tr>
-                  <td colspan="6">None</td>
-                </tr>
-              </tbody>
-            </table>
+            <SettingsGame :games="games" type="stats" :loading="loading" />
           </div>
         </div>
       </div>
       <div v-else>
-        <SpinnerComponent />
+        <Spinner />
       </div>
     </template>
   </BaseLayout>
