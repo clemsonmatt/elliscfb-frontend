@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import PickemLayout from './Layout.vue'
 import SpinnerComponent from '@/components/Spinner.vue'
+import WeekDropdownComponent from '@/components/WeekDropdown.vue'
 </script>
 
 <template>
   <PickemLayout>
+    <template #pickem-header>
+      <WeekDropdownComponent :week="week" :weeks="weeks" @set-week="setWeek" v-if="!gamesLoading" />
+    </template>
     <template #pickem-content>
       <div v-if="!gamesLoading">
-        <div class="grid hidden grid-cols-10 gap-1 my-6 md:inline-flex justify-items-stretch">
+        <div class="hidden grid-cols-10 gap-1 my-6 md:grid justify-items-stretch">
           <div class="card" v-for="game in games">
             <div class="card-body">
               <img :src="`../teamLogos/${game.away_team.logo}`" class="w-full" />
@@ -86,7 +90,7 @@ export default {
     async getWeeks(week: string) {
       // get weeks data
       await axios
-        .get(`/weeks/full-season.json`)
+        .get(`/weeks/pickem-available.json`)
         .then((response) => {
           this.weeks = response.data.weeks
 
@@ -135,7 +139,7 @@ export default {
 
       // update url
       this.$router.push({
-        name: 'cfb_pickem',
+        name: 'cfb_pickem_all_picks',
         params: {
           week: number
         }

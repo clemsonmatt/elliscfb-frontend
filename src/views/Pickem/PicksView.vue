@@ -5,10 +5,14 @@ import PickemComponent from '@/components/Pickem.vue'
 import PickemLockedComponent from '@/components/PickemLocked.vue'
 import PickemCompleteComponent from '@/components/PickemComplete.vue'
 import SpinnerComponent from '@/components/Spinner.vue'
+import WeekDropdownComponent from '@/components/WeekDropdown.vue'
 </script>
 
 <template>
   <PickemLayout>
+    <template #pickem-header>
+      <WeekDropdownComponent :week="week" :weeks="weeks" @set-week="setWeek" v-if="!loading" />
+    </template>
     <template #pickem-content>
       <div v-if="!loading">
         <div v-if="error != ''" class="mb-4">
@@ -85,7 +89,7 @@ export default {
     async getWeeks(week: string) {
       // get weeks data
       await axios
-        .get(`/weeks/full-season.json`)
+        .get(`/weeks/pickem-available.json`)
         .then((response) => {
           this.weeks = response.data.weeks
 
@@ -108,7 +112,6 @@ export default {
         .get(`/pickem/${week}/week-games.json`)
         .then((response) => {
           this.games = response.data
-          console.log(this.games)
         })
         .catch((error) => {
           console.log(error)
