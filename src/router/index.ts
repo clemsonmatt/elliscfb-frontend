@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/auth.store'
 import Login from '@/views/LoginView.vue'
 import CreateAccount from '@/views/CreateAccountView.vue'
 import Profile from '@/views/ProfileView.vue'
+import ProfileEdit from '@/views/ProfileEditView.vue'
 import Pickem from '@/views/Pickem/PicksView.vue'
 import PickemAllPicks from '@/views/Pickem/AllPicksView.vue'
 import SettingsPickem from '@/views/Settings/PickemView.vue'
@@ -123,6 +124,11 @@ const router = createRouter({
       path: '/profile',
       name: 'cfb_profile',
       component: Profile
+    },
+    {
+      path: '/profile/edit',
+      name: 'cfb_profile_edit',
+      component: ProfileEdit
     }
   ]
 })

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import router from '@/router'
 import axios from 'axios'
+import type User from '@/types/User'
 
 const currentUser = localStorage.getItem('user')
 const userRoles = localStorage.getItem('roles')
@@ -47,6 +48,10 @@ export const useAuthStore = defineStore({
       localStorage.removeItem('token')
       localStorage.removeItem('roles')
       router.push('/login')
+    },
+
+    profileUpdated(user: User) {
+      this.user = user
     }
   }
 })
