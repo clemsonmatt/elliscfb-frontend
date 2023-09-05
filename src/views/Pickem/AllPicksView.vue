@@ -54,6 +54,12 @@ import WeekDropdownComponent from '@/components/WeekDropdown.vue'
         <div v-else>
           <SpinnerComponent />
         </div>
+
+        <div v-if="games.length == 0">
+          <div class="mt-6 card">
+            <div class="card-body">Pick'em not yet available for week {{ week }}</div>
+          </div>
+        </div>
       </div>
       <div v-else>
         <SpinnerComponent />
