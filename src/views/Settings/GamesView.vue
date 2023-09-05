@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import BaseLayout from '../BaseLayout.vue'
 import SettingsNavbar from '@/components/SettingsNavbar.vue'
-import GameComponent from '@/components/SettingsGame.vue'
-import SpinnerComponent from '@/components/Spinner.vue'
+import SettingsGame from '@/components/SettingsGame.vue'
 </script>
 
 <template>
@@ -44,28 +43,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
           </div>
         </div>
         <div class="card-body">
-          <table class="table table-compact table-zebra" v-if="!loading">
-            <thead>
-              <th>Away Team</th>
-              <th>Home Team</th>
-              <th>Result</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Location</th>
-              <th></th>
-            </thead>
-            <tbody v-for="game in games">
-              <GameComponent :game="game" :isManage="true" />
-            </tbody>
-            <tbody v-if="games.length == 0">
-              <tr>
-                <td colspan="6">None</td>
-              </tr>
-            </tbody>
-          </table>
-          <div v-else>
-            <SpinnerComponent />
-          </div>
+          <SettingsGame :games="games" type="manage" :loading="loading" />
         </div>
       </div>
     </template>

@@ -81,7 +81,7 @@ const router = createRouter({
       component: Rankings
     },
     {
-      path: '/settings/pickem',
+      path: '/settings/pickem/:week?',
       name: 'cfb_settings_pickem',
       component: SettingsPickem,
       meta: { manageRole: true }

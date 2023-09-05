@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import BaseLayout from '../BaseLayout.vue'
+import SettingsGame from '@/components/SettingsGame.vue'
 import SettingsNavbar from '@/components/SettingsNavbar.vue'
+import Spinner from '@/components/Spinner.vue'
+import WeekDropdown from '@/components/WeekDropdown.vue'
 </script>
 
 <template>
@@ -13,15 +16,89 @@ import SettingsNavbar from '@/components/SettingsNavbar.vue'
       <div class="card card-simple">
         <div class="card-title">
           <div>Week 1 Games</div>
-          <div class="btn-group">
-            <button class="btn btn-sm">Send reminder email</button>
-            <button class="btn btn-sm btn-primary">Week 1</button>
-          </div>
+          <button class="btn btn-sm">Send reminder email</button>
+          <WeekDropdown :week="week" :weeks="weeks" />
         </div>
         <div class="card-body">
-          <div>TODO</div>
+          <SettingsGame :games="games" type="pickem" :loading="loading" />
         </div>
       </div>
     </template>
   </BaseLayout>
 </template>
+
+<script lang="ts">
+import type Game from '@/types/Game'
+import type Week from '@/types/Week'
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      loading: true,
+      games: [] as Game[],
+      week: '' as String,
+      weeks: [] as Week[],
+      pickem_games: [] as Game[]
+    }
+  },
+  async created() {
+    let week = this.$route.params.week?.toString()
+
+    if (week != '' && week != undefined) {
+      this.week = week
+    }
+
+    this.getWeeks(week)
+  },
+  methods: {
+    async getWeeks(week: string) {
+      // get weeks data
+      await axios
+        .get(`/weeks/full-season.json`)
+        .then((response) => {
+          this.weeks = response.data.weeks
+
+          if (week == '' || week == undefined) {
+            week = response.data.current_week.number
+            this.week = week
+          }
+
+          this.getGames(week)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    async getGames(week: string) {
+      // get game data
+      await axios
+        .get(`/games/${week}/week.json`)
+        .then((response) => {
+          this.games = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+        .then(() => {
+          this.loading = false
+        })
+    },
+    async setWeek(number: string) {
+      this.loading = true
+
+      // update data
+      this.week = number
+      this.getWeeks(number)
+
+      // update url
+      this.$router.push({
+        name: 'cfb_settings_pickem',
+        params: {
+          week: number
+        }
+      })
+    }
+  }
+}
+</script>
