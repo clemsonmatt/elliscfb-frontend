@@ -8,7 +8,7 @@ const authStore = useAuthStore()
 
 <template>
   <div class="bg-base-200">
-    <div class="pb-0 navbar">
+    <div class="pb-0 md:pb-2 navbar">
       <div class="flex-none">
         <div class="dropdown lg:hidden">
           <label tabindex="0" class="btn btn-square btn-ghost">

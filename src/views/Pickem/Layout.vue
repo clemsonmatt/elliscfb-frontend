@@ -10,7 +10,7 @@ const currentRouteName = route.name
   <BaseLayout>
     <template #header>Pickem</template>
     <template #header-action>
-      <a href="#" class="btn btn-primary btn-sm">Week 1</a>
+      <slot name="pickem-header"></slot>
     </template>
     <template #default>
       <div class="grid gap-4 lg:grid-cols-3" v-if="!loading">
@@ -79,22 +79,6 @@ const currentRouteName = route.name
           </div>
         </div>
         <div class="row-span-2 lg:col-span-2">
-          <div class="grid grid-cols-2 justify-items-stretch tabs tabs-boxed">
-            <router-link
-              :to="{ name: 'cfb_pickem' }"
-              :class="{ 'tab-active': currentRouteName == 'cfb_pickem' }"
-              class="tab tab-lg"
-            >
-              My Picks
-            </router-link>
-            <router-link
-              :to="{ name: 'cfb_pickem_all_picks', params: { week: week.toString() } }"
-              :class="{ 'tab-active': currentRouteName == 'cfb_pickem_all_picks' }"
-              class="tab tab-lg"
-            >
-              All Picks
-            </router-link>
-          </div>
           <slot name="pickem-content"></slot>
         </div>
       </div>
@@ -151,19 +135,6 @@ export default {
           console.log(error)
           this.error = 'Could not retrieve week data'
         })
-    },
-    async setWeek(number: string) {
-      // update data
-      this.week = number
-      this.getWeeks(number)
-
-      // update url
-      this.$router.push({
-        name: 'cfb_pickem',
-        params: {
-          week: number
-        }
-      })
     },
     async getStats() {
       await axios
