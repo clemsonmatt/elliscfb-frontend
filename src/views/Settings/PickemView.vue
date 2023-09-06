@@ -100,20 +100,15 @@ export default {
       })
     },
     async gamePicked(game: Game) {
-      this.loading = true
-
       await axios
         .post(`/games/${game.id}/toggle-pickem.json`, {
           pickem: !game.pickem
         })
         .then((response) => {
-          this.getGames(this.week.toString())
+          game.pickem = !game.pickem
         })
         .catch((error) => {
           console.log(error)
-        })
-        .then(() => {
-          this.loading = false
         })
     }
   }
