@@ -30,7 +30,8 @@ const props = defineProps<{
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 mx-auto text-white rounded-full bg-primary"
+            class="w-6 h-6 mx-auto text-white rounded-full cursor-pointer bg-primary"
+            @click="$emit('game-picked', game)"
             v-if="game.pickem"
           >
             <path
@@ -45,7 +46,8 @@ const props = defineProps<{
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 mx-auto rounded-full text-base-100 bg-base-300"
+            class="w-6 h-6 mx-auto rounded-full cursor-pointer text-base-100 bg-base-300"
+            @click="$emit('game-picked', game)"
             v-else
           >
             <path
@@ -126,11 +128,6 @@ const props = defineProps<{
           >
             Edit
           </router-link>
-        </td>
-        <td v-if="props.type == 'pickem'">
-          <button class="btn btn-xs btn-primary" @click="$emit('game-picked', game)">
-            Pick'em
-          </button>
         </td>
         <td v-if="props.type == 'stats'">
           <router-link
