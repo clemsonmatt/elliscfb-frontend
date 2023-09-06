@@ -28,22 +28,22 @@ import WeekDropdownComponent from '@/components/WeekDropdown.vue'
         <div v-for="game in games">
           <PickemComponent
             :game="game"
-            :away-team-picked="picks.includes(game.away_team.slug)"
-            :home-team-picked="picks.includes(game.home_team.slug)"
+            :away-team-picked="isTeamPicked(game.away_team)"
+            :home-team-picked="isTeamPicked(game.home_team)"
             @home-team-picked="pickWinner(game, game.home_team)"
             @away-team-picked="pickWinner(game, game.away_team)"
             v-if="canPick(game)"
           />
           <PickemLockedComponent
             :game="game"
-            :away-team-picked="picks.includes(game.away_team.slug)"
-            :home-team-picked="picks.includes(game.home_team.slug)"
+            :away-team-picked="isTeamPicked(game.away_team)"
+            :home-team-picked="isTeamPicked(game.home_team)"
             v-if="!canPick(game) && game.winning_team == null"
           />
           <PickemCompleteComponent
             :game="game"
-            :away-team-picked="picks.includes(game.away_team.slug)"
-            :home-team-picked="picks.includes(game.home_team.slug)"
+            :away-team-picked="isTeamPicked(game.away_team)"
+            :home-team-picked="isTeamPicked(game.home_team)"
             v-if="!canPick(game) && game.winning_team != null"
           />
         </div>
@@ -128,7 +128,13 @@ export default {
       await axios
         .get(`/pickem/${week}/week-picks.json`)
         .then((response) => {
-          this.picks = response.data.picks
+          // convert array string to array
+          var picks = response.data.picks
+            .replaceAll('"', '')
+            .replace('[', '')
+            .replace(']', '')
+            .split(',')
+          this.picks = picks
           this.loading = false
         })
         .catch((error) => {
@@ -157,7 +163,13 @@ export default {
           team: team.id
         })
         .then((response) => {
-          this.picks = response.data.picks
+          // convert array string to array
+          var picks = response.data.picks
+            .replaceAll('"', '')
+            .replace('[', '')
+            .replace(']', '')
+            .split(',')
+          this.picks = picks
           this.error = ''
         })
         .catch((error) => {
@@ -175,6 +187,17 @@ export default {
           console.log(error.response.data.error)
           this.error = error.response.data.error
         })
+    },
+    isTeamPicked(team: Team): boolean {
+      var teamPicked = false
+
+      this.picks.forEach((slug) => {
+        if (slug == team.slug) {
+          teamPicked = true
+        }
+      })
+
+      return teamPicked
     },
     canPick(game: Game): boolean {
       var gameTime = new Date(game.datetime).toLocaleString('en-us', {
