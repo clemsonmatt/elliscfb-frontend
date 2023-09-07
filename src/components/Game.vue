@@ -49,8 +49,30 @@ const props = defineProps<{
               }"
             >
               <img :src="`../../teamLogos/${game.home_team.logo}`" class="w-16 sm:w-24" />
-              <span class="hidden sm:block">{{ game.home_team.name }}</span>
-              <span class="block sm:hidden">{{ game.home_team.name_short }}</span>
+              <span class="hidden sm:block">
+                {{ game.home_team.name }}
+                <span
+                  class="mx-1 badge badge-accent badge-outline"
+                  v-if="
+                    props.game.predicted_winning_team &&
+                    props.game.predicted_winning_team.id == props.game.home_team.id
+                  "
+                >
+                  -{{ props.game.spread }}
+                </span>
+              </span>
+              <span class="block sm:hidden">
+                {{ game.home_team.name_short }}
+                <span
+                  class="mx-1 badge badge-accent badge-outline"
+                  v-if="
+                    props.game.predicted_winning_team &&
+                    props.game.predicted_winning_team.id == props.game.home_team.id
+                  "
+                >
+                  -{{ props.game.spread }}
+                </span>
+              </span>
             </div>
           </router-link>
         </div>
@@ -107,8 +129,30 @@ const props = defineProps<{
               }"
             >
               <img :src="`../../teamLogos/${game.away_team.logo}`" class="w-16 sm:w-24" />
-              <span class="hidden sm:block">{{ game.away_team.name }}</span>
-              <span class="block sm:hidden">{{ game.away_team.name_short }}</span>
+              <span class="hidden sm:block">
+                {{ game.away_team.name }}
+                <span
+                  class="mx-1 badge badge-accent badge-outline"
+                  v-if="
+                    props.game.predicted_winning_team &&
+                    props.game.predicted_winning_team.id == props.game.away_team.id
+                  "
+                >
+                  -{{ props.game.spread }}
+                </span>
+              </span>
+              <span class="block sm:hidden">
+                {{ game.away_team.name_short }}
+                <span
+                  class="mx-1 badge badge-accent badge-outline"
+                  v-if="
+                    props.game.predicted_winning_team &&
+                    props.game.predicted_winning_team.id == props.game.away_team.id
+                  "
+                >
+                  -{{ props.game.spread }}
+                </span>
+              </span>
             </div>
           </router-link>
         </div>
