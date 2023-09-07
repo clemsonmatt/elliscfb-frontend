@@ -65,13 +65,13 @@ import type Game from '@/types/Game'
       <div class="grid gap-4 xl:grid-cols-3">
         <div class="card">
           <h2 class="card-title">Details</h2>
-          <div class="text-center card-body">
-            <div class="text-lg">
-              <span class="italic">{{ game.location }}</span>
-              <br />
-              {{ game.home_team.city }}, {{ game.home_team.state }}
-            </div>
-            <h4 class="text-lg">
+          <div class="card-body">
+            <h5 class="mt-2 text-lg font-bold">Location</h5>
+            <h6 class="-mt-2 italic">{{ game.location }}</h6>
+            <h6 class="-mt-2">{{ game.home_team.city }}, {{ game.home_team.state }}</h6>
+
+            <h5 class="mt-2 text-lg font-bold">Date</h5>
+            <h6 class="-mt-2 italic">
               {{
                 new Date(game.date).toLocaleDateString('en-us', {
                   weekday: 'long',
@@ -80,13 +80,23 @@ import type Game from '@/types/Game'
                   day: 'numeric'
                 })
               }}
-            </h4>
-            <h4 class="pb-2 text-lg">
-              {{ game.time }}
-              <div class="ml-2 badge badge-default badge-outline" v-if="game.network">
-                {{ game.network }}
-              </div>
-            </h4>
+            </h6>
+
+            <h5 class="mt-2 text-lg font-bold">Time</h5>
+            <h6 class="-mt-2 italic">{{ game.time }}</h6>
+
+            <div v-if="game.network">
+              <h5 class="mt-2 text-lg font-bold">Network</h5>
+              <h6 class="-mt-2 italic">{{ game.network }}</h6>
+            </div>
+
+            <div v-if="game.predicted_winning_team">
+              <div class="divider"></div>
+              <h5 class="text-lg font-bold">Spread</h5>
+              <h6 class="italic">
+                {{ game.predicted_winning_team.name_short }} -{{ game.spread }}
+              </h6>
+            </div>
           </div>
         </div>
         <div class="md:col-span-2 md:row-span-2">
