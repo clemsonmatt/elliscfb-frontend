@@ -6,25 +6,56 @@ import type Game from '@/types/Game'
 <template>
   <BaseLayout>
     <template #header>
-      <div class="flex justify-between" v-if="!loading">
-        <div>
-          <div class="flex items-center space-x-4">
-            <img :src="`../teamLogos/${game.home_team.logo}`" class="w-16" />
-            <router-link
-              :to="{ name: 'cfb_team', params: { slug: game.home_team.slug.toString() } }"
-            >
-              {{ game.home_team.name }}
-            </router-link>
+      <div v-if="!loading">
+        <div class="justify-between hidden md:flex">
+          <div>
+            <h4 class="text-lg uppercase text-base-300">Home</h4>
+            <div class="flex items-center space-x-4">
+              <img :src="`../teamLogos/${game.home_team.logo}`" class="w-16" />
+              <router-link
+                :to="{ name: 'cfb_team', params: { slug: game.home_team.slug.toString() } }"
+              >
+                {{ game.home_team.name }}
+              </router-link>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-lg text-right uppercase text-base-300">Away</h4>
+            <div class="flex items-center space-x-4">
+              <router-link
+                :to="{ name: 'cfb_team', params: { slug: game.away_team.slug.toString() } }"
+              >
+                {{ game.away_team.name }}
+              </router-link>
+              <img :src="`../teamLogos/${game.away_team.logo}`" class="w-16" />
+            </div>
           </div>
         </div>
-        <div>
-          <div class="flex items-center space-x-4">
-            <router-link
-              :to="{ name: 'cfb_team', params: { slug: game.away_team.slug.toString() } }"
-            >
-              {{ game.away_team.name }}
-            </router-link>
-            <img :src="`../teamLogos/${game.away_team.logo}`" class="w-16" />
+        <div class="block md:hidden">
+          <div>
+            <h4 class="text-lg uppercase text-base-300">Home</h4>
+            <div class="flex items-center space-x-4">
+              <img :src="`../teamLogos/${game.home_team.logo}`" class="w-10" />
+              <router-link
+                :to="{ name: 'cfb_team', params: { slug: game.home_team.slug.toString() } }"
+                class="text-2xl"
+              >
+                {{ game.home_team.name }}
+              </router-link>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div>
+            <h4 class="text-lg uppercase text-base-300">Away</h4>
+            <div class="flex items-center space-x-4">
+              <img :src="`../teamLogos/${game.away_team.logo}`" class="w-10" />
+              <router-link
+                :to="{ name: 'cfb_team', params: { slug: game.away_team.slug.toString() } }"
+                class="text-2xl"
+              >
+                {{ game.away_team.name }}
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -34,9 +65,13 @@ import type Game from '@/types/Game'
       <div class="grid gap-4 xl:grid-cols-3">
         <div class="card">
           <h2 class="card-title">Details</h2>
-          <div class="text-center card-body">
-            <h4 class="pb-2 text-lg italic border-b border-base-100">{{ game.location }}</h4>
-            <h4 class="text-lg">
+          <div class="card-body">
+            <h5 class="mt-2 text-lg font-bold">Location</h5>
+            <h6 class="-mt-2 italic">{{ game.location }}</h6>
+            <h6 class="-mt-2">{{ game.home_team.city }}, {{ game.home_team.state }}</h6>
+
+            <h5 class="mt-2 text-lg font-bold">Date</h5>
+            <h6 class="-mt-2 italic">
               {{
                 new Date(game.date).toLocaleDateString('en-us', {
                   weekday: 'long',
@@ -45,24 +80,28 @@ import type Game from '@/types/Game'
                   day: 'numeric'
                 })
               }}
-            </h4>
-            <h4 class="pb-2 text-lg">
-              {{ game.time }}
-              <div class="ml-2 badge badge-primary">{{ game.network ?? 'TBD' }}</div>
-            </h4>
+            </h6>
+
+            <h5 class="mt-2 text-lg font-bold">Time</h5>
+            <h6 class="-mt-2 italic">{{ game.time }}</h6>
+
+            <div v-if="game.network">
+              <h5 class="mt-2 text-lg font-bold">Network</h5>
+              <h6 class="-mt-2 italic">{{ game.network }}</h6>
+            </div>
+
+            <div v-if="game.predicted_winning_team">
+              <div class="divider"></div>
+              <h5 class="text-lg font-bold">Spread</h5>
+              <h6 class="italic">
+                {{ game.predicted_winning_team.name_short }} -{{ game.spread }}
+              </h6>
+            </div>
           </div>
         </div>
-        <div class="col-span-2 row-span-2">
-          <div class="mb-6 card card-compact" v-if="game.winning_team">
-            <h2 class="card-title">
-              Game Statistics
-              <router-link
-                :to="{ name: 'cfb_settings_game_stat', params: { id: game.id.toString() } }"
-                class="btn btn-sm"
-              >
-                Edit Stats
-              </router-link>
-            </h2>
+        <div class="md:col-span-2 md:row-span-2">
+          <div class="mb-6 card card-compact">
+            <h2 class="card-title">Game Statistics</h2>
             <div class="card-body">
               <table class="table table-compact">
                 <thead>
@@ -72,7 +111,7 @@ import type Game from '@/types/Game'
                     <th class="text-center">{{ game.away_team.name_short }}</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody v-if="game.winning_team">
                   <tr>
                     <th colspan="3" class="bg-base-300">Points</th>
                   </tr>
@@ -98,7 +137,7 @@ import type Game from '@/types/Game'
                   </tr>
                   <tr>
                     <th>4th Quarter</th>
-                    <td class="text-center">{{ game.home_team_stats.penalty_yards }}</td>
+                    <td class="text-center">{{ game.home_team_stats.q4 }}</td>
                     <td class="text-center">{{ game.away_team_stats.q4 }}</td>
                   </tr>
                   <tr>
@@ -107,8 +146,13 @@ import type Game from '@/types/Game'
                     <td class="text-center">{{ game.away_team_stats.ot || '-' }}</td>
                   </tr>
                 </tbody>
+                <tbody v-else>
+                  <tr>
+                    <td colspan="3">None</td>
+                  </tr>
+                </tbody>
               </table>
-              <table class="table mt-6 table-compact">
+              <table class="table mt-6 table-compact" v-if="false">
                 <thead>
                   <tr>
                     <th>Stat</th>
@@ -156,39 +200,32 @@ import type Game from '@/types/Game'
               </table>
             </div>
           </div>
-          <div class="card card-compact">
-            <div class="card-body" v-if="!loading">
-              <h2 class="card-title">Team Comparison</h2>
-              <table class="table table-compact">
-                <thead>
-                  <tr>
-                    <th>Stat (Avg per game)</th>
-                    <th class="text-center">{{ game.home_team.name_short }}</th>
-                    <th class="text-center">{{ game.away_team.name_short }}</th>
-                    <th class="text-center">Winner</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th>Scoring Margin</th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                  </tr>
-                  <tr>
-                    <th>Total Offense</th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                  </tr>
-                  <tr>
-                    <th>Opponent Total Offense</th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="card" v-if="false">
+            <div class="card-body">
+              <h2 class="text-xl font-semibold uppercase">Team Comparison</h2>
+            </div>
+          </div>
+          <div class="grid gap-4 mt-3 md:grid-cols-3" v-if="false">
+            <div class="card">
+              <div class="card-body" v-if="!loading">
+                <h5 class="font-bold">Scoring Margin</h5>
+                <h6>{{ game.home_team.name_short }}: &mdash;</h6>
+                <h6>{{ game.away_team.name_short }}: &mdash;</h6>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body" v-if="!loading">
+                <h5 class="font-bold">Total Offense</h5>
+                <h6>{{ game.home_team.name_short }}: &mdash;</h6>
+                <h6>{{ game.away_team.name_short }}: &mdash;</h6>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body" v-if="!loading">
+                <h5 class="font-bold">Opponent Total Offense</h5>
+                <h6>{{ game.home_team.name_short }}: &mdash;</h6>
+                <h6>{{ game.away_team.name_short }}: &mdash;</h6>
+              </div>
             </div>
           </div>
         </div>

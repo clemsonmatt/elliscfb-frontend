@@ -23,29 +23,20 @@ const props = defineProps<{
             }}
           </div>
           <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-10 h-10 mx-auto text-primary"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-              />
-            </svg>
+            <h3 class="text-2xl text-primary">
+              {{ props.game.home_team_stats.final }}
+              &mdash;
+              {{ props.game.away_team_stats.final }}
+            </h3>
           </div>
           <div>
             {{ props.game.time }}
           </div>
         </div>
-        <div class="divider"></div>
+        <div class="mb-0 divider"></div>
       </div>
       <div class="grid items-center grid-cols-2 gap-4 md:grid-cols-3 justify-items-stretch">
-        <div class="card-link" @click="$emit('home-team-picked')">
+        <div>
           <div class="items-center text-center card-body">
             <img :src="`../teamLogos/${props.game.home_team.logo}`" class="w-24" />
             <div class="hidden md:block">
@@ -69,11 +60,38 @@ const props = defineProps<{
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-10 h-10 mt-2 rounded-full"
-              :class="{
-                'text-white bg-primary': props.homeTeamPicked,
-                ' text-base-100 bg-base-300': !props.homeTeamPicked
-              }"
+              class="w-10 h-10 mt-2 text-white rounded-full bg-error"
+              v-if="!props.awayTeamPicked && props.game.winning_team.id == props.game.away_team.id"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10 mt-2 text-white rounded-full bg-success"
+              v-if="props.homeTeamPicked && props.game.winning_team.id == props.game.home_team.id"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10 mt-2 rounded-full text-base-100 bg-base-300"
+              v-if="!props.homeTeamPicked"
             >
               <path
                 stroke-linecap="round"
@@ -85,20 +103,11 @@ const props = defineProps<{
         </div>
         <div class="hidden text-center md:block">
           <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-10 h-10 mx-auto mb-4 text-primary"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-              />
-            </svg>
+            <h3 class="mb-4 text-2xl text-primary">
+              {{ props.game.home_team_stats.final }}
+              &mdash;
+              {{ props.game.away_team_stats.final }}
+            </h3>
             {{ props.game.location }}
             <br />
             {{ props.game.home_team.city }}, {{ props.game.home_team.state }}
@@ -128,7 +137,7 @@ const props = defineProps<{
             </div>
           </div>
         </div>
-        <div class="card-link" @click="$emit('away-team-picked')">
+        <div>
           <div class="items-center text-center card-body">
             <img :src="`../teamLogos/${props.game.away_team.logo}`" class="w-24" />
             <div class="hidden md:block">
@@ -152,11 +161,38 @@ const props = defineProps<{
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-10 h-10 mt-2 rounded-full"
-              :class="{
-                'text-white bg-primary': props.awayTeamPicked,
-                ' text-base-100 bg-base-300': !props.awayTeamPicked
-              }"
+              class="w-10 h-10 mt-2 text-white rounded-full bg-error"
+              v-if="!props.homeTeamPicked && props.game.winning_team.id == props.game.home_team.id"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10 mt-2 text-white rounded-full bg-success"
+              v-if="props.awayTeamPicked && props.game.winning_team.id == props.game.away_team.id"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10 mt-2 rounded-full text-base-100 bg-base-300"
+              v-if="!props.awayTeamPicked"
             >
               <path
                 stroke-linecap="round"
@@ -168,10 +204,6 @@ const props = defineProps<{
         </div>
       </div>
       <div class="block mx-auto text-center md:hidden">
-        <div v-if="props.game.predicted_winning_team">
-          {{ props.game.predicted_winning_team.name_abbr }}
-          <span class="mx-1 badge badge-accent badge-outline">-{{ props.game.spread }}</span>
-        </div>
         <router-link
           v-bind:to="{ name: 'cfb_game', params: { id: props.game.id.toString() } }"
           class="mt-2 btn btn-sm btn-primary"

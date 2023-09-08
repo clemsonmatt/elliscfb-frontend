@@ -17,6 +17,15 @@
 .card-compact>.card-body {
   @apply p-1;
 }
+.card-success {
+  @apply border-2 border-success;
+}
+.card-error {
+  @apply border-2 border-error;
+}
+.card-primary {
+  @apply border-2 border-primary;
+}
 
 .table>tbody>tr {
   @apply border-b border-base-200;

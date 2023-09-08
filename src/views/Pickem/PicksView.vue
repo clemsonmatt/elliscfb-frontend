@@ -1,58 +1,55 @@
 <script setup lang="ts">
-import BaseLayout from '@/views/BaseLayout.vue'
 import AlertComponent from '@/components/Alert.vue'
-import SpinnerComponent from '@/components/Spinner.vue'
+import PickemLayout from './Layout.vue'
 import PickemComponent from '@/components/Pickem.vue'
 import PickemLockedComponent from '@/components/PickemLocked.vue'
+import PickemCompleteComponent from '@/components/PickemComplete.vue'
+import PickemNavbar from '@/components/PickemNavbar.vue'
+import SpinnerComponent from '@/components/Spinner.vue'
+import WeekDropdownComponent from '@/components/WeekDropdown.vue'
 </script>
 
 <template>
-  <BaseLayout>
-    <template #header>Pickem</template>
-    <template #header-action>
-      <a href="#" class="btn btn-primary btn-sm">Week 1</a>
+  <PickemLayout>
+    <template #pickem-header>
+      <WeekDropdownComponent :week="week" :weeks="weeks" @set-week="setWeek" v-if="!loading" />
     </template>
-    <template #default>
-      <div class="grid gap-4 lg:grid-cols-3" v-if="!loading">
-        <div>
-          <div class="card">
-            <div class="card-title">Stats</div>
-            <div class="card-body">
-              <div>Coming soon...</div>
-            </div>
-          </div>
-          <div class="mt-6 card">
-            <div class="card-title">Leaderboard</div>
-            <div class="card-body">
-              <div>Coming soon...</div>
-            </div>
-          </div>
+    <template #pickem-content>
+      <div v-if="!loading">
+        <PickemNavbar :week="week" />
+
+        <div v-if="error != ''" class="mb-4">
+          <AlertComponent color="error" :message="`${error}`" />
         </div>
-        <div class="row-span-2 lg:col-span-2">
-          <div class="grid grid-cols-2 justify-items-stretch tabs tabs-boxed">
-            <a class="tab tab-lg tab-active">My Picks</a>
-            <a class="tab tab-lg">All Picks</a>
-          </div>
-          <div v-if="error != ''" class="mb-4">
-            <AlertComponent color="error" :message="`${error}`" />
-          </div>
-          <div v-for="game in games">
-            <PickemComponent
-              :game="game"
-              :away-team-picked="picks.includes(game.away_team.slug)"
-              :home-team-picked="picks.includes(game.home_team.slug)"
-              @home-team-picked="pickWinner(game, game.home_team)"
-              @away-team-picked="pickWinner(game, game.away_team)"
-              v-if="canPick(game)"
-            />
-            <PickemLockedComponent
-              :game="game"
-              :away-team-picked="picks.includes(game.away_team.slug)"
-              :home-team-picked="picks.includes(game.home_team.slug)"
-              @home-team-picked="pickWinner(game, game.home_team)"
-              @away-team-picked="pickWinner(game, game.away_team)"
-              v-if="!canPick(game) && game.winning_team == null"
-            />
+
+        <h3 class="mt-4 text-3xl text-center" v-if="show_time">
+          {{ new Date(now).toLocaleString() }}
+        </h3>
+        <div v-for="game in games">
+          <PickemComponent
+            :game="game"
+            :away-team-picked="isTeamPicked(game.away_team)"
+            :home-team-picked="isTeamPicked(game.home_team)"
+            @home-team-picked="pickWinner(game, game.home_team)"
+            @away-team-picked="pickWinner(game, game.away_team)"
+            v-if="canPick(game)"
+          />
+          <PickemLockedComponent
+            :game="game"
+            :away-team-picked="isTeamPicked(game.away_team)"
+            :home-team-picked="isTeamPicked(game.home_team)"
+            v-if="!canPick(game) && game.winning_team == null"
+          />
+          <PickemCompleteComponent
+            :game="game"
+            :away-team-picked="isTeamPicked(game.away_team)"
+            :home-team-picked="isTeamPicked(game.home_team)"
+            v-if="!canPick(game) && game.winning_team != null"
+          />
+        </div>
+        <div v-if="games.length == 0">
+          <div class="mt-6 card">
+            <div class="card-body">Pick'em not yet available for week {{ week }}</div>
           </div>
         </div>
       </div>
@@ -60,7 +57,7 @@ import PickemLockedComponent from '@/components/PickemLocked.vue'
         <SpinnerComponent />
       </div>
     </template>
-  </BaseLayout>
+  </PickemLayout>
 </template>
 
 <script lang="ts">
@@ -78,6 +75,7 @@ export default {
       weeks: [] as Week[],
       picks: [] as String[],
       error: '' as String,
+      show_time: false as Boolean,
       now: new Date()
     }
   },
@@ -89,12 +87,13 @@ export default {
     }
 
     this.getWeeks(week)
+    this.showTime()
   },
   methods: {
     async getWeeks(week: string) {
       // get weeks data
       await axios
-        .get(`/weeks/full-season.json`)
+        .get(`/weeks/pickem-available.json`)
         .then((response) => {
           this.weeks = response.data.weeks
 
@@ -129,7 +128,13 @@ export default {
       await axios
         .get(`/pickem/${week}/week-picks.json`)
         .then((response) => {
-          this.picks = response.data.picks
+          // convert array string to array
+          var picks = response.data.picks
+            .replaceAll('"', '')
+            .replace('[', '')
+            .replace(']', '')
+            .split(',')
+          this.picks = picks
           this.loading = false
         })
         .catch((error) => {
@@ -158,7 +163,13 @@ export default {
           team: team.id
         })
         .then((response) => {
-          this.picks = response.data.picks
+          // convert array string to array
+          var picks = response.data.picks
+            .replaceAll('"', '')
+            .replace('[', '')
+            .replace(']', '')
+            .split(',')
+          this.picks = picks
           this.error = ''
         })
         .catch((error) => {
@@ -166,13 +177,35 @@ export default {
           this.error = error.response.data.error
         })
     },
+    async showTime() {
+      await axios
+        .get('/pickem/show-time')
+        .then((response) => {
+          this.show_time = response.data
+        })
+        .catch((error) => {
+          console.log(error.response.data.error)
+          this.error = error.response.data.error
+        })
+    },
+    isTeamPicked(team: Team): boolean {
+      var teamPicked = false
+
+      this.picks.forEach((slug) => {
+        if (slug == team.slug) {
+          teamPicked = true
+        }
+      })
+
+      return teamPicked
+    },
     canPick(game: Game): boolean {
       var gameTime = new Date(game.datetime).toLocaleString('en-us', {
         timeZone: 'America/New_York'
       })
       var currentTime = this.now.toLocaleString('en-us', { timeZone: 'America/New_York' })
 
-      return gameTime > currentTime
+      return new Date(gameTime) > new Date(currentTime)
     }
   }
 }

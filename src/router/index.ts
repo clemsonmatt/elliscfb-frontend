@@ -2,18 +2,24 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import Login from '@/views/LoginView.vue'
 import CreateAccount from '@/views/CreateAccountView.vue'
-import Pickem from '@/views/PickemView.vue'
+import Profile from '@/views/ProfileView.vue'
+import ProfileEdit from '@/views/ProfileEditView.vue'
+import Pickem from '@/views/Pickem/PicksView.vue'
+import PickemAllPicks from '@/views/Pickem/AllPicksView.vue'
 import SettingsPickem from '@/views/Settings/PickemView.vue'
 import SettingsGames from '@/views/Settings/GamesView.vue'
 import SettingsStats from '@/views/Settings/GameStatsView.vue'
 import SettingsStatsAdd from '@/views/Settings/GameStatsAddView.vue'
 import Teams from '@/views/TeamsView.vue'
 import Team from '@/views/TeamView.vue'
-import TeamGames from '@/views/TeamGamesView.vue'
+import TeamSchedule from '@/views/Team/ScheduleView.vue'
+import TeamRankings from '@/views/Team/RankingsView.vue'
+import TeamStatistics from '@/views/Team/StatisticsView.vue'
 import Games from '@/views/Game/ListView.vue'
 import Game from '@/views/Game/DetailView.vue'
 import GameAdd from '@/views/Game/AddView.vue'
 import GameEdit from '@/views/Game/EditView.vue'
+import Rankings from '@/views/RankingsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +28,11 @@ const router = createRouter({
       path: '/:week?',
       name: 'cfb_pickem',
       component: Pickem
+    },
+    {
+      path: '/:week/all-picks',
+      name: 'cfb_pickem_all_picks',
+      component: PickemAllPicks
     },
     {
       path: '/teams',
@@ -36,7 +47,17 @@ const router = createRouter({
     {
       path: '/teams/:slug/games',
       name: 'cfb_team_games',
-      component: TeamGames
+      component: TeamSchedule
+    },
+    {
+      path: '/teams/:slug/rankings',
+      name: 'cfb_team_rankings',
+      component: TeamRankings
+    },
+    {
+      path: '/teams/:slug/statistics',
+      name: 'cfb_team_statistics',
+      component: TeamStatistics
     },
     {
       path: '/games/:week?',
@@ -55,7 +76,12 @@ const router = createRouter({
       component: Game
     },
     {
-      path: '/settings/pickem',
+      path: '/rankings',
+      name: 'cfb_rankings',
+      component: Rankings
+    },
+    {
+      path: '/settings/pickem/:week?',
       name: 'cfb_settings_pickem',
       component: SettingsPickem,
       meta: { manageRole: true }
@@ -93,6 +119,16 @@ const router = createRouter({
       path: '/create-account',
       name: 'cfb_create_account',
       component: CreateAccount
+    },
+    {
+      path: '/profile',
+      name: 'cfb_profile',
+      component: Profile
+    },
+    {
+      path: '/profile/edit',
+      name: 'cfb_profile_edit',
+      component: ProfileEdit
     }
   ]
 })
