@@ -12,7 +12,7 @@ import AlertComponent from '@/components/Alert.vue'
       <AlertComponent color="error" :message="error" />
     </div>
     <div v-if="created" class="mb-4">
-      <AlertComponent color="success" message="Account created! Login to proceed." />
+      <AlertComponent color="success" message="Account saved! Login to proceed." />
     </div>
     <div class="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 bg-base-200">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -53,8 +53,14 @@ import AlertComponent from '@/components/Alert.vue'
                 Create account
               </router-link>
             </div>
-            <div v-if="false">
-              <a href="#" class="font-bold no-underline link">Forgot password</a>
+            <div>
+              <br class="md:hidden" />
+              <router-link
+                :to="{ name: 'cfb_forgot_password' }"
+                class="font-bold no-underline link"
+              >
+                Forgot password
+              </router-link>
             </div>
           </div>
         </form>

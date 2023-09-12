@@ -20,6 +20,8 @@ import Game from '@/views/Game/DetailView.vue'
 import GameAdd from '@/views/Game/AddView.vue'
 import GameEdit from '@/views/Game/EditView.vue'
 import Rankings from '@/views/RankingsView.vue'
+import ForgotPassword from '@/views/ForgotPasswordView.vue'
+import ResetPassword from '@/views/ResetPasswordView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -129,14 +131,34 @@ const router = createRouter({
       path: '/profile/edit',
       name: 'cfb_profile_edit',
       component: ProfileEdit
+    },
+    {
+      path: '/forgot-password',
+      name: 'cfb_forgot_password',
+      component: ForgotPassword
+    },
+    {
+      path: '/reset-password/:reset_token',
+      name: 'cfb_reset_password',
+      component: ResetPassword
     }
   ]
 })
 
 router.beforeEach(async (to) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/login', '/login/created', '/create-account']
-  const authRequired = !publicPages.includes(to.path)
+  const publicPages = [
+    'cfb_login',
+    'cfb_create_account',
+    'cfb_forgot_password',
+    'cfb_reset_password'
+  ]
+
+  let authRequired = true
+  if (to.name) {
+    authRequired = !publicPages.includes(to.name.toString())
+  }
+
   const requiresManageRole = to.meta.manageRole
   const auth = useAuthStore()
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseLayout from '../BaseLayout.vue'
+import Alert from '@/components/Alert.vue'
 import SettingsGame from '@/components/SettingsGame.vue'
 import SettingsNavbar from '@/components/SettingsNavbar.vue'
 import Spinner from '@/components/Spinner.vue'
@@ -13,10 +14,13 @@ import WeekDropdown from '@/components/WeekDropdown.vue'
     <template #default>
       <SettingsNavbar />
 
+      <Alert :message="message" color="success" v-if="message" />
+      <Alert :message="error" color="success" v-if="error" />
+
       <div class="card card-simple">
         <div class="card-title">
           <div>Week {{ week }} Games ({{ games.length }})</div>
-          <button class="btn btn-sm">Send reminder email</button>
+          <button class="btn btn-sm" @click="sendReminderEmail">Send reminder email</button>
           <WeekDropdown :week="week" :weeks="weeks" />
         </div>
         <div class="card-body">
@@ -39,7 +43,9 @@ export default {
       games: [] as Game[],
       week: '' as String,
       weeks: [] as Week[],
-      pickem_games: [] as Game[]
+      pickem_games: [] as Game[],
+      message: '' as String,
+      error: '' as String
     }
   },
   async created() {
@@ -109,6 +115,19 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+        })
+    },
+    async sendReminderEmail() {
+      await axios
+        .get('/email/send-weekly-reminder.json')
+        .then((response) => {
+          // show success alert
+          this.message = 'Emails sent'
+        })
+        .catch((error) => {
+          // show error alert
+          this.error = error.response.data.error
+          console.log(error.response.data.error)
         })
     }
   }
