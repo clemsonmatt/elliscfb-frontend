@@ -1,18 +1,28 @@
 <script setup lang="ts">
-import BaseLayout from './BaseLayout.vue'
+import BaseLayout from '../BaseLayout.vue'
+import Alert from '@/components/Alert.vue'
 import Poll from '@/components/Poll.vue'
+import SettingsNavbar from '@/components/SettingsNavbar.vue'
 import Spinner from '@/components/Spinner.vue'
 import WeekDropdown from '@/components/WeekDropdown.vue'
 </script>
 
 <template>
   <BaseLayout>
-    <template #header>Rankings</template>
+    <template #header>Settings</template>
 
     <template #default>
+      <SettingsNavbar />
+
+      <Alert :message="message" color="success" v-if="message" />
+      <Alert :message="error" color="error" v-if="error" />
+
       <div class="card card-simple">
         <div class="card-title">
           <div>Week {{ week }} Rankings</div>
+          <button class="btn btn-sm" @click="importRankings">
+            Import week {{ week }} rankings
+          </button>
           <WeekDropdown :week="week" :weeks="weeks" @set-week="setWeek" v-if="!loading" />
         </div>
         <div class="card-body">
@@ -41,7 +51,9 @@ export default {
       loading: true,
       rankings: {} as Rankings,
       week: '' as String,
-      weeks: [] as Week[]
+      weeks: [] as Week[],
+      message: '' as String,
+      error: '' as String
     }
   },
   async created() {
@@ -57,7 +69,7 @@ export default {
     async getWeeks(week: string) {
       // get weeks data
       await axios
-        .get(`/weeks/pickem-available.json`)
+        .get(`/weeks/full-season.json`)
         .then((response) => {
           this.weeks = response.data.weeks
 
@@ -88,6 +100,8 @@ export default {
     },
     async setWeek(number: string) {
       this.loading = true
+      this.message = ''
+      this.error = ''
 
       // update data
       this.week = number
@@ -95,11 +109,30 @@ export default {
 
       // update url
       this.$router.push({
-        name: 'cfb_rankings',
+        name: 'cfb_settings_rankings',
         params: {
           week: number
         }
       })
+    },
+    async importRankings() {
+      this.loading = true
+
+      await axios
+        .get(`/rankings/${this.week}/import.json`)
+        .then((response) => {
+          // show success alert
+          this.message = 'Imported polls'
+          this.getRankings(this.week.toString())
+        })
+        .catch((error) => {
+          // show error alert
+          this.error = error.response.data.error
+          console.log(error.response.data.error)
+        })
+        .then(() => {
+          this.loading = false
+        })
     }
   }
 }
