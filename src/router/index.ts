@@ -79,7 +79,7 @@ const router = createRouter({
       component: Game
     },
     {
-      path: '/rankings',
+      path: '/rankings/:week?',
       name: 'cfb_rankings',
       component: Rankings
     },
