@@ -20,7 +20,10 @@ const props = defineProps<{
           <td>{{ ranking.rank }}</td>
           <td class="flex items-center">
             <img :src="`../../teamLogos/${ranking.team.logo}`" class="w-6 mr-2" />
-            {{ ranking.team.name_short }}
+            <span v-if="ranking.team.name_short.includes('. ')">
+              {{ ranking.team.name_short.split('. ')[1] }}
+            </span>
+            <span v-else>{{ ranking.team.name_short }}</span>
           </td>
         </tr>
         <tr v-if="props.rankings.length == 0">
