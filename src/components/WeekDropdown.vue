@@ -16,8 +16,10 @@ const props = defineProps<{
       id="js-week-dropdown"
     >
       <li v-for="w in props.weeks">
-        <a v-if="w.number.toString() == week" class="bg-primary">Week {{ w.number }}</a>
-        <a v-else @click="$emit('set-week', w.number.toString())">Week {{ w.number }}</a>
+        <a v-if="w.number.toString() == week" class="text-sm bg-primary">Week {{ w.number }}</a>
+        <a v-else @click="$emit('setWeek', w.number.toString())" class="text-sm">
+          Week {{ w.number }}
+        </a>
       </li>
     </ul>
   </details>

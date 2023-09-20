@@ -10,6 +10,7 @@ import SettingsPickem from '@/views/Settings/PickemView.vue'
 import SettingsGames from '@/views/Settings/GamesView.vue'
 import SettingsStats from '@/views/Settings/GameStatsView.vue'
 import SettingsStatsAdd from '@/views/Settings/GameStatsAddView.vue'
+import SettingsRankings from '@/views/Settings/RankingsView.vue'
 import Teams from '@/views/TeamsView.vue'
 import Team from '@/views/TeamView.vue'
 import TeamSchedule from '@/views/Team/ScheduleView.vue'
@@ -110,6 +111,12 @@ const router = createRouter({
       path: '/settings/stats/:id/add',
       name: 'cfb_settings_game_stat',
       component: SettingsStatsAdd,
+      meta: { manageRole: true }
+    },
+    {
+      path: '/settings/rankings/:week?',
+      name: 'cfb_settings_rankings',
+      component: SettingsRankings,
       meta: { manageRole: true }
     },
     {

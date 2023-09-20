@@ -33,6 +33,14 @@ const currentRouteName = route.name
         </router-link>
       </li>
       <li><a>People</a></li>
+      <li>
+        <router-link
+          :to="{ name: 'cfb_settings_rankings' }"
+          :class="{ active: currentRouteName == 'cfb_settings_rankings' }"
+        >
+          Rankings
+        </router-link>
+      </li>
     </ul>
   </div>
 </template>
