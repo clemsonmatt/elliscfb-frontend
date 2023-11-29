@@ -6,7 +6,6 @@ import Profile from '@/views/ProfileView.vue'
 import ProfileEdit from '@/views/ProfileEditView.vue'
 import Pickem from '@/views/Pickem/PicksView.vue'
 import PickemAllPicks from '@/views/Pickem/AllPicksView.vue'
-import SettingsPickem from '@/views/Settings/PickemView.vue'
 import SettingsGames from '@/views/Settings/GamesView.vue'
 import SettingsStats from '@/views/Settings/GameStatsView.vue'
 import SettingsStatsAdd from '@/views/Settings/GameStatsAddView.vue'
@@ -82,12 +81,6 @@ const router = createRouter({
       path: '/rankings/:week?',
       name: 'cfb_rankings',
       component: Rankings
-    },
-    {
-      path: '/settings/pickem/:week?',
-      name: 'cfb_settings_pickem',
-      component: SettingsPickem,
-      meta: { manageRole: true }
     },
     {
       path: '/settings/games/:week?',

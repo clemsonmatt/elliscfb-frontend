@@ -2,6 +2,8 @@
 import BaseLayout from '../BaseLayout.vue'
 import SettingsNavbar from '@/components/SettingsNavbar.vue'
 import SettingsGame from '@/components/SettingsGame.vue'
+import WeekDropdown from '@/components/WeekDropdown.vue'
+import Alert from '@/components/Alert.vue'
 </script>
 
 <template>
@@ -11,39 +13,29 @@ import SettingsGame from '@/components/SettingsGame.vue'
     <template #default>
       <SettingsNavbar />
 
+      <Alert :message="message" color="success" v-if="message" />
+      <Alert :message="error" color="success" v-if="error" />
+
       <div class="card card-simple">
         <div class="card-title">
           <div>Week {{ week }} Games ({{ games.length }})</div>
-          <button @click="importGames()" class="btn btn-sm">
-            <span v-if="games.length == 0">Import</span>
-            <span v-else>Update</span>
-            &nbsp;week {{ week }} games
-          </button>
           <div>
             <router-link class="btn btn-success btn-sm" :to="{ name: 'cfb_game_add' }">
               Add game
             </router-link>
-            <div class="dropdown dropdown-end">
-              <div tabindex="0" class="m-1 btn btn-sm btn-primary">Week {{ week }}</div>
-              <ul
-                tabindex="0"
-                class="p-2 mt-3 shadow-lg menu dropdown-content bg-base-200 rounded-box w-52"
-                id="js-week-dropdown"
-              >
-                <li v-for="w in weeks">
-                  <a v-if="w.number.toString() == week" class="text-sm bg-primary"
-                    >Week {{ w.number }}</a
-                  >
-                  <a v-else @click="setWeek(w.number.toString())" class="text-sm"
-                    >Week {{ w.number }}</a
-                  >
-                </li>
-              </ul>
-            </div>
+            <WeekDropdown :week="week" :weeks="weeks" @set-week="setWeek" v-if="!loading" />
           </div>
         </div>
         <div class="card-body">
-          <SettingsGame :games="games" type="manage" :loading="loading" />
+          <div class="flex justify-between pb-4 border-b border-base-100">
+            <button class="btn btn-sm" @click="sendReminderEmail()">Send reminder email</button>
+            <button @click="importGames()" class="btn btn-sm">
+              <span v-if="games.length == 0">Import</span>
+              <span v-else>Update</span>
+              &nbsp;week {{ week }} games
+            </button>
+          </div>
+          <SettingsGame :games="games" type="pickem" :loading="loading" @game-picked="gamePicked" />
         </div>
       </div>
     </template>
@@ -61,7 +53,10 @@ export default {
       loading: true,
       games: [] as Game[],
       week: '' as String,
-      weeks: [] as Week[]
+      weeks: [] as Week[],
+      pickem_games: [] as Game[],
+      message: '' as String,
+      error: '' as String
     }
   },
   async created() {
@@ -132,6 +127,31 @@ export default {
         })
         .then(() => {
           this.loading = false
+        })
+    },
+    async gamePicked(game: Game) {
+      await axios
+        .post(`/games/${game.id}/toggle-pickem.json`, {
+          pickem: !game.pickem
+        })
+        .then((response) => {
+          game.pickem = !game.pickem
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    async sendReminderEmail() {
+      await axios
+        .get('/email/send-weekly-reminder.json')
+        .then((response) => {
+          // show success alert
+          this.message = 'Emails sent'
+        })
+        .catch((error) => {
+          // show error alert
+          this.error = error.response.data.error
+          console.log(error.response.data.error)
         })
     }
   }

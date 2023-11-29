@@ -10,14 +10,6 @@ const currentRouteName = route.name
     <ul class="px-1 menu menu-horizontal">
       <li>
         <router-link
-          :to="{ name: 'cfb_settings_pickem' }"
-          :class="{ active: currentRouteName == 'cfb_settings_pickem' }"
-        >
-          Pick'em
-        </router-link>
-      </li>
-      <li>
-        <router-link
           :to="{ name: 'cfb_settings_games' }"
           :class="{ active: currentRouteName == 'cfb_settings_games' }"
         >
