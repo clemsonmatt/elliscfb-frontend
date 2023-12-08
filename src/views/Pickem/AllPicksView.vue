@@ -15,7 +15,7 @@ import WeekDropdownComponent from '@/components/WeekDropdown.vue'
         <PickemNavbar :week="week" />
 
         <div
-          class="w-full max-w-screen-sm py-4 overflow-x-auto md:max-w-screen-md lg:max-w-none"
+          class="w-[calc(100vw-4rem)] md:w-full px-4 py-4 overflow-x-auto md:max-w-screen-md lg:max-w-none"
           v-if="!picksLoading"
         >
           <div class="flex">
