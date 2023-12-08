@@ -29,7 +29,7 @@ import WeekDropdownComponent from '@/components/WeekDropdown.vue'
           </div>
           <div class="mt-4" v-for="user_pick in user_picks">
             <div class="w-full h-10">
-              <h4 class="fixed text-2xl text-center md:text-left">{{ user_pick.username }}</h4>
+              <h4 class="absolute text-2xl text-center md:text-left">{{ user_pick.username }}</h4>
             </div>
             <div class="flex">
               <div
