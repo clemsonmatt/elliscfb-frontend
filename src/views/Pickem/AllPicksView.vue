@@ -14,39 +14,47 @@ import WeekDropdownComponent from '@/components/WeekDropdown.vue'
       <div v-if="!gamesLoading">
         <PickemNavbar :week="week" />
 
-        <div class="hidden grid-cols-10 gap-1 my-6 md:grid justify-items-stretch">
-          <div class="card" v-for="game in games">
-            <div class="card-body">
-              <img :src="`../teamLogos/${game.away_team.logo}`" class="w-full" />
-              <div class="divider"></div>
-              <img :src="`../teamLogos/${game.home_team.logo}`" class="w-full" />
+        <div
+          class="w-full max-w-screen-sm py-4 overflow-x-auto md:max-w-screen-md lg:max-w-none"
+          v-if="!picksLoading"
+        >
+          <div class="flex">
+            <div class="mx-1 border-2 border-gray-800 card" v-for="game in games">
+              <div class="w-20 card-body">
+                <img :src="`../teamLogos/${game.away_team.logo}`" class="w-full" />
+                <div class="divider"></div>
+                <img :src="`../teamLogos/${game.home_team.logo}`" class="w-full" />
+              </div>
             </div>
           </div>
-        </div>
-        <div v-for="user_pick in user_picks" v-if="!picksLoading">
-          <div class="divider"></div>
-          <h4 class="text-2xl text-center md:text-left">{{ user_pick.username }}</h4>
-          <div class="grid grid-cols-5 gap-1 mb-6 md:grid-cols-10 justify-items-stretch">
-            <div
-              class="my-1 card"
-              :class="{
-                'card-success':
-                  game.winning_team && user_pick.picks.includes(game.winning_team.slug),
-                'card-error': game.winning_team && !user_pick.picks.includes(game.winning_team.slug)
-              }"
-              v-for="game in games"
-            >
-              <div class="card-body">
-                <img
-                  :src="`../teamLogos/${game.away_team.logo}`"
-                  class="w-full"
-                  v-if="user_pick.picks.includes(game.away_team.slug)"
-                />
-                <img
-                  :src="`../teamLogos/${game.home_team.logo}`"
-                  class="w-full"
-                  v-if="user_pick.picks.includes(game.home_team.slug)"
-                />
+          <div class="mt-4" v-for="user_pick in user_picks">
+            <div class="w-full h-10">
+              <h4 class="fixed text-2xl text-center md:text-left">{{ user_pick.username }}</h4>
+            </div>
+            <div class="flex">
+              <div
+                class="mx-1 card"
+                :class="{
+                  'card-success':
+                    game.winning_team && user_pick.picks.includes(game.winning_team.slug),
+                  'card-error':
+                    game.winning_team && !user_pick.picks.includes(game.winning_team.slug),
+                  'border-2 border-gray-800': !game.winning_team
+                }"
+                v-for="game in games"
+              >
+                <div class="w-20 card-body">
+                  <img
+                    :src="`../teamLogos/${game.away_team.logo}`"
+                    class="w-full"
+                    v-if="user_pick.picks.includes(game.away_team.slug)"
+                  />
+                  <img
+                    :src="`../teamLogos/${game.home_team.logo}`"
+                    class="w-full"
+                    v-if="user_pick.picks.includes(game.home_team.slug)"
+                  />
+                </div>
               </div>
             </div>
           </div>
