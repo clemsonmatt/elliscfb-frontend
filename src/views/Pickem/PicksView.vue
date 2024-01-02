@@ -192,7 +192,7 @@ export default {
       var teamPicked = false
 
       this.picks.forEach((pick) => {
-        // gameSlug looks like this: 123-clemson
+        // pick looks like this: 123-clemson
         var gameSlug = pick.split('-')
         var gameId = parseInt(gameSlug[0])
         var teamSlug = gameSlug[1]
