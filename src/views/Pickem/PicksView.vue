@@ -194,7 +194,7 @@ export default {
       this.picks.forEach((gameSlug) => {
         // gameSlug looks like this: 123-clemson
         gameSlug = gameSlug.split('-')
-        var gameId = gameSlug[0]
+        var gameId = parseInt(gameSlug[0])
         var teamSlug = gameSlug[1]
 
         if (gameId == game.id && teamSlug == team.slug) {
