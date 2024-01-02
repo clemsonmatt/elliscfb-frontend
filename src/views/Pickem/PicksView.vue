@@ -28,22 +28,22 @@ import WeekDropdownComponent from '@/components/WeekDropdown.vue'
         <div v-for="game in games">
           <PickemComponent
             :game="game"
-            :away-team-picked="isTeamPicked(game.away_team)"
-            :home-team-picked="isTeamPicked(game.home_team)"
+            :away-team-picked="isTeamPicked(game, game.away_team)"
+            :home-team-picked="isTeamPicked(game, game.home_team)"
             @home-team-picked="pickWinner(game, game.home_team)"
             @away-team-picked="pickWinner(game, game.away_team)"
             v-if="canPick(game)"
           />
           <PickemLockedComponent
             :game="game"
-            :away-team-picked="isTeamPicked(game.away_team)"
-            :home-team-picked="isTeamPicked(game.home_team)"
+            :away-team-picked="isTeamPicked(game, game.away_team)"
+            :home-team-picked="isTeamPicked(game, game.home_team)"
             v-if="!canPick(game) && game.winning_team == null"
           />
           <PickemCompleteComponent
             :game="game"
-            :away-team-picked="isTeamPicked(game.away_team)"
-            :home-team-picked="isTeamPicked(game.home_team)"
+            :away-team-picked="isTeamPicked(game, game.away_team)"
+            :home-team-picked="isTeamPicked(game, game.home_team)"
             v-if="!canPick(game) && game.winning_team != null"
           />
         </div>
@@ -188,11 +188,16 @@ export default {
           this.error = error.response.data.error
         })
     },
-    isTeamPicked(team: Team): boolean {
+    isTeamPicked(game: Game, team: Team): boolean {
       var teamPicked = false
 
-      this.picks.forEach((slug) => {
-        if (slug == team.slug) {
+      this.picks.forEach((gameSlug) => {
+        // gameSlug looks like this: 123-clemson
+        gameSlug = gameSlug.split('-')
+        var gameId = gameSlug[0]
+        var teamSlug = gameSlug[1]
+
+        if (gameId == game.id && teamSlug == team.slug) {
           teamPicked = true
         }
       })

@@ -36,9 +36,11 @@ import WeekDropdownComponent from '@/components/WeekDropdown.vue'
                 class="mx-1 card"
                 :class="{
                   'card-success':
-                    game.winning_team && user_pick.picks.includes(game.winning_team.slug),
+                    game.winning_team &&
+                    user_pick.picks.includes(`${game.id}-${game.winning_team.slug}`),
                   'card-error':
-                    game.winning_team && !user_pick.picks.includes(game.winning_team.slug),
+                    game.winning_team &&
+                    !user_pick.picks.includes(`${game.id}-${game.winning_team.slug}`),
                   'border-2 border-gray-800': !game.winning_team
                 }"
                 v-for="game in games"
@@ -47,12 +49,12 @@ import WeekDropdownComponent from '@/components/WeekDropdown.vue'
                   <img
                     :src="`../teamLogos/${game.away_team.logo}`"
                     class="w-full"
-                    v-if="user_pick.picks.includes(game.away_team.slug)"
+                    v-if="user_pick.picks.includes(`${game.id}-${game.away_team.slug}`)"
                   />
                   <img
                     :src="`../teamLogos/${game.home_team.logo}`"
                     class="w-full"
-                    v-if="user_pick.picks.includes(game.home_team.slug)"
+                    v-if="user_pick.picks.includes(`${game.id}-${game.home_team.slug}`)"
                   />
                 </div>
               </div>
