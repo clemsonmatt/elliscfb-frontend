@@ -191,9 +191,9 @@ export default {
     isTeamPicked(game: Game, team: Team): boolean {
       var teamPicked = false
 
-      this.picks.forEach((gameSlug) => {
-        // gameSlug looks like this: 123-clemson
-        gameSlug = gameSlug.split('-')
+      this.picks.forEach((pick) => {
+        // pick looks like this: 123-clemson
+        var gameSlug = pick.split('-')
         var gameId = parseInt(gameSlug[0])
         var teamSlug = gameSlug[1]
 
