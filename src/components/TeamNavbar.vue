@@ -10,8 +10,8 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="mb-4 navbar bg-base-200 rounded-xl">
-    <ul class="px-1 menu menu-horizontal">
+  <div class="mb-4">
+    <ul class="menu menu-vertical lg:menu-horizontal bg-base-200 rounded-box">
       <li>
         <router-link
           :to="{ name: 'cfb_team', params: { slug: slug.toString() } }"

@@ -23,8 +23,8 @@ import SpinnerComponent from '@/components/Spinner.vue'
       <div v-else>
         <TeamNavbar :slug="team.slug" />
 
-        <div class="grid gap-4 xl:grid-cols-3">
-          <div class="row-span-2 card">
+        <div class="grid-cols-3 gap-4 lg:grid">
+          <div class="md:row-span-2 card">
             <h2 class="card-title">School Info</h2>
             <div class="card-body">
               <h4 class="text-xl italic font-bold underline">{{ team.school }}</h4>
@@ -50,7 +50,7 @@ import SpinnerComponent from '@/components/Spinner.vue'
             </div>
           </div>
           <div class="md:col-span-2">
-            <div class="mt-6 mb-0 card">
+            <div class="mt-6 mb-0 lg:mt-0 card">
               <div class="card-body">
                 <h2 class="text-xl font-semibold uppercase">Next Game</h2>
               </div>

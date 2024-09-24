@@ -61,7 +61,7 @@ const props = defineProps<{
               <span v-else>{{ props.game.home_team.name_short }}</span>
             </div>
             <div class="block md:hidden">
-              {{ props.game.home_team.name_abbr }}
+              {{ props.game.home_team.name_short }}
             </div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +144,7 @@ const props = defineProps<{
               <span v-else>{{ props.game.away_team.name_short }}</span>
             </div>
             <div class="block md:hidden">
-              {{ props.game.away_team.name_abbr }}
+              {{ props.game.away_team.name_short }}
             </div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +169,7 @@ const props = defineProps<{
       </div>
       <div class="block mx-auto text-center md:hidden">
         <div v-if="props.game.predicted_winning_team">
-          {{ props.game.predicted_winning_team.name_abbr }}
+          {{ props.game.predicted_winning_team.name_short }}
           <span class="mx-1 badge badge-accent badge-outline">-{{ props.game.spread }}</span>
         </div>
         <router-link
